@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import UserModel from "./models/user.js";
+import UserModel from "./model/user.js";
 const app = express();
 
 const connectDB = async () => {
