@@ -1,7 +1,7 @@
-import MainMenuFunction from "./companents/MainMenu";
+import NavBarFunction from "./components/MainMenu";
 
 function App() {
-    return <MainMenuFunction></MainMenuFunction>;
+    return <NavBarFunction></NavBarFunction>;
 }
 
 
