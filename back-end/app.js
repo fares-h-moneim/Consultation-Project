@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import UserModel from "./models/user.js";
 const app = express();
 
 const connectDB = async () => {
@@ -16,19 +17,20 @@ const connectDB = async () => {
 
 connectDB();
 
-const UserSchema = mongoose.Schema({
-    name: String,
-    age: Number
-})
 
-const UserModel = mongoose.model("users", UserSchema);
 
-app.get("/getUsers", (req, res) => {
-    res.json(UserModel.find({}).then(function (users) {
-        res.json(users);
-    })).catch((err) => res.status(400).json({
-        err
-    }));
+app.get("/getUsers", async (req, res) => {
+    const users = await UserModel.find({});
+    res.send(users);
+});
+
+app.post("/addUser", async (req, res) => {
+    const user = new UserModel({
+        name: "John",
+        age: 30,
+    });
+    await user.save();
+    res.send(user);
 });
 
 app.listen(3000, () => {
