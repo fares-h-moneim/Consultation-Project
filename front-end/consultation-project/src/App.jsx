@@ -1,5 +1,8 @@
-function App(){
-  return <h1> Hello Worlds</h1>;
+import MainMenuFunction from "./companents/MainMenu";
+
+function App() {
+    return <MainMenuFunction></MainMenuFunction>;
 }
+
 
 export default App;
