@@ -5,7 +5,7 @@ const app = express();
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2", {
+        await mongoose.connect("mongodb://localhost:27017/epl", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -26,8 +26,16 @@ app.get("/getUsers", async (req, res) => {
 
 app.post("/addUser", async (req, res) => {
     const user = new UserModel({
-        name: "John",
-        age: 30,
+        username: "test",
+        password: "test",
+        first_name: "test",
+        last_name: "test",
+        birth_date: "12-2-1999",
+        gender: "Male",
+        city: "test",
+        address: "test",
+        email: "test",
+        role: "Manager"
     });
     await user.save();
     res.send(user);

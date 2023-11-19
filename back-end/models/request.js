@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const UserSchema = mongoose.Schema({
+const RequestSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   first_name: { type: String, required: true },
@@ -12,5 +12,5 @@ const UserSchema = mongoose.Schema({
   role: { type: String, enum: ['Manager', 'Fan'] }
 })
 
-const UserModel = mongoose.model("User", UserSchema);
-export default UserModel;
+const RequestModel = mongoose.model("Request", UserSchema);
+export default RequestModel;
