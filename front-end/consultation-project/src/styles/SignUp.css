@@ -1,0 +1,11 @@
+.half {
+    display: flex;
+    justify-content: space-between;
+}
+
+.half .item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    width: 48%;
+}

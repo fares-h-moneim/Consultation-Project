@@ -1,5 +1,6 @@
 .App {
     overflow-x: hidden !important;
+    overflow-y: hidden !important;
     padding-right: 0;
     padding-left: 0;
     background-color: red;
@@ -8,4 +9,5 @@
 .container {
     max-width: 100% !important;
     overflow-x: hidden !important;
+    overflow-y: hidden !important;
 }
