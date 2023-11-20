@@ -12,5 +12,5 @@ const RequestSchema = mongoose.Schema({
   role: { type: String, enum: ['Manager', 'Fan'] }
 })
 
-const RequestModel = mongoose.model("Request", UserSchema);
+const RequestModel = mongoose.model("Request", RequestSchema);
 export default RequestModel;

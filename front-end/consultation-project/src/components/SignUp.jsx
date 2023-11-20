@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+    const history = useHistory();
     const [userData, setUserData] = useState({
         username: "",
         email: "",
@@ -15,7 +16,18 @@ export default function Signup() {
         address: "",
         role: ""
     });
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            var response = await fetch("/add-request", userData);
+            if (response.ok){
+                console.log("sign up success")
+            }
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
     const handleChange = (e) => {
         setUserData({
             ...userData,
@@ -128,11 +140,11 @@ export default function Signup() {
                                 <label htmlFor="gender">Gender</label>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <label className="flex-fill mr-3">
-                                        <input type="radio" name="gender" value="male" />
+                                        <input type="radio" name="gender" value="Male" />
                                         <span className="ml-2">Male</span>
                                     </label>
                                     <label className="flex-fill">
-                                        <input type="radio" name="gender" value="female" />
+                                        <input type="radio" name="gender" value="Female" />
                                         <span className="ml-2">Female</span>
                                     </label>
                                 </div>
@@ -184,11 +196,11 @@ export default function Signup() {
                                 <label htmlFor="role">Role</label>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <label className="flex-fill mr-3">
-                                        <input type="radio" name="role" value="manager" />
+                                        <input type="radio" name="role" value="Manager" />
                                         <span className="ml-2">Manager</span>
                                     </label>
                                     <label className="flex-fill">
-                                        <input type="radio" name="role" value="fan" />
+                                        <input type="radio" name="role" value="Fan" />
                                         <span className="ml-2">Fan</span>
                                     </label>
                                 </div>
@@ -202,6 +214,7 @@ export default function Signup() {
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
+                            onSubmit = {handleSubmit}
                         >
                             Sign Up
                         </button>

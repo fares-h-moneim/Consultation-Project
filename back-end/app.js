@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import UserModel from "./model/user.js";
+import  addRequest from "./controller/request.js"
 const app = express();
 
 const connectDB = async () => {
@@ -17,7 +18,7 @@ const connectDB = async () => {
 
 connectDB();
 
-
+app.post("/add-request", addRequest);
 
 app.get("/getUsers", async (req, res) => {
     const users = await UserModel.find({});
