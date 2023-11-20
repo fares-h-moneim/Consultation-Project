@@ -2,18 +2,19 @@ import { useState } from "react";
 import Button from "./NavButton";
 import "../styles/NavBar.css";
 import EFALogo from "../assets/EFA.png";
+import { Link } from "react-router-dom";
 
-export default function NavBar({ onClick }) {
+export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg bg-black">
-      <a className="navbar-brand" href="/" onClick={() => onClick("home")}>
+      <Link className="navbar-brand" to="/">
         <img
           src={EFALogo}
           width={50}
           className="rounded float-start ml-2"
           alt="EFA Logo"
         />
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -29,16 +30,24 @@ export default function NavBar({ onClick }) {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Button text="MATCHES" onClick={() => onClick("matches")} />
+            <Link to="/matches">
+              <Button text="MATCHES" />
+            </Link>
           </li>
           <li className="nav-item">
-            <Button text="BOOKINGS" onClick={() => onClick("bookings")} />
+            <Link to="/bookings">
+              <Button text="BOOKINGS" />
+            </Link>
           </li>
           <li className="nav-item">
-            <Button text="SIGN UP" onClick={() => onClick("signup")} />
+            <Link to="/signup">
+              <Button text="SIGN UP" />
+            </Link>
           </li>
           <li className="nav-item">
-            <Button text="SIGN IN" onClick={() => onClick("signin")} />
+            <Link to="/signin">
+              <Button text="SIGN IN" />
+            </Link>
           </li>
         </ul>
       </div>

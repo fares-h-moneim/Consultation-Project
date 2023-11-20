@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
     const [userData, setUserData] = useState({
@@ -36,9 +37,10 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="fname"
+                                    name="firstName"
                                     id="fname"
                                     required=""
+                                    placeholder="John"
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -46,9 +48,10 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="lname"
+                                    name="lastName"
                                     id="lname"
                                     required=""
+                                    placeholder="Doe"
                                 />
                             </div>
                         </div>
@@ -59,9 +62,10 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="uname"
+                                    name="userName"
                                     id="uname"
                                     required=""
+                                    placeholder="johndoe"
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -71,6 +75,29 @@ export default function Signup() {
                                     className="form-control form-control-md rounded-0"
                                     name="email"
                                     id="email"
+                                    required=""
+                                    placeholder="example@email.com"
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control form-control-md rounded-0"
+                                    name="password"
+                                    id="password"
+                                    required=""
+                                />
+                            </div>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="confPass">Confirm Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control form-control-md rounded-0"
+                                    name="confPass"
+                                    id="confPass"
                                     required=""
                                 />
                             </div>
@@ -95,7 +122,7 @@ export default function Signup() {
                                 <input
                                     type="date"
                                     className="form-control form-control-md rounded-0"
-                                    name="bday"
+                                    name="birthDate"
                                     id="bday"
                                     required=""
                                 />
@@ -122,6 +149,24 @@ export default function Signup() {
                                     id="address"
                                     required=""
                                 />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="role">Role</label>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <label className="flex-fill mr-3">
+                                        <input type="radio" name="role" value="manager" />
+                                        <span className="ml-2">Manager</span>
+                                    </label>
+                                    <label className="flex-fill">
+                                        <input type="radio" name="role" value="fan" />
+                                        <span className="ml-2">Fan</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="form-group col-md-6 mt-4">
+                                <Link to="/signin"><p>Already have an account? Sign in instead.</p></Link>
                             </div>
                         </div>
 
