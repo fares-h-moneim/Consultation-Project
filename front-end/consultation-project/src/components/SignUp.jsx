@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
-    const history = useHistory();
     const [userData, setUserData] = useState({
         username: "",
         email: "",
@@ -18,13 +17,13 @@ export default function Signup() {
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            var response = await fetch("/add-request", userData);
-            if (response.ok){
+        try {
+            var response = await fetch("http://localhost:3000/add-request", userData);
+            if (response.ok) {
                 console.log("sign up success")
             }
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
@@ -214,7 +213,7 @@ export default function Signup() {
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
-                            onSubmit = {handleSubmit}
+                            onSubmit={handleSubmit}
                         >
                             Sign Up
                         </button>
