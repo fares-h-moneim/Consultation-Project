@@ -6,6 +6,7 @@ export default function Signup() {
         username: "",
         email: "",
         password: "",
+        confirmPassword: "",
         firstName: "",
         lastName: "",
         birthDate: "",
@@ -14,6 +15,13 @@ export default function Signup() {
         address: "",
         role: ""
     });
+
+    const handleChange = (e) => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value
+        });
+    }
 
     return (
         <div className="col mt-3 mb-3 ml-5 mr-5">
@@ -41,6 +49,8 @@ export default function Signup() {
                                     id="fname"
                                     required=""
                                     placeholder="John"
+                                    value={userData.firstName}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -52,6 +62,8 @@ export default function Signup() {
                                     id="lname"
                                     required=""
                                     placeholder="Doe"
+                                    value={userData.lastName}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -62,10 +74,12 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="userName"
+                                    name="username"
                                     id="uname"
                                     required=""
                                     placeholder="johndoe"
+                                    value={userData.username}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -77,6 +91,8 @@ export default function Signup() {
                                     id="email"
                                     required=""
                                     placeholder="example@email.com"
+                                    value={userData.email}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -89,6 +105,8 @@ export default function Signup() {
                                     name="password"
                                     id="password"
                                     required=""
+                                    value={userData.password}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -99,6 +117,8 @@ export default function Signup() {
                                     name="confPass"
                                     id="confPass"
                                     required=""
+                                    value={userData.confirmPassword}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -125,6 +145,8 @@ export default function Signup() {
                                     name="birthDate"
                                     id="bday"
                                     required=""
+                                    value={userData.birthDate}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -138,6 +160,9 @@ export default function Signup() {
                                     name="city"
                                     id="city"
                                     required=""
+                                    placeholder="Cairo"
+                                    value={userData.city}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group col-md-6">
@@ -148,6 +173,9 @@ export default function Signup() {
                                     name="address"
                                     id="address"
                                     required=""
+                                    placeholder="Appartment, studio, or floor"
+                                    value={userData.address}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>

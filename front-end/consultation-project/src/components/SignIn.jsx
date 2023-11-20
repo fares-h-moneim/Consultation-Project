@@ -7,6 +7,13 @@ export default function SignIn() {
         password: ""
     });
 
+    const handleChange = (e) => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value
+        });
+    }
+
     return (
         <div className="col mt-3 mb-3 ml-5 mr-5">
             <div className="card rounded-2">
@@ -25,14 +32,16 @@ export default function SignIn() {
                     >
                         <div className="form-row">
                             <div className="form-group col">
-                                <label htmlFor="fname">Username</label>
+                                <label htmlFor="username">Username</label>
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="userName"
-                                    id="uname"
+                                    name="username"
+                                    id="username"
                                     required=""
                                     placeholder="John"
+                                    value={userData.username}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -46,6 +55,8 @@ export default function SignIn() {
                                     id="password"
                                     required=""
                                     placeholder="Doe"
+                                    value={userData.password}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
