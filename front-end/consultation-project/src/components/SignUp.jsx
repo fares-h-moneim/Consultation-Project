@@ -15,7 +15,7 @@ export default function Signup() {
     });
 
     return (
-        <div className="col mr-5">
+        <div className="col mt-3 mb-3 ml-5 mr-5">
             <div className="card rounded-2">
                 <div className="card-header text-center">
                     <div className="h3 mb-0">Sign Up</div>
