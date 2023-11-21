@@ -1,4 +1,5 @@
 import RequestModel from "../model/request.js";
+import UserModel from "../model/user.js";
 import bcrypt from 'bcrypt';
 
 const addRequest = async (req, res) => {
@@ -17,4 +18,50 @@ const addRequest = async (req, res) => {
     }
 };
 
-export default addRequest;
+const approveRequest = async (req, res) => {
+    try{
+        const request = await RequestModel.findById(req.params.id);
+        if(request){
+            const newUser = new UserModel({
+                username: request.username,
+                password: request.password,
+                first_name: request.first_name,
+                last_name: request.last_name,
+                birth_date: request.birth_date,
+                gender: request.gender,
+                city: request.city,
+                address: request.address,
+                email: request.email,
+                role: request.role
+            });
+            const savedUser = await newUser.save();
+            res.status(201).json(savedUser);
+        }
+        else{
+            res.status(404).json({error: 'Request not found'});
+        }
+    }
+    catch(error){
+        console.error('Error approving request:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+const declineRequest = async (req, res) => {
+    try{
+        const request = await RequestModel.findById(req.params.id);
+        if(request){
+            const deletedRequest = await RequestModel.findByIdAndDelete(req.params.id);
+            res.status(201).json(deletedRequest);
+        }
+        else{
+            res.status(404).json({error: 'Request not found'});
+        }
+    }
+    catch(error){
+        console.error('Error declining request:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export {addRequest, approveRequest, declineRequest};
