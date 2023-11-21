@@ -226,7 +226,6 @@ export default function Signup() {
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
-
                         >
                             Sign Up
                         </button>
