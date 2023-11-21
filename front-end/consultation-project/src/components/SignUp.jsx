@@ -25,7 +25,7 @@ export default function Signup() {
                 },
                 body: JSON.stringify(userData)
             }
-            var response = await fetch("http://localhost:3000/add-request", options);
+            var response = await fetch("http://localhost:3000/request/add-request", options);
             if (response.ok) {
                 console.log("sign up success")
             }
