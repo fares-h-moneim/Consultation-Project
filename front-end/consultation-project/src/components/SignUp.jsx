@@ -16,7 +16,7 @@ export default function Signup() {
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
+        try {
             var options = {
                 method: "POST",
                 headers: {
@@ -26,11 +26,11 @@ export default function Signup() {
                 body: JSON.stringify(userData)
             }
             var response = await fetch("http://localhost:3000/add-request", options);
-            if (response.ok){
+            if (response.ok) {
                 console.log("sign up success")
             }
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
@@ -50,13 +50,12 @@ export default function Signup() {
                 <div className="card-body">
                     <form
                         action=""
-                        className="form"
+                        className="form needs-validation"
                         role="form"
                         autoComplete="off"
                         id="formLogin"
-                        noValidate=""
                         method="POST"
-                        onSubmit = {handleSubmit}
+                        onSubmit={handleSubmit}
                     >
                         <div className="form-row">
                             <div className="form-group col-md-6">
@@ -71,6 +70,12 @@ export default function Signup() {
                                     value={userData.firstName}
                                     onChange={handleChange}
                                 />
+                                <div className="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div className="invalid-feedback">
+                                    Please enter first name.
+                                </div>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="lname">Last Name</label>
@@ -221,7 +226,7 @@ export default function Signup() {
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
-                            
+
                         >
                             Sign Up
                         </button>

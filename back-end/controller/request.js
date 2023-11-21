@@ -1,9 +1,10 @@
 import RequestModel from "../model/request.js";
+import bcrypt from 'bcrypt';
 
 const addRequest = async (req, res) => {
     try {
         const newRequestData = req.body;
-        console.log(newRequestData);
+        newRequestData.password = await bcrypt.hash(newRequestData.password, 10);
         const request = new RequestModel(newRequestData);
         const savedRequest = await request.save();
         res.status(201).json(savedRequest); // Return the saved request with a 201 status code for successful creation
