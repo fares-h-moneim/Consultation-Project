@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/SignUp.css";
 
 export default function Signup() {
     const [userData, setUserData] = useState({
@@ -14,32 +15,75 @@ export default function Signup() {
         address: "",
         role: "Manager"
     });
+
+    const [confPass, setConfPass] = useState("");
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            var options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(userData)
+        if (validateForm()) {
+            try {
+                var options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                }
+                var response = await fetch("http://localhost:3000/request/add-request", options);
+                if (response.ok) {
+                    console.log("sign up success");
+                    navigate("/");
+                }
             }
-            var response = await fetch("http://localhost:3000/request/add-request", options);
-            if (response.ok) {
-                console.log("sign up success")
+            catch (error) {
+                console.log(error)
             }
-        }
-        catch (error) {
-            console.log(error)
         }
     }
+
     const handleChange = (e) => {
-        setUserData({
-            ...userData,
-            [e.target.name]: e.target.value
+        const { name, value } = e.target;
+
+        if (name === "confPass") {
+            setConfPass(value);
+        } else {
+            setUserData({
+                ...userData,
+                [name]: value
+            });
+        }
+
+        setErrors({
+            ...errors,
+            [name]: ""
         });
     }
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        // Validate each field
+        for (const key in userData) {
+            if (userData[key] === "") {
+                newErrors[key] = "This field is required";
+                isValid = false;
+            }
+        }
+
+        // Validate password confirmation
+        if (userData.password !== confPass) {
+            newErrors.confPass = "Passwords do not match";
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    }
+
 
     return (
         <div className="col mt-3 mb-3 ml-5 mr-5">
@@ -58,7 +102,7 @@ export default function Signup() {
                         onSubmit={handleSubmit}
                     >
                         <div className="form-row">
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 mb-0">
                                 <label htmlFor="fname">First Name</label>
                                 <input
                                     type="text"
@@ -77,7 +121,7 @@ export default function Signup() {
                                     Please enter first name.
                                 </div>
                             </div>
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 mb-0">
                                 <label htmlFor="lname">Last Name</label>
                                 <input
                                     type="text"
@@ -91,7 +135,14 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
-
+                        {(errors["firtst_name"] || errors["last_name"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["first_name"] !== "" && <div className="text-danger">First Name is Required</div>}
+                            </div>
+                            <div className="col-md-6">
+                                {errors["last_name"] !== "" && <div className="text-danger">Last Name is Required</div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="uname">Username</label>
@@ -120,6 +171,14 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
+                        {(errors["username"] || errors["email"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["username"] !== "" && <div className="text-danger"> Username is Required</div>}
+                            </div>
+                            <div className="col-md-6">
+                                {errors["email"] !== "" && <div className="text-danger"> Provide a valid email</div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="password">Password</label>
@@ -146,17 +205,23 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
-
+                        {(errors["confPass"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                            </div>
+                            <div className="col-md-6">
+                                {errors["confPass"] !== "" && <div className="text-danger"> Passwords don't match </div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="gender">Gender</label>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <label className="flex-fill mr-3">
-                                        <input type="radio" name="gender" value="Male" />
+                                        <input type="radio" name="gender" value="Male" checked={userData.gender === 'Male'} onChange={handleChange} />
                                         <span className="ml-2">Male</span>
                                     </label>
                                     <label className="flex-fill">
-                                        <input type="radio" name="gender" value="Female" />
+                                        <input type="radio" name="gender" value="Female" checked={userData.gender === 'Female'} onChange={handleChange} />
                                         <span className="ml-2">Female</span>
                                     </label>
                                 </div>
@@ -174,6 +239,14 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
+                        {(errors["gender"] || errors["birth_date"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["gender"] !== "" && <div className="text-danger"> Pick a gender</div>}
+                            </div>
+                            <div className="col-md-6">
+                                {errors["birth_date"] !== "" && <div className="text-danger"> Provide a birth date</div>}
+                            </div>
+                        </div>}
 
                         <div className="form-row">
                             <div className="form-group col-md-6">
@@ -203,16 +276,24 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
+                        {(errors["city"] || errors["address"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["city"] !== "" && <div className="text-danger"> City is required</div>}
+                            </div>
+                            <div className="col-md-6">
+                                {errors["address"] !== "" && <div className="text-danger"> Address is required</div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="role">Role</label>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <label className="flex-fill mr-3">
-                                        <input type="radio" name="role" value="Manager" />
+                                        <input type="radio" name="role" value="Manager" checked={userData.role === 'Manager'} onChange={handleChange} />
                                         <span className="ml-2">Manager</span>
                                     </label>
                                     <label className="flex-fill">
-                                        <input type="radio" name="role" value="Fan" />
+                                        <input type="radio" name="role" value="Fan" checked={userData.role === 'Fan'} onChange={handleChange} />
                                         <span className="ml-2">Fan</span>
                                     </label>
                                 </div>
@@ -221,7 +302,11 @@ export default function Signup() {
                                 <Link to="/signin"><p>Already have an account? Sign in instead.</p></Link>
                             </div>
                         </div>
-
+                        {(errors["role"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["role"] !== "" && <div className="text-danger"> Choose a role</div>}
+                            </div>
+                        </div>}
                         <button
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
