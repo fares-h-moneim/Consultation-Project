@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/SignUp.css";
 
 export default function Signup() {
@@ -18,6 +18,7 @@ export default function Signup() {
 
     const [confPass, setConfPass] = useState("");
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,7 +34,8 @@ export default function Signup() {
                 }
                 var response = await fetch("http://localhost:3000/request/add-request", options);
                 if (response.ok) {
-                    console.log("sign up success")
+                    console.log("sign up success");
+                    navigate("/");
                 }
             }
             catch (error) {
