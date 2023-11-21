@@ -3,6 +3,7 @@ import RequestModel from "../model/request.js";
 const addRequest = async (req, res) => {
     try {
         const newRequestData = req.body;
+        console.log(newRequestData);
         const request = new RequestModel(newRequestData);
         const savedRequest = await request.save();
         res.status(201).json(savedRequest); // Return the saved request with a 201 status code for successful creation

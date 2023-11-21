@@ -12,7 +12,7 @@
 export default function Button(props) {
     return (
         <button type="button" className="btn" onClick={props.onClick}>
-            <div class="fs-4 text-white">{props.text}</div>
+            <div className="fs-4 text-white">{props.text}</div>
         </button>
     );
 }

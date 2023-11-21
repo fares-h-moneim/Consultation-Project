@@ -1,25 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 export default function Signup() {
-    const history = useHistory();
     const [userData, setUserData] = useState({
         username: "",
         email: "",
         password: "",
-        confirmPassword: "",
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        gender: "",
+        first_name: "",
+        last_name: "",
+        birth_date: "",
+        gender: "Male",
         city: "",
         address: "",
-        role: ""
+        role: "Manager"
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            var response = await fetch("/add-request", userData);
+            var options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(userData)
+            }
+            var response = await fetch("http://localhost:3000/add-request", options);
             if (response.ok){
                 console.log("sign up success")
             }
@@ -50,6 +56,7 @@ export default function Signup() {
                         id="formLogin"
                         noValidate=""
                         method="POST"
+                        onSubmit = {handleSubmit}
                     >
                         <div className="form-row">
                             <div className="form-group col-md-6">
@@ -57,7 +64,7 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="firstName"
+                                    name="first_name"
                                     id="fname"
                                     required=""
                                     placeholder="John"
@@ -70,7 +77,7 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     className="form-control form-control-md rounded-0"
-                                    name="lastName"
+                                    name="last_name"
                                     id="lname"
                                     required=""
                                     placeholder="Doe"
@@ -154,7 +161,7 @@ export default function Signup() {
                                 <input
                                     type="date"
                                     className="form-control form-control-md rounded-0"
-                                    name="birthDate"
+                                    name="birth_date"
                                     id="bday"
                                     required=""
                                     value={userData.birthDate}
@@ -214,7 +221,7 @@ export default function Signup() {
                             type="submit"
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
-                            onSubmit = {handleSubmit}
+                            
                         >
                             Sign Up
                         </button>
