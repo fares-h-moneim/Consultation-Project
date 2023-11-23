@@ -35,6 +35,7 @@ const approveRequest = async (req, res) => {
                 role: request.role
             });
             const savedUser = await newUser.save();
+            const deletedRequest = await RequestModel.findByIdAndDelete(req.params.id);
             res.status(201).json(savedUser);
         }
         else{
