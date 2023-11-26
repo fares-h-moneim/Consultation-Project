@@ -1,26 +1,33 @@
-import React from "react";
-import stadium from "../assets/stadium.svg";
-import calendar from "../assets/calendar.svg";
+import React, { useState, useEffect } from 'react';
 import Match from "./MatchComponent";
 
 export default function MatchesList() {
-    const matchElements = [];
+  const [matches, setMatches] = useState([]);
 
-    //async function GetMatches() {
-       // const post = await fetch("/get-matches").then((res) => res.json());
-        for (let index = 0; index < 7; index++) {
-            matchElements.push(
-              <div className="d-flex align-items-center justify-content-center m-4">
-             <Match></Match>
-             </div>
-            );
-          }
-      //}
+  useEffect(() => {
+    async function getMatches() {
+      var options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }
+      var response = await fetch("http://localhost:3000/match/get-matches", options);
+      var data = await response.json();
+      setMatches(data);
+    }
 
-     // GetMatches();
+    getMatches();
+  }, []);
+
   return (
     <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red" }}>
-       {matchElements}
-   </div>
+      {matches.map((match, index) => (
+        <div key={index} className="d-flex align-items-center justify-content-center m-4">
+          <Match match={match} />
+        </div>
+      ))}
+    </div>
   );
 }

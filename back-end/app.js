@@ -6,13 +6,14 @@ import RequestModel from "./model/request.js";
 import requestRouter from "./routes/request.js";
 import userRouter from "./routes/user.js";
 import matchRouter from "./routes/match.js";
+import MatchModel from "./model/match.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/epl", {
+        await mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -42,6 +43,11 @@ app.get("/getUser", async (req, res) => {
 
 });
 
+app.use("/add-match", async (req, res) => {
+    const match = new MatchModel(req.body);
+    const savedMatch = await match.save();
+    res.send(savedMatch);
+});
 
 app.listen(3000, () => {
     console.log("On Port 3000");
