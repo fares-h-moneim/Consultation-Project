@@ -34,11 +34,11 @@ export default function NavBar() {
               <Button text="MATCHES" />
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/bookings">
               <Button text="BOOKINGS" />
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link to="/signup">
               <Button text="SIGN UP" />
