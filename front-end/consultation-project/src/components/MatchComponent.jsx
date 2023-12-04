@@ -8,19 +8,19 @@ export default function Match(props) {
             <div className="row g-0 align-items-center justify-content-top p-0" style={{ backgroundColor: "white" }}>
                 <div className="col text-center">
                     <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: "18px", fontWeight: "bold", color: "#333" }}>
-                       yaya
+                             {props.home_team +'vs'+props.away_team}
                     </h3>
                 </div>
                 <div className="col text-center">
                     <div className="d-flex align-items-center justify-content-center">
                         <img src={stadium} alt="stadium Image" />
-                        <h5 style={{ marginLeft: "10px" }}>Cairo</h5>
+                        <h5 style={{ marginLeft: "10px" }}>{props.venue}</h5>
                     </div>
                 </div>
                 <div className="col text-center">
                     <div className="d-flex align-items-center justify-content-center">
                         <img src={calendar} alt="calendar Image" />
-                        <h5 style={{ marginLeft: "10px" }}>25/5/2021</h5>
+                        <h5 style={{ marginLeft: "10px" }}>{props.date_time}</h5>
                     </div>
                 </div>
                 <div className="col text-center">
@@ -30,12 +30,12 @@ export default function Match(props) {
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
                 <div className="col">
                     <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
-                        Main referee : Ahmed Yasser
+                         Main referee : {props.main_referee}
                     </p>
                 </div>
                 <div className="col">
                     <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
-                        Two Linesmen : Ahmed Yasser / Ahmed Yasser
+                    Two Linesmen : {props.lineman1} / {props.lineman2}
                     </p>
 
                 </div>
