@@ -35,7 +35,7 @@ export default function Match(props) {
                 </div>
                 <div className="col">
                     <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
-                    Two Linesmen : {props.lineman1} / {props.lineman2}
+                          Two Linesmen : {props.lineman1} / {props.lineman2}
                     </p>
 
                 </div>

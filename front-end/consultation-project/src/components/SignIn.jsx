@@ -1,17 +1,44 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function SignIn() {
+export default async function SignIn() {
     const [userData, setUserData] = useState({
         username: "",
         password: ""
     });
 
+    void CallEndPoint(userData)
+    {
+        e.preventDefault();
+        if (validateForm()) {
+            try {
+                var options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                }
+                var response = await fetch("http://localhost:3000/signin", options);
+                if (response.ok) {
+                    console.log("sign In success");
+                    navigate("/");
+                }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
     const handleChange = (e) => {
         setUserData({
             ...userData,
             [e.target.name]: e.target.value
+
         });
+        CallEndPoint(userData);
     }
 
     return (
