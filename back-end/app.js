@@ -7,6 +7,8 @@ import requestRouter from "./routes/request.js";
 import userRouter from "./routes/user.js";
 import matchRouter from "./routes/match.js";
 import MatchModel from "./model/match.js";
+import bcrypt from "bcrypt";
+import venueRouter from "./routes/venue.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -32,6 +34,7 @@ app.use((err, req, res, next) => {
 app.use("/request", requestRouter);
 app.use("/user", userRouter);
 app.use("/match", matchRouter);
+app.use("/venue", venueRouter);
 app.get("/getRequest", async (req, res) => {
     const users = await RequestModel.find({});
     res.send(users);
@@ -40,7 +43,28 @@ app.get("/getRequest", async (req, res) => {
 app.get("/getUser", async (req, res) => {
     const users = await UserModel.find({});
     res.send(users);
+});
 
+app.post("/addUser", async (req, res) => {
+    const user = new UserModel({
+        username: "yehia1",
+        password: await bcrypt.hash("123456", 10),
+        first_name: "yehia",
+        last_name: "yehia",
+        birth_date: "1999-12-12",
+        gender: "Male",
+        city: "Cairo",
+        address: "Cairo",
+        email: "yehiatarek63@gmail.com",
+        role: "Fan"
+    });
+
+    try {
+        const savedUser = await user.save();
+        res.send(savedUser);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 app.use("/add-match", async (req, res) => {

@@ -24,7 +24,7 @@ export default function Match(props) {
                     </div>
                 </div>
                 <div className="col text-center">
-                    <button type="button" class="btn btn-danger">Book Now!</button>
+                    <button type="button" className="btn btn-danger">Book Now!</button>
                 </div>
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>

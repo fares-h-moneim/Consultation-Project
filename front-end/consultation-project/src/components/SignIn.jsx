@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default async function SignIn() {
+export default function SignIn() {
     const [userData, setUserData] = useState({
         username: "",
         password: ""
     });
-
-    void CallEndPoint(userData)
-    {
+    const navigate = useNavigate();
+    const callEndPoint = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
             try {
                 var options = {
                     method: "POST",
@@ -20,17 +18,15 @@ export default async function SignIn() {
                     },
                     body: JSON.stringify(userData)
                 }
-                var response = await fetch("http://localhost:3000/signin", options);
+                var response = await fetch("http://localhost:3000/user/sign-in", options);
                 if (response.ok) {
-                    console.log("sign In success");
+                    console.log("Sign In success");
                     navigate("/");
                 }
-            }
-            catch (error) {
-                console.log(error)
+            } catch (error) {
+                console.log(error);
             }
         }
-    }
 
     const handleChange = (e) => {
         setUserData({
@@ -38,7 +34,6 @@ export default async function SignIn() {
             [e.target.name]: e.target.value
 
         });
-        CallEndPoint(userData);
     }
 
     return (
@@ -56,6 +51,7 @@ export default async function SignIn() {
                         id="formLogin"
                         noValidate=""
                         method="POST"
+                        onSubmit={callEndPoint}
                     >
                         <div className="form-row">
                             <div className="form-group col">

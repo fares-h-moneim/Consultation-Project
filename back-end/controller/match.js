@@ -24,4 +24,42 @@ const addMatch = async (req, res) => {
     }
 }
 
-export { getMatches, addMatch };
+const bookMatch = async (req, res) => {
+    try {
+        const matchId = req.params.matchId;
+        const userId = req.params.userId;
+        const match = await MatchModel.findById(matchId);
+        if (!matchId) {
+            res.status(400).json({ error: 'Match ID is required' });
+        }
+        if (!userId) {
+            res.status(400).json({ error: 'User ID is required' });
+        }
+        const venue = await VenueModel.findById(match.venue);
+
+        if (!venue) {
+            return res.status(404).json({ error: 'Venue not found' });
+        }
+        if (match.capacity === venue.capacity) {
+            return res.status(400).json({ error: 'Match capacity is full' });
+        }
+        if (match) {
+            const isMatchBooked = match.booked_fans.includes(userId);
+            if (isMatchBooked) {
+                res.status(400).json({ error: 'Match is already booked' });
+            } else {
+                match.booked_fans.push(userId);
+                const savedMatch = await match.save();
+                res.status(200).json(savedMatch);
+            }
+        } else {
+            res.status(404).json({ error: 'Match not found' });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export { getMatches, addMatch, bookMatch };

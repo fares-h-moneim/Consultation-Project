@@ -1,5 +1,6 @@
-import UserModel from "../models/user.js";
+import UserModel from "../model/user.js";
 import jwt from "jsonwebtoken";
+import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -49,4 +50,4 @@ const requireFan = (req, res, next) => {
   })(req, res, next);
 };
 
-export default {requireManager, requireFan};
+export {requireManager, requireFan};
