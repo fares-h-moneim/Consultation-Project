@@ -20,6 +20,8 @@ export default function SignIn() {
                 }
                 var response = await fetch("http://localhost:3000/user/sign-in", options);
                 if (response.ok) {
+                    var jwtToken = await response.json();
+                    localStorage.setItem("jwtToken", jwtToken);
                     console.log("Sign In success");
                     navigate("/");
                 }
