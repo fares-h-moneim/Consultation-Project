@@ -43,4 +43,22 @@ const logout = async (req, res) => {
   }
 };
 
-export {signIn, logout};
+const getDetails = async (req, res) => {
+  try {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Missing token' });
+    }
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = await UserModel.findOne({ _id: decoded.sub });
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export {signIn, logout, getDetails};
