@@ -7,6 +7,7 @@ export default function SignIn() {
         password: ""
     });
     const [errors, setErrors] = useState({});
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const navigate = useNavigate();
     const callEndPoint = async (e) => {
         e.preventDefault();
@@ -27,9 +28,14 @@ export default function SignIn() {
                     var username = responseData.username;
                     localStorage.setItem("jwtToken", jwtToken);
                     localStorage.setItem("username", username);
+                    setInvalidCredentials(false);
                     window.dispatchEvent(new Event("login"));
-                    console.log("Sign In success");
                     navigate("/");
+                }
+                else {
+                    if (response.status === 401) {
+                        setInvalidCredentials(true);
+                    }
                 }
             }
         }
@@ -43,6 +49,10 @@ export default function SignIn() {
             ...userData,
             [e.target.name]: e.target.value
 
+        });
+        setErrors({
+            ...errors,
+            [e.target.name]: ""
         });
     }
     const validateForm = () => {
@@ -67,6 +77,10 @@ export default function SignIn() {
                 <div className="card-header text-center">
                     <div className="h3 mb-0">Sign In</div>
                 </div>
+                {invalidCredentials &&
+                    <div class="d-flex justify-content-center alert alert-danger" role="alert">
+                        Invalid Credentials
+                    </div>}
                 <div className="card-body">
                     <form
                         action=""
