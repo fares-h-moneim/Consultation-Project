@@ -13,7 +13,6 @@ export default function NavBar() {
   };
   const logout = async () => {
       try {
-        // Make a request to the server's logout endpoint
         const response = await fetch("http://localhost:3000/user/log-out", {
           method: "POST",
           headers: {
@@ -23,11 +22,8 @@ export default function NavBar() {
         });
 
         if (response.ok) {
-          // Remove the token from localStorage
           localStorage.removeItem("jwtToken");
-          // Update the isAuthenticated state
           setIsAuthenticated(false);
-          // Redirect to the home page or any other desired location
           navigate("/");
         } else {
           console.error("Logout failed");
@@ -37,6 +33,20 @@ export default function NavBar() {
       }
     };
 
+    useEffect(() => {
+    checkAuthentication();
+
+    const handleLogin = () => {
+      checkAuthentication();
+    };
+
+    window.addEventListener("login", handleLogin);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("login", handleLogin);
+    };
+  }, []); // Only run on mount
 
   useEffect(() => {
     // Check authentication status when the component mounts

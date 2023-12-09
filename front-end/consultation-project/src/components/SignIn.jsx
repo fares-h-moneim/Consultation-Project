@@ -22,6 +22,7 @@ export default function SignIn() {
                 if (response.ok) {
                     var jwtToken = await response.json();
                     localStorage.setItem("jwtToken", jwtToken);
+                    window.dispatchEvent(new Event("login"));
                     console.log("Sign In success");
                     navigate("/");
                 }
