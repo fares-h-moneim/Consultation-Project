@@ -82,4 +82,15 @@ const deleteUser = async (req, res) => {
     }
 }
 
-export {addRequest, approveRequest, declineRequest, deleteUser};
+const getAllUsers = async (req, res) => {
+    try{
+        const users = await UserModel.find();
+        res.status(201).json(users);
+    }
+    catch(error){
+        console.error('Error getting all users:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export {addRequest, approveRequest, declineRequest, deleteUser, getAllUsers};

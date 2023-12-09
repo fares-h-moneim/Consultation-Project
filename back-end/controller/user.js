@@ -61,4 +61,24 @@ const getDetailsByUsername = async (req, res) => {
   }
 };
 
-export {signIn, logout, getDetailsByUsername};
+const updateDetails = async (req, res) => {
+  try{
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Missing token' });
+    }
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = await UserModel.findOne({ _id: decoded.sub });
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+    const updatedUser = await UserModel.findByIdAndUpdate(decoded.sub, req.body, {new: true});
+    res.status(200).json({ updatedUser });
+  }
+  catch(error){
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export {signIn, logout, getDetailsByUsername, updateDetails};
