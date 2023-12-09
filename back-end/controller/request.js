@@ -65,4 +65,32 @@ const declineRequest = async (req, res) => {
     }
 }
 
-export {addRequest, approveRequest, declineRequest};
+const deleteUser = async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id);
+        if(user){
+            const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+            res.status(201).json(deletedUser);
+        }
+        else{
+            res.status(404).json({error: 'User not found'});
+        }
+    }
+    catch(error){
+        console.error('Error deleting user:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    try{
+        const users = await UserModel.find();
+        res.status(201).json(users);
+    }
+    catch(error){
+        console.error('Error getting all users:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export {addRequest, approveRequest, declineRequest, deleteUser, getAllUsers};
