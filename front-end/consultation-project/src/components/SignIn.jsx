@@ -6,10 +6,12 @@ export default function SignIn() {
         username: "",
         password: ""
     });
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const callEndPoint = async (e) => {
         e.preventDefault();
-            try {
+        try {
+            if (validateForm()) {
                 var options = {
                     method: "POST",
                     headers: {
@@ -29,10 +31,12 @@ export default function SignIn() {
                     console.log("Sign In success");
                     navigate("/");
                 }
-            } catch (error) {
-                console.log(error);
             }
         }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleChange = (e) => {
         setUserData({
@@ -40,6 +44,21 @@ export default function SignIn() {
             [e.target.name]: e.target.value
 
         });
+    }
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        // Validate each field
+        for (const key in userData) {
+            if (userData[key] === "") {
+                newErrors[key] = "This field is required";
+                isValid = false;
+            }
+        }
+
+        setErrors(newErrors);
+        return isValid;
     }
 
     return (
@@ -74,6 +93,11 @@ export default function SignIn() {
                                 />
                             </div>
                         </div>
+                        {(errors["username"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["username"] !== "" && <div className="text-danger"> Username is Required</div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col">
                                 <label htmlFor="password">Password</label>
@@ -89,6 +113,11 @@ export default function SignIn() {
                                 />
                             </div>
                         </div>
+                        {(errors["password"]) && <div className="form-row">
+                            <div className="col-md-6 mb-1">
+                                {errors["password"] !== "" && <div className="text-danger"> Password is Required</div>}
+                            </div>
+                        </div>}
                         <div className="form-row">
                             <div className="form-group col">
                                 <Link to="/signup"><p>Don't have an account? Sign up instead</p></Link>
