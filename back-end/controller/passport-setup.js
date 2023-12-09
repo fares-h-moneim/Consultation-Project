@@ -50,4 +50,15 @@ const requireFan = (req, res, next) => {
   })(req, res, next);
 };
 
-export {requireManager, requireFan};
+const requireAdmin = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user) => {
+    if (err || !user || user.role !== 'Admin') {
+      res.status(401).json({ message: 'Unauthorized: Admin access required' });
+    } else {
+      req.user = user;
+      next();
+    }
+  })(req, res, next);
+}
+
+export {requireManager, requireFan, requireAdmin};

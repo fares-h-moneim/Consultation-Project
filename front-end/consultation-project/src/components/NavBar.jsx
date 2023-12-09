@@ -7,11 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 export default function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  // You need to implement a function or use an authentication context to check if the user is authenticated
   const checkAuthentication = () => {
-    // Your logic to check authentication status (e.g., checking localStorage, a context, etc.)
     const token = localStorage.getItem("jwtToken");
-    console.log(token);
     setIsAuthenticated(!!token);
   };
   const logout = async () => {
@@ -44,7 +41,7 @@ export default function NavBar() {
   useEffect(() => {
     // Check authentication status when the component mounts
     checkAuthentication();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <nav className="navbar navbar-expand-lg bg-black">
@@ -87,7 +84,7 @@ export default function NavBar() {
             {/* Conditionally render "SIGN UP" or "LOGOUT" based on authentication */}
             {isAuthenticated ? (
               <Link to="/">
-                <button text="LOGOUT" onClick={logout}/>
+                <Button text="LOGOUT" onClick={logout}/>
               </Link>
             ) : (
               <Link to="/signup">

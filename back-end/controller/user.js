@@ -30,6 +30,7 @@ const signIn = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const token = req.header('Authorization');
+    console.log(jwt.decode(token));
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: Missing token' });
     }
