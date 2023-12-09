@@ -20,8 +20,11 @@ export default function SignIn() {
                 }
                 var response = await fetch("http://localhost:3000/user/sign-in", options);
                 if (response.ok) {
-                    var jwtToken = await response.json();
+                    var responseData = await response.json();
+                    var jwtToken = responseData.token;
+                    var username = responseData.username;
                     localStorage.setItem("jwtToken", jwtToken);
+                    localStorage.setItem("username", username);
                     window.dispatchEvent(new Event("login"));
                     console.log("Sign In success");
                     navigate("/");

@@ -6,34 +6,41 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const checkAuthentication = () => {
     const token = localStorage.getItem("jwtToken");
-    setIsAuthenticated(!!token);
+    if (token) {
+      setUsername(localStorage.getItem("username"));
+      setIsAuthenticated(true);
+    } else {
+      setUsername("");
+      setIsAuthenticated(false);
+    }
   };
   const logout = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/user/log-out", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        });
-
-        if (response.ok) {
-          localStorage.removeItem("jwtToken");
-          setIsAuthenticated(false);
-          navigate("/");
-        } else {
-          console.error("Logout failed");
-        }
-      } catch (error) {
-        console.error(error);
+    try {
+      const response = await fetch("http://localhost:3000/user/log-out", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      });
+      if (response.ok) {
+        localStorage.removeItem("jwtToken");
+        setIsAuthenticated(false);
+        console.log("Logout success");
+        navigate("/");
+      } else {
+        console.error("Logout failed");
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     checkAuthentication();
 
     const handleLogin = () => {
@@ -94,7 +101,7 @@ export default function NavBar() {
             {/* Conditionally render "SIGN UP" or "LOGOUT" based on authentication */}
             {isAuthenticated ? (
               <Link to="/">
-                <Button text="LOGOUT" onClick={logout}/>
+                <Button text="LOGOUT" onClick={logout} />
               </Link>
             ) : (
               <Link to="/signup">
@@ -113,7 +120,15 @@ export default function NavBar() {
             )}
           </li>
         </ul>
+        {isAuthenticated && (
+          <div className="ml-auto mr-3">
+            <Link to="">
+              <Button text={`${username}`} />
+            </Link>
+          </div>
+        )}
       </div>
+
     </nav>
   );
 }

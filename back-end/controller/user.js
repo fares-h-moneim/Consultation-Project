@@ -16,7 +16,7 @@ const signIn = async (req, res) => {
               const token = jwt.sign({ sub: tryGetUsername._id, username: tryGetUsername.username, role: tryGetUsername.role }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: '1h',
               });
-              res.json({ token });
+              res.json({ token, username: tryGetUsername.username});
             } else {
               res.status(401).json({ message: 'Invalid credentials' });
             }
@@ -30,12 +30,10 @@ const signIn = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const token = req.header('Authorization');
-    console.log(jwt.decode(token));
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: Missing token' });
     }
-    const expiredToken = jwt.sign({}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 1 });
-    res.json({ token: expiredToken });
+    res.status(200).json({ message: 'Logout successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
