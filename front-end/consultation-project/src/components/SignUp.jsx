@@ -14,6 +14,8 @@ export default function Signup({ user = {
     address: "",
     role: "Manager"
 }, text = "Sign Up" }) {
+    //TODO: Set auth and user name when user signs up
+
     const [userData, setUserData] = useState(user);
 
     const [confPass, setConfPass] = useState("");
