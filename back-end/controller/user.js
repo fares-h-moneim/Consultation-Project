@@ -43,7 +43,7 @@ const logout = async (req, res) => {
   }
 };
 
-const getDetails = async (req, res) => {
+const getDetailsByUsername = async (req, res) => {
   try {
     const token = req.header('Authorization');
     if (!token) {
@@ -61,4 +61,4 @@ const getDetails = async (req, res) => {
   }
 };
 
-export {signIn, logout, getDetails};
+export {signIn, logout, getDetailsByUsername};
