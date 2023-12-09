@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/SignUp.css";
 
-export default function Signup() {
-    const [userData, setUserData] = useState({
-        username: "",
-        email: "",
-        password: "",
-        first_name: "",
-        last_name: "",
-        birth_date: "",
-        gender: "Male",
-        city: "",
-        address: "",
-        role: "Manager"
-    });
+export default function Signup({ user = {
+    username: "",
+    email: "",
+    password: "",
+    first_name: "",
+    last_name: "",
+    birth_date: "",
+    gender: "Male",
+    city: "",
+    address: "",
+    role: "Manager"
+}, text = "Sign Up" }) {
+    const [userData, setUserData] = useState(user);
 
     const [confPass, setConfPass] = useState("");
     const [errors, setErrors] = useState({});
@@ -89,7 +89,7 @@ export default function Signup() {
         <div className="col mt-3 mb-3 ml-5 mr-5">
             <div className="card rounded-2">
                 <div className="card-header text-center">
-                    <div className="h3 mb-0">Sign Up</div>
+                    <div className="h3 mb-0">{text}</div>
                 </div>
                 <div className="card-body">
                     <form
@@ -298,9 +298,9 @@ export default function Signup() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="form-group col-md-6 mt-4">
+                            {text == "Sign Up" && <div className="form-group col-md-6 mt-4">
                                 <Link to="/signin"><p>Already have an account? Sign in instead.</p></Link>
-                            </div>
+                            </div>}
                         </div>
                         {(errors["role"]) && <div className="form-row">
                             <div className="col-md-6 mb-1">

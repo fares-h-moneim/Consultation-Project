@@ -122,7 +122,7 @@ export default function NavBar() {
         </ul>
         {isAuthenticated && (
           <div className="ml-auto mr-3">
-            <Link to="">
+            <Link to="/edit-profile">
               <Button text={`${username}`} />
             </Link>
           </div>

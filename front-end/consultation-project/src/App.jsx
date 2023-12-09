@@ -6,6 +6,7 @@ import SignupPage from "./components/SignUpPage";
 import { Route, Routes } from "react-router-dom";
 import SignInPage from "./components/SignInPage";
 import MatchesList from "./components/MatchesPage";
+import EditUser from "./components/EditUser";
 export default function App() {
     const [index, setIndex] = useState("home");
     const onPageClick = (index) => {
@@ -24,6 +25,7 @@ export default function App() {
                     <Route path="/signup" element={<SignupPage />}></Route>
                     <Route path="/signin" element={<SignInPage />}></Route>
                     <Route path="/matches" element={<MatchesList />}></Route>
+                    <Route path="/edit-profile" element={<EditUser />}></Route>
                 </Routes>
             </div>
         </>
