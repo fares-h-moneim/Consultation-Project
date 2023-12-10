@@ -8,6 +8,7 @@ import SignInPage from "./components/SignInPage";
 import MatchesList from "./components/MatchesPage";
 import EditUser from "./components/EditUser";
 import Booking from "./components/Booking";
+import AdminPortal from "./components/AdminPortal";
 export default function App() {
     const [index, setIndex] = useState("home");
     const onPageClick = (index) => {
@@ -28,6 +29,7 @@ export default function App() {
                     <Route path="/matches" element={<MatchesList />}></Route>
                     <Route path="/edit-profile" element={<EditUser />}></Route>
                     <Route path="/booking" element={<Booking />}></Route>
+                    <Route path="/admin" element={<AdminPortal />}></Route>
                 </Routes>
             </div>
         </>

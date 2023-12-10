@@ -30,7 +30,14 @@ export default function SignIn() {
                     localStorage.setItem("username", username);
                     setInvalidCredentials(false);
                     window.dispatchEvent(new Event("login"));
-                    navigate("/");
+
+                    //TODO: Check if user is admin or not
+                    if (!true) {
+                        navigate("/");
+                    }
+                    else {
+                        navigate("/admin");
+                    }
                 }
                 else {
                     if (response.status === 401) {

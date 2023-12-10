@@ -1,0 +1,11 @@
+.custom-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-text-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
