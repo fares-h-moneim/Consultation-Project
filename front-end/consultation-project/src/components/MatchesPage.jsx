@@ -22,7 +22,7 @@ export default function MatchesList() {
   }, []);
 
   return (
-    <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red" }}>
+    <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red", height: "92vh" }}>
       {matches.map((match, index) => (
         <div key={index} className="d-flex align-items-center justify-content-center m-4">
           <Match match={match} />

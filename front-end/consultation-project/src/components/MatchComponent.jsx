@@ -4,7 +4,12 @@ import calendar from "../assets/calendar.svg";
 
 export default function Match(props) {
     const navigator = () => {
-        window.location.href = "/booking";
+        if (!localStorage.getItem("jwtToken")) {
+            window.location.href = "/signin";
+        }
+        else {
+            window.location.href = "/booking";
+        }
     }
     return (
         <div className="col" style={{ height: "9vh", width: "80vw" }}>
