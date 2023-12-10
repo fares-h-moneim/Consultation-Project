@@ -31,12 +31,15 @@ export default function SignIn() {
                     setInvalidCredentials(false);
                     window.dispatchEvent(new Event("login"));
 
-                    //TODO: Check if user is admin or not
+                    //TODO: Check if user is admin or manager or fan
                     if (!true) {
-                        navigate("/");
+                        navigate("/"); //if fan
+                    }
+                    else if (false) {
+                        navigate("/admin"); //if admin
                     }
                     else {
-                        navigate("/admin");
+                        navigate("/manager"); //if manager
                     }
                 }
                 else {
