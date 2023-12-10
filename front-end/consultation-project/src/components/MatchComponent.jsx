@@ -3,12 +3,15 @@ import stadium from "../assets/stadium.svg";
 import calendar from "../assets/calendar.svg";
 
 export default function Match(props) {
+    const navigator = () => {
+        window.location.href = "/booking";
+    }
     return (
         <div className="col" style={{ height: "9vh", width: "80vw" }}>
             <div className="row g-0 align-items-center justify-content-top p-0" style={{ backgroundColor: "white" }}>
                 <div className="col text-center">
                     <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: "18px", fontWeight: "bold", color: "#333" }}>
-                             {props.home_team +'vs'+props.away_team}
+                        {props.home_team + 'vs' + props.away_team}
                     </h3>
                 </div>
                 <div className="col text-center">
@@ -24,18 +27,18 @@ export default function Match(props) {
                     </div>
                 </div>
                 <div className="col text-center">
-                    <button type="button" className="btn btn-danger">Book Now!</button>
+                    <button type="button" className="btn btn-danger" onClick={navigator}>Book Now!</button>
                 </div>
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
                 <div className="col">
                     <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
-                         Main referee : {props.main_referee}
+                        Main referee : {props.main_referee}
                     </p>
                 </div>
                 <div className="col">
                     <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
-                          Two Linesmen : {props.lineman1} / {props.lineman2}
+                        Two Linesmen : {props.lineman1} / {props.lineman2}
                     </p>
 
                 </div>
