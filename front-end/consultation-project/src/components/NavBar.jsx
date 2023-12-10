@@ -90,43 +90,31 @@ export default function NavBar() {
             </Link>
           </li>
           <li className="nav-item">
-            {/* Conditionally render "BOOKINGS" based on authentication */}
             {isAuthenticated && (
               <Link to="/bookings">
                 <Button text="BOOKINGS" />
               </Link>
             )}
           </li>
-          <li className="nav-item">
-            {/* Conditionally render "SIGN UP" or "LOGOUT" based on authentication */}
-            {isAuthenticated ? (
-              <Link to="/">
-                <Button text="LOGOUT" onClick={logout} />
-              </Link>
-            ) : (
-              <Link to="/signup">
-                <Button text="SIGN UP" />
-              </Link>
-            )}
-          </li>
-          <li className="nav-item">
-            {/* Conditionally render "SIGN IN" or "LOGOUT" based on authentication */}
-            {isAuthenticated ? (
-              <></>
-            ) : (
-              <Link to="/signin">
-                <Button text="SIGN IN" />
-              </Link>
-            )}
-          </li>
         </ul>
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <div className="ml-auto mr-3">
             <Link to="/edit-profile">
               <Button text={`${username}`} />
             </Link>
+            <Link to="/">
+              <Button text="LOGOUT" onClick={logout} />
+            </Link>
           </div>
-        )}
+        ) :
+          <div className="ml-auto mr-3">
+            <Link to="/signin">
+              <Button text="SIGN IN" />
+            </Link>
+            <Link to="/signup">
+              <Button text="SIGN UP" />
+            </Link>
+          </div>}
       </div>
 
     </nav>
