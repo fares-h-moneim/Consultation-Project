@@ -15,7 +15,7 @@ export default function Match(props) {
         <div className="col" style={{ height: "9vh", width: "80vw" }}>
             <div className="row g-0 align-items-center justify-content-top p-0" style={{ backgroundColor: "white" }}>
                 <div className="col text-center">
-                    <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: "18px", fontWeight: "bold", color: "#333" }}>
+                    <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: "18px", fontWeight: "bold", color: "#333"  }}>
                         {props.home_team + 'vs' + props.away_team}
                     </h3>
                 </div>

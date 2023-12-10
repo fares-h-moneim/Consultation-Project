@@ -4,8 +4,10 @@ import MascotImage from "./MascotImage";
 import ButtonImage from "./ButtonImage";
 import football from "../assets/futbol-regular.svg";
 import Stadium from "../assets/StadiumRed.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function ManagerPortal() {
+    const navigate = useNavigate();
     return (
         <div className="container-fluid px-0 content" style={{ backgroundColor: "red", height: "92vh" }}>
             <div className="row align-items-center">
@@ -19,7 +21,7 @@ export default function ManagerPortal() {
                     <div className="row align-items-center px-5">
                         {/* 3 Buttons in the first row */}
                         <div className="col mt-3 mb-3">
-                            <ButtonImage text="Add Match" image={football} width="100%" height="auto" />
+                        <ButtonImage text="Add Match" image={football} width="100%" height="auto" />
                         </div>
                         <div className="col mt-3 mb-3">
                             <ButtonImage text="Edit Match" image={football} width="100%" height="auto" />

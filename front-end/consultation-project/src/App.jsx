@@ -10,6 +10,7 @@ import EditUser from "./components/EditUser";
 import Booking from "./components/Booking";
 import AdminPortal from "./components/AdminPortal";
 import ManagerPortal from "./components/ManagerPortal";
+import AddingMatch from './components/ManagerPortal_Components/AddMatchPage'
 export default function App() {
     const [index, setIndex] = useState("home");
     const onPageClick = (index) => {
@@ -24,7 +25,7 @@ export default function App() {
             <NavBar />
             <div className="App container">
                 <Routes>
-                    <Route path="/" element={<LandingPage />}></Route>
+                    <Route path="/" element={<AddingMatch />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>
                     <Route path="/signin" element={<SignInPage />}></Route>
                     <Route path="/matches" element={<MatchesList />}></Route>
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path="/booking" element={<Booking />}></Route>
                     <Route path="/admin" element={<AdminPortal />}></Route>
                     <Route path="/manager" element={<ManagerPortal />}></Route>
+                    <Route path="/Adding-Match" element={<AddingMatch />}></Route>
                 </Routes>
             </div>
         </>
