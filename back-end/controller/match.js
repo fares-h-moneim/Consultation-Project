@@ -66,8 +66,23 @@ const getMatchById = async (req, res) => {
     try {
         const matchId = req.params.matchId;
         const match = await MatchModel.findById(matchId);
+        const homeTeam = await TeamModel.findById(match.home_team);
+        const awayTeam = await TeamModel.findById(match.away_team);
+        const referee = await RefereeModel.findById(match.main_referee);
+        const venue = await VenueModel.findById(match.venue);
+        const lineman1 = await RefereeModel.findById(match.lineman1);
+        const lineman2 = await RefereeModel.findById(match.lineman2);
+        var response = {
+            match: match,
+            home_team: homeTeam,
+            away_team: awayTeam,
+            main_referee: referee,
+            venue: venue,
+            lineman1: lineman1,
+            lineman2: lineman2
+        }
         if (match) {
-            res.status(200).json(match);
+            res.status(200).json(response);
         } else {
             res.status(404).json({ error: 'Match not found' });
         }
