@@ -1,4 +1,7 @@
 import MatchModel from "../model/match.js";
+import VenueModel from "../model/venue.js";
+import TeamModel from "../model/team.js";
+import RefereeModel from "../model/referee.js";
 
 const getMatches = async (req, res) => {
     try {
