@@ -62,4 +62,21 @@ const bookMatch = async (req, res) => {
     }
 }
 
-export { getMatches, addMatch, bookMatch };
+const getMatchById = async (req, res) => {
+    try {
+        const matchId = req.params.matchId;
+        const match = await MatchModel.findById(matchId);
+        if (match) {
+            res.status(200).json(match);
+        } else {
+            res.status(404).json({ error: 'Match not found' });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
+
+export { getMatches, addMatch, bookMatch, getMatchById };
