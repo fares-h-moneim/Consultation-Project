@@ -30,7 +30,7 @@ export default function App() {
             <NavBar />
             <div className="App container">
                 <Routes>
-                    <Route path="/" element={<AddingStadium />}></Route>
+                    <Route path="/" element={<LandingPage />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>
                     <Route path="/signin" element={<SignInPage />}></Route>
                     <Route path="/matches" element={<MatchesList />}></Route>
@@ -38,10 +38,10 @@ export default function App() {
                     <Route path="/booking" element={<Booking />}></Route>
                     <Route path="/admin" element={<AdminPortal />}></Route>
                     <Route path="/manager" element={<ManagerPortal />}></Route>
-                    <Route path="/Adding-Match" element={<AddingMatch />}></Route>
-                    <Route path="/editing-Match" element={<EditingMatch />}></Route>
-                    <Route path="/ViewingMatched" element={<MatchesListForManager />}></Route>
-                    <Route path="/AddingStdium" element={<AddingStadium />}></Route>
+                    <Route path="/add-match" element={<AddingMatch />}></Route>
+                    <Route path="/edit-match" element={<EditingMatch />}></Route>
+                    <Route path="/view-matches" element={<MatchesListForManager />}></Route>
+                    <Route path="/add-stadium" element={<AddingStadium />}></Route>
                 </Routes>
             </div>
         </>
