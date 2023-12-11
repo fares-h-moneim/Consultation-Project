@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MascotImage from "./MascotImage";
-import SignUp from "./SignUp";
+import EditUserForm from "./EditUserForm";
 
 export default function EditUser() {
     const [userData, setUserData] = useState({
@@ -29,6 +29,7 @@ export default function EditUser() {
                 });
                 if (response.ok) {
                     const userDataResponse = await response.json();
+                    userDataResponse.user.birth_date = userDataResponse.user.birth_date.split("T")[0];
                     setUserData(userDataResponse.user);
                 } else {
                     console.error("Failed to Retrieve User Data");
@@ -45,7 +46,7 @@ export default function EditUser() {
         <div className="container-fluid px-0 content" style={{ backgroundColor: "red", height: "auto" }}>
             <div className="row align-items-center">
                 <MascotImage />
-                <SignUp user={userData} text="Edit Profile" />
+                <EditUserForm user={userData} />
             </div>
         </div>
     );

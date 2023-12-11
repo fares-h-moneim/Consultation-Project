@@ -68,7 +68,8 @@ const updateDetails = async (req, res) => {
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: Missing token' });
     }
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
     const user = await UserModel.findOne({ _id: decoded.sub });
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });
@@ -81,5 +82,6 @@ const updateDetails = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 export {signIn, logout, getDetailsByUsername, updateDetails};

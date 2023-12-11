@@ -46,19 +46,25 @@ export default function NavBar() {
     const handleLogin = () => {
       checkAuthentication();
     };
+    const handleProfileUpdated = (event) => {
+        setUsername(event.username);
+        console.log(username)
+    }
 
     window.addEventListener("login", handleLogin);
+    window.addEventListener("profileUpdated", handleProfileUpdated);
 
     // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener("login", handleLogin);
+      window.removeEventListener("profileUpdated", handleProfileUpdated);
     };
   }, []); // Only run on mount
 
   useEffect(() => {
     // Check authentication status when the component mounts
     checkAuthentication();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, username]);
 
   return (
     <nav className="navbar navbar-expand-lg bg-black">
