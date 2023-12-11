@@ -16,6 +16,7 @@ export default function MatchesList() {
       var response = await fetch("http://localhost:3000/match/get-matches", options);
       var data = await response.json();
       setMatches(data);
+      console.log(data);
     }
 
     getMatches();
@@ -25,7 +26,7 @@ export default function MatchesList() {
     <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red", height: "92vh" }}>
       {matches.map((match, index) => (
         <div key={index} className="d-flex align-items-center justify-content-center m-4">
-          <Match match={match} />
+          <Match matchDetails={match} />
         </div>
       ))}
     </div>

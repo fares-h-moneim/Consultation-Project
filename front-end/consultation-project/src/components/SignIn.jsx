@@ -33,10 +33,13 @@ export default function SignIn() {
                     setInvalidCredentials(false);
                     window.dispatchEvent(new Event("login"));
 
-                    if (role === "Fan" || role === "Manager") {
+                    if (role === "Fan") {
                         navigate("/");
                     }
-                    else if(role === "admin") {
+                    else if (role === "Manager") {
+                        navigate("/manager");
+                    }
+                    else if (role === "Admin") {
                         navigate("/admin");
                     }
                 }
