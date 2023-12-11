@@ -21,19 +21,15 @@ export default function ManagerPortal() {
                     <div className="row align-items-center px-5">
                         {/* 3 Buttons in the first row */}
                         <div className="col mt-3 mb-3">
-                        <ButtonImage text="Add Match" image={football} width="100%" height="auto" />
+                            <ButtonImage text="Add Match" image={football} width="100%" height="auto" onClick={() => { navigate("/add-matches") }} />
                         </div>
                         <div className="col mt-3 mb-3">
-                            <ButtonImage text="Edit Match" image={football} width="100%" height="auto" />
+                            <ButtonImage text="View Matches" image={football} width="100%" height="auto" onClick={() => { navigate("/view-matches") }} />
                         </div>
                     </div>
                     <div className="row align-items-center justify-content-center px-5">
-                        {/* 2 Buttons in the second row */}
                         <div className="col mt-3 mb-3">
-                            <ButtonImage text="View Matches" image={football} width="100%" height="auto" />
-                        </div>
-                        <div className="col mt-3 mb-3">
-                            <ButtonImage text="Add Stadium" image={Stadium} width="100%" height="auto" />
+                            <ButtonImage text="Add Stadium" image={Stadium} width="50%" height="auto" onClick={() => { navigate("/add-stadium") }} />
                         </div>
                     </div>
                 </div>

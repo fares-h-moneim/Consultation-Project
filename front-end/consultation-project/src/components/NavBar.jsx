@@ -47,8 +47,8 @@ export default function NavBar() {
       checkAuthentication();
     };
     const handleProfileUpdated = (event) => {
-        setUsername(event.username);
-        console.log(username)
+      setUsername(event.username);
+      console.log(username)
     }
 
     window.addEventListener("login", handleLogin);
@@ -91,12 +91,17 @@ export default function NavBar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/matches">
-              <Button text="MATCHES" />
-            </Link>
+            {localStorage.getItem("role") === "Manager" ?
+              <Link to="/view-matches">
+                <Button text="MATCHES" />
+              </Link> :
+              <Link to="/matches">
+                <Button text="MATCHES" />
+              </Link>
+            }
           </li>
           <li className="nav-item">
-            {isAuthenticated && (
+            {isAuthenticated && localStorage.getItem("role") === "Fan" && (
               <Link to="/bookings">
                 <Button text="BOOKINGS" />
               </Link>
@@ -105,9 +110,11 @@ export default function NavBar() {
         </ul>
         {isAuthenticated ? (
           <div className="ml-auto mr-3">
-            <Link to="/edit-profile">
-              <Button text={`${username}`} />
-            </Link>
+            {(localStorage.getItem("role") === "Fan" || localStorage.getItem("role") === "Manager") &&
+              <Link to="/edit-profile">
+                <Button text={`${username}`} />
+              </Link>
+            }
             <Link to="/">
               <Button text="LOGOUT" onClick={logout} />
             </Link>
