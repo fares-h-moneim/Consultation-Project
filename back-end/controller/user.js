@@ -16,7 +16,7 @@ const signIn = async (req, res) => {
               const token = jwt.sign({ sub: tryGetUsername._id, username: tryGetUsername.username, role: tryGetUsername.role }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: '1h',
               });
-              res.json({ token, username: tryGetUsername.username});
+              res.json({ token, username: tryGetUsername.username, role: tryGetUsername.role});
             } else {
               res.status(401).json({ message: 'Invalid credentials' });
             }

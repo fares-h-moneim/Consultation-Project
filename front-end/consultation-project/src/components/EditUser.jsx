@@ -3,9 +3,20 @@ import MascotImage from "./MascotImage";
 import SignUp from "./SignUp";
 
 export default function EditUser() {
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        first_name: "",
+        last_name: "",
+        birth_date: "",
+        gender: "Male",
+        city: "",
+        address: "",
+        role: "Manager"
+    });
 
-    /*useEffect(() => {
+    useEffect(() => {
         const getUserData = async () => {
             try {
                 const token = localStorage.getItem("jwtToken");
@@ -18,8 +29,7 @@ export default function EditUser() {
                 });
                 if (response.ok) {
                     const userDataResponse = await response.json();
-                    setUserData(userDataResponse);
-                    console.log(userDataResponse);
+                    setUserData(userDataResponse.user);
                 } else {
                     console.error("Failed to Retrieve User Data");
                 }
@@ -29,13 +39,13 @@ export default function EditUser() {
         };
 
         getUserData();
-    }, []);*/
+    }, []);
 
     return (
         <div className="container-fluid px-0 content" style={{ backgroundColor: "red", height: "auto" }}>
             <div className="row align-items-center">
                 <MascotImage />
-                <SignUp text="Edit Profile" />
+                <SignUp user={userData} text="Edit Profile" />
             </div>
         </div>
     );

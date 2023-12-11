@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/SignUp.css";
 
-export default function Signup({ user = {
-    username: "",
-    email: "",
-    password: "",
-    first_name: "",
-    last_name: "",
-    birth_date: "",
-    gender: "Male",
-    city: "",
-    address: "",
-    role: "Manager"
-}, text = "Sign Up" }) {
-    //TODO: Set auth and user name when user signs up
 
-    const [userData, setUserData] = useState(user);
+export default function Signup({ user, text = "Sign Up" }) {
+    const initialUserData = user ? { ...user } : {
+        username: "",
+        email: "",
+        password: "",
+        first_name: "",
+        last_name: "",
+        birth_date: "",
+        gender: "Male",
+        city: "",
+        address: "",
+        role: "Manager"
+};
 
+    const [userData, setUserData] = useState(initialUserData);
     const [confPass, setConfPass] = useState("");
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
@@ -63,6 +63,10 @@ export default function Signup({ user = {
             [name]: ""
         });
     }
+    useEffect(() => {
+        setUserData(user ? { ...user } : initialUserData);
+    }, [user]);
+
 
     const validateForm = () => {
         let isValid = true;
@@ -113,7 +117,7 @@ export default function Signup({ user = {
                                     id="fname"
                                     required=""
                                     placeholder="John"
-                                    value={userData.firstName}
+                                    value={userData.first_name}
                                     onChange={handleChange}
                                 />
                                 <div className="valid-feedback">
@@ -132,12 +136,12 @@ export default function Signup({ user = {
                                     id="lname"
                                     required=""
                                     placeholder="Doe"
-                                    value={userData.lastName}
+                                    value={userData.last_name}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        {(errors["firtst_name"] || errors["last_name"]) && <div className="form-row">
+                        {(errors["first_name"] || errors["last_name"]) && <div className="form-row">
                             <div className="col-md-6 mb-1">
                                 {errors["first_name"] !== "" && <div className="text-danger">First Name is Required</div>}
                             </div>
@@ -236,7 +240,7 @@ export default function Signup({ user = {
                                     name="birth_date"
                                     id="bday"
                                     required=""
-                                    value={userData.birthDate}
+                                    value={userData.birth_date}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -314,7 +318,7 @@ export default function Signup({ user = {
                             className="btn btn-danger btn-lg float-right"
                             id="btnSignup"
                         >
-                            Sign Up
+                            {text}
                         </button>
                     </form>
                 </div>

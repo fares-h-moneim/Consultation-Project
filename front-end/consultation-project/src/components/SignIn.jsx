@@ -26,20 +26,18 @@ export default function SignIn() {
                     var responseData = await response.json();
                     var jwtToken = responseData.token;
                     var username = responseData.username;
+                    var role = responseData.role;
                     localStorage.setItem("jwtToken", jwtToken);
                     localStorage.setItem("username", username);
+                    localStorage.setItem("role", role)
                     setInvalidCredentials(false);
                     window.dispatchEvent(new Event("login"));
 
-                    //TODO: Check if user is admin or manager or fan
-                    if (!true) {
-                        navigate("/"); //if fan
+                    if (role === "Fan" || role === "Manager") {
+                        navigate("/");
                     }
-                    else if (false) {
-                        navigate("/admin"); //if admin
-                    }
-                    else {
-                        navigate("/manager"); //if manager
+                    else if(role === "admin") {
+                        navigate("/admin");
                     }
                 }
                 else {
