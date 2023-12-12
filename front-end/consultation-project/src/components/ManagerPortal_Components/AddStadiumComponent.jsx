@@ -1,13 +1,40 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const AddStadiumForm = ({ onAddStadium }) => {
+const AddStadiumForm = () => {
   const [stadiumData, setStadiumData] = useState({
-    name: "",
-    shape: "",
-    seats: 0,
+    venue_name: "",
+    num_of_rows: 0,
+    num_of_seats_per_row: 0,
   });
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      if(validateForm()){
+          var options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                },
+                body: JSON.stringify(stadiumData)
+          }
+          var response = await fetch("http://localhost:3000/venue/add-venue", options);
+          if(response.ok){
+              var data = await response.json();
+              console.log(data);
+              navigate("/");
+          }
+      }
+    }
+    catch(error){
+        console.log(error);
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,18 +55,18 @@ const AddStadiumForm = ({ onAddStadium }) => {
     const newErrors = {};
 
 
-    if (stadiumData.name === "") {
-      newErrors.name = "Stadium name is required";
+    if (stadiumData.venue_name === "") {
+      newErrors.venue_name = "Stadium name is required";
       isValid = false;
     }
 
-    if (stadiumData.shape === "") {
-      newErrors.shape = "Stadium shape is required";
+    if (stadiumData.num_of_rows === 0) {
+      newErrors.num_of_rows = "Number of rows must be greater than 0";
       isValid = false;
     }
 
-    if (stadiumData.seats <= 0) {
-      newErrors.seats = "Number of seats must be greater than 0";
+    if (stadiumData.num_of_seats_per_row <= 0) {
+      newErrors.num_of_seats_per_row = "Number of seats in a row must be greater than 0";
       isValid = false;
     }
 
@@ -47,20 +74,7 @@ const AddStadiumForm = ({ onAddStadium }) => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-     
-      onAddStadium(stadiumData);
-
-      setStadiumData({
-        name: "",
-        shape: "",
-        seats: 0,
-      });
-    }
-  };
+  
 
   return (
     <div className="col mt-3 mb-3 ml-5 mr-5">
@@ -75,45 +89,44 @@ const AddStadiumForm = ({ onAddStadium }) => {
             onSubmit={handleSubmit}
           >
             <div className="form-group">
-              <label htmlFor="name">Stadium Name</label>
+              <label htmlFor="venue_name">Stadium Name</label>
               <input
                 type="text"
                 className="form-control form-control-md rounded-0"
-                name="name"
-                id="name"
-                required
-                value={stadiumData.name}
+                name="venue_name"
+                id="venue_name"
+                value={stadiumData.venue_name}
                 onChange={handleChange}
               />
-              {errors.name && <div className="text-danger">{errors.name}</div>}
+              {errors.venue_name && <div className="text-danger">{errors.venue_name}</div>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="shape">Stadium Shape</label>
-              <input
-                type="text"
-                className="form-control form-control-md rounded-0"
-                name="shape"
-                id="shape"
-                required
-                value={stadiumData.shape}
-                onChange={handleChange}
-              />
-              {errors.shape && <div className="text-danger">{errors.shape}</div>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="seats">Number of Seats</label>
+              <label htmlFor="num_of_rows">Number of rows</label>
               <input
                 type="number"
                 className="form-control form-control-md rounded-0"
-                name="seats"
-                id="seats"
+                name="num_of_rows"
+                id="num_of_rows"
                 required
-                value={stadiumData.seats}
+                value={stadiumData.num_of_rows}
                 onChange={handleChange}
               />
-              {errors.seats && <div className="text-danger">{errors.seats}</div>}
+              {errors.num_of_rows && <div className="text-danger">{errors.num_of_rows}</div>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="num_of_seats_per_row">Number of seats per row</label>
+              <input
+                type="number"
+                className="form-control form-control-md rounded-0"
+                name="num_of_seats_per_row"
+                id="num_of_seats_per_row"
+                required
+                value={stadiumData.num_of_seats_per_row}
+                onChange={handleChange}
+              />
+              {errors.num_of_seats_per_row && <div className="text-danger">{errors.num_of_seats_per_row}</div>}
             </div>
 
             <button type="submit" className="btn btn-primary btn-lg float-right">

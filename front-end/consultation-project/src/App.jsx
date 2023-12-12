@@ -35,7 +35,7 @@ export default function App() {
                     <Route path="/signin" element={<SignInPage />}></Route>
                     <Route path="/matches" element={<MatchesList />}></Route>
                     <Route path="/edit-profile" element={<EditUser />}></Route>
-                    <Route path="/booking" element={<Booking />}></Route>
+                    <Route path="/booking/:matchId" element={<Booking />}></Route>
                     <Route path="/admin" element={<AdminPortal />}></Route>
                     <Route path="/manager" element={<ManagerPortal />}></Route>
                     <Route path="/add-match" element={<AddingMatch />}></Route>

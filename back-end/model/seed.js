@@ -80,7 +80,8 @@ const savedRequest = await request.save();
 const venue = new VenueModel({
     venue_name: "Cairo International Stadium",
     location: "Cairo",
-    capacity: 10000
+    num_of_rows: 5,
+    num_of_seats_per_row: 10
 });
 const savedVenue = await venue.save();
 
