@@ -12,14 +12,6 @@ export default function MatchComponent({ matchDetails }) {
     // TODO : Change Navigator
 
     const navigate = useNavigate();
-    const navigator = () => {
-        if (!localStorage.getItem("jwtToken")) {
-            window.location.href = "/signin";
-        }
-        else {
-            window.location.href = "/booking";
-        }
-    }
     const [match, setMatch] = useState({
         home_team: "../assets/Ahly.png",
         away_team: "../assets/Zamalek.png",
@@ -41,13 +33,25 @@ export default function MatchComponent({ matchDetails }) {
                 }
             }
             var response = await fetch(`http://localhost:3000/match/get-match/${matchDetails._id}`, options);
+            const originalDate = new Date(data.match.date_time);
+
+            const opts = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+            };
+
+            const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
             if (response.ok) {
                 var data = await response.json();
                 const m = {
                     home_team: data.home_team.team_name,
                     away_team: data.away_team.team_name,
                     venue: data.venue.venue_name,
-                    date_time: data.match.date_time,
+                    date_time: formattedDate,
                     main_referee: data.main_referee.first_name + " " + data.main_referee.last_name,
                     lineman1: data.lineman1.first_name + " " + data.lineman1.last_name,
                     lineman2: data.lineman2.first_name + " " + data.lineman2.last_name

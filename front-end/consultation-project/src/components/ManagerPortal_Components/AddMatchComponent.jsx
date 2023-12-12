@@ -16,16 +16,16 @@ const AddMatchForm = () => {
 
     const [errors, setErrors] = useState({});
 
-    const teams = ["Team1", "Team2", /* ... add all 18 teams here ... */];
+    const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
     const stadiums = ["Stadium1", "Stadium2", /* ... add all approved stadiums here ... */];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         // If the property is nested (e.g., linesmen.linesman1)
         if (name.includes("linesmen")) {
             const [parentName, nestedName] = name.split(".");
-    
+
             setMatchData((prevData) => ({
                 ...prevData,
                 [parentName]: {
@@ -39,13 +39,13 @@ const AddMatchForm = () => {
                 [name]: value,
             });
         }
-    
+
         setErrors({
             ...errors,
             [name]: "",
         });
     };
-    
+
 
     const validateForm = () => {
         let isValid = true;
