@@ -11,7 +11,6 @@ import bcrypt from "bcrypt";
 import venueRouter from "./routes/venue.js";
 import refereeRouter from "./routes/referee.js";
 import teamRouter from "./routes/team.js";
-import team from "./controller/team.js";
 const app = express();
 app.use(cors());
 app.use(express.json());

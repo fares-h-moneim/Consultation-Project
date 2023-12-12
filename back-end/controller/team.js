@@ -1,8 +1,6 @@
-import TeamModel from "../models/team.js";
+import TeamModel from "../model/team.js";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
 
-dotenv.config();
 const getAllTeams = async (req, res) => {
     try {
         const token = req.header('Authorization');
@@ -23,4 +21,4 @@ const getAllTeams = async (req, res) => {
     }
 }
 
-export default { getAllTeams };
+export default getAllTeams;

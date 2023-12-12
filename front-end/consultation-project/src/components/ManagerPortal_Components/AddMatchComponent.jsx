@@ -17,6 +17,7 @@ const AddMatchForm = () => {
     const [venues, setVenues] = useState([]);
     const [referees, setReferees] = useState([]);
     const [errors, setErrors] = useState({});
+    const [teams, setTeams] = useState([]);
     useEffect(() => {
         const getVenues = async () => {
             try {
@@ -30,7 +31,6 @@ const AddMatchForm = () => {
                 const response = await fetch("http://localhost:3000/venue/get-venues", options);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
                     setVenues(data);
                 } else {
                     console.error("Failed to fetch venues");
@@ -51,7 +51,6 @@ const AddMatchForm = () => {
                 const response = await fetch("http://localhost:3000/referee/get-referees", options);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
                     setReferees(data);
                 } else {
                     console.error("Failed to fetch referees");
@@ -60,10 +59,33 @@ const AddMatchForm = () => {
                 console.error("Error fetching referees:", error);
             }
         }
+        const getTeams = async () => {
+            try {
+                var options = {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                    }
+                }
+                const response = await fetch("http://localhost:3000/team/get-all-teams", options);
+                if (response.ok) {
+                    const data = await response.json();
+                    setTeams(data);
+                }
+                else {
+                    console.error("Failed to fetch teams");
+                }
+            } catch (error) {
+                console.error("Error fetching teams:", error);
+            }
+        }
+        getTeams();
         getVenues();
         getReferees();
     }, []);
-    const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
+    //const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
 
 
     const handleChange = (e) => {
