@@ -7,28 +7,28 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 dotenv.config();
 const signIn = async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        const tryGetUsername = await UserModel.findOne({ username: username });
-        if (tryGetUsername) {
-            const isPasswordCorrect = await bcrypt.compare(password, tryGetUsername.password);
-            if (isPasswordCorrect) {
-              const token = jwt.sign({ sub: tryGetUsername._id, username: tryGetUsername.username, role: tryGetUsername.role }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: '1h',
-              });
-              res.json({ token, username: tryGetUsername.username, role: tryGetUsername.role});
-            } else {
-              res.status(401).json({ message: 'Invalid credentials' });
-            }
-        }
-        else {
-            res.status(401).json({ message: 'Invalid credentials' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+  try {
+    const { username, password } = req.body;
+    const tryGetUsername = await UserModel.findOne({ username: username });
+    if (tryGetUsername) {
+      const isPasswordCorrect = await bcrypt.compare(password, tryGetUsername.password);
+      if (isPasswordCorrect) {
+        const token = jwt.sign({ sub: tryGetUsername._id, username: tryGetUsername.username, role: tryGetUsername.role }, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: '1h',
+        });
+        res.json({ token, username: tryGetUsername.username, role: tryGetUsername.role });
+      } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+      }
     }
-  };
+    else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
 const logout = async (req, res) => {
   try {
@@ -63,7 +63,7 @@ const getDetailsByUsername = async (req, res) => {
 };
 
 const updateDetails = async (req, res) => {
-  try{
+  try {
     const token = req.header('Authorization');
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: Missing token' });
@@ -74,14 +74,60 @@ const updateDetails = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
-    const updatedUser = await UserModel.findByIdAndUpdate(decoded.sub, req.body, {new: true});
+    const updatedUser = await UserModel.findByIdAndUpdate(decoded.sub, req.body, { new: true });
     res.status(200).json({ updatedUser });
   }
-  catch(error){
+  catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
 
-export {signIn, logout, getDetailsByUsername, updateDetails};
+const deleteUser = async (req, res) => {
+  try {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Missing token' });
+    }
+    const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+    if (decoded.role != 'Admin') {
+      return res.status(401).json({ message: 'Unauthorized: Admin role required' });
+    }
+    const user = await UserModel.findById(req.body.id);
+    if (user) {
+      const deletedUser = await UserModel.findByIdAndDelete(req.body.id);
+      res.status(201).json(deletedUser);
+    }
+    else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  }
+  catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+const getAllUsers = async (req, res) => {
+  try {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Missing token' });
+    }
+    const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+    if (decoded.role != 'Admin') {
+      return res.status(401).json({ message: 'Unauthorized: Admin role required' });
+    }
+    const users = await UserModel.find();
+    res.status(201).json(users);
+  }
+  catch (error) {
+    console.error('Error getting all users:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export { signIn, logout, getDetailsByUsername, updateDetails, getAllUsers, deleteUser };

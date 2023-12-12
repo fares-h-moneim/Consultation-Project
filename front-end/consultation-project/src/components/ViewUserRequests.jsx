@@ -21,7 +21,6 @@ export default function ViewUserRequests() {
         }
 
         getRequests();
-        console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
     }, []);
 
     return (
