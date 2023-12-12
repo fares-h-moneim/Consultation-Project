@@ -37,11 +37,23 @@ export default function Match({ matchDetails }) {
             if (response.ok) {
                 var data = await response.json();
                 console.log(data);
+                const originalDate = new Date(data.date_time);
+
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                };
+
+                const formattedDate = new Intl.DateTimeFormat('en-US', options).format(originalDate);
                 const m = {
                     home_team: data.home_team.team_name,
                     away_team: data.away_team.team_name,
                     venue: data.venue.venue_name,
-                    date_time: data.match.date_time,
+                    date_time: formattedDate,
                     main_referee: data.main_referee.first_name + " " + data.main_referee.last_name,
                     lineman1: data.lineman1.first_name + " " + data.lineman1.last_name,
                     lineman2: data.lineman2.first_name + " " + data.lineman2.last_name
@@ -104,9 +116,9 @@ export default function Match({ matchDetails }) {
                         <h5 style={{ marginLeft: "10px" }}>{match.date_time}</h5>
                     </div>
                 </div>
-                <div className="col text-center">
+                {localStorage.getItem("role") !== "Admin" && <div className="col text-center">
                     <button type="button" className="btn btn-danger" onClick={navigator}>Book Now!</button>
-                </div>
+                </div>}
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
                 <div className="col">

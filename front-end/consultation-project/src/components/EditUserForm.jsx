@@ -13,7 +13,7 @@ export default function EditUserForm({ user }) {
         gender: "Male",
         city: "",
         address: ""
-};
+    };
 
     const [userData, setUserData] = useState(initialUserData);
     const [errors, setErrors] = useState({});
@@ -34,12 +34,17 @@ export default function EditUserForm({ user }) {
                 }
                 var response = await fetch("http://localhost:3000/user/update-details", options);
                 if (response.ok) {
-                    const {updatedUser} = await response.json();
+                    const { updatedUser } = await response.json();
                     const event = new Event("profileUpdated");
                     event.username = updatedUser.username;
                     localStorage.setItem("username", updatedUser.username);
                     window.dispatchEvent(event);
-                    navigate("/");
+                    if (localStorage.getItem("role") === "Manager") {
+                        navigate("/manager");
+                    }
+                    else if (localStorage.getItem("role") === "Fan") {
+                        navigate("/");
+                    }
                 }
             }
             catch (error) {
