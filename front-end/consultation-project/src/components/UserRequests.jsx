@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 export default function UserRequest({ user, key }) {
+    const [isRemoved, setIsRemoved] = useState(false);
     function dateFormat(dateString) {
         const originalDate = new Date(dateString);
 
@@ -11,6 +14,58 @@ export default function UserRequest({ user, key }) {
         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(originalDate);
         return formattedDate;
     }
+
+    const accept = async (e) => {
+        e.preventDefault();
+        try {
+            var options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                },
+                body: JSON.stringify({ id: user._id }) // pass id in the body
+            }
+            console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
+            var response = await fetch(`http://localhost:3000/request/approve-request`, options);
+            if (response.ok) {
+                setIsRemoved(true);
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const reject = async (e) => {
+        e.preventDefault();
+        try {
+            var options = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                },
+                body: JSON.stringify({ id: user._id })
+            }
+            console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
+            var response = await fetch(`http://localhost:3000/request/decline-request`, options);
+            if (response.ok) {
+                setIsRemoved(true);
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    if (isRemoved) {
+        return null;
+    }
+
     return (
         <div className="col py-3" style={{ height: "9vh", width: "80vw" }}>
             <div className="row g-0 align-items-center justify-content-top p-0" style={{ backgroundColor: "white" }}>
@@ -30,10 +85,10 @@ export default function UserRequest({ user, key }) {
                     </div>
                 </div>
                 <div className="col text-center">
-                    <button type="button" className="btn btn-success" style={{ margin: "10px 10px" }} onClick={() => { navigate(`/booking/${matchDetails._id}`) }}>Accept</button>
+                    <button type="button" className="btn btn-success" style={{ margin: "10px 10px" }} onClick={accept}>Accept</button>
                 </div>
                 <div className="col text-center">
-                    <button type="button" className="btn btn-danger" style={{ margin: "10px 10px" }} onClick={() => { navigate(`/booking/${matchDetails._id}`) }}>Reject</button>
+                    <button type="button" className="btn btn-danger" style={{ margin: "10px 10px" }} onClick={reject}>Reject</button>
                 </div>
             </div>
             <div className="row g-0" style={{ backgroundColor: "grey" }}>

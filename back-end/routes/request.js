@@ -3,8 +3,8 @@ import { addRequest, approveRequest, declineRequest, deleteUser, getAllRequests 
 import { requireAdmin } from "../controller/passport-setup.js";
 const requestRouter = express.Router();
 requestRouter.post("/add-request", addRequest);
-requestRouter.post("/approve-request/:id", requireAdmin, approveRequest);
-requestRouter.delete("/decline-request/:id", requireAdmin, declineRequest);
+requestRouter.post("/approve-request", approveRequest);
+requestRouter.delete("/decline-request", declineRequest);
 requestRouter.delete("/delete-user/:id", requireAdmin, deleteUser);
 requestRouter.get("/get-all-requests", getAllRequests);
 export default requestRouter;
