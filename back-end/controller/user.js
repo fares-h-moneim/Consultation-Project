@@ -83,5 +83,16 @@ const updateDetails = async (req, res) => {
   }
 };
 
+const checkUserAvailability = async (req, res) => {
+    try {
+        const tryUsername = req.params.username;
+        const user = await UserModel.findOne({ username: tryUsername });
+        res.json({ available: !user }); // Return true if the username is available
+    } catch (error) {
+        console.error('Error checking username availability:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 
-export {signIn, logout, getDetailsByUsername, updateDetails};
+
+export {signIn, logout, getDetailsByUsername, updateDetails, checkUserAvailability};

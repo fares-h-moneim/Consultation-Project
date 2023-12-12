@@ -1,10 +1,11 @@
 import express from "express";
-import {signIn, logout, getDetailsByUsername, updateDetails} from "../controller/user.js";
+import {signIn, logout, getDetailsByUsername, updateDetails, checkUserAvailability} from "../controller/user.js";
 const userRouter = express.Router();
 userRouter.post("/sign-in", signIn);
 userRouter.post("/log-out", logout);
 userRouter.get("/details", getDetailsByUsername);
 userRouter.put("/update-details", updateDetails);
+userRouter.get("/check-username-availability/:username", checkUserAvailability);
 //userRouter.post("/refresh", handleRefresh);
 // userRouter.post("/verify/:token", handleVerify);
 export default userRouter;

@@ -21,7 +21,9 @@ export default function EditUserForm({ user }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
+        const result = await validateForm();
+        if (result) {
+            console.log("hello")
             try {
                 var options = {
                     method: "PUT",
@@ -52,6 +54,29 @@ export default function EditUserForm({ user }) {
             }
         }
     }
+    const checkUsernameAvailability = async () => {
+        try {
+            var options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            }
+            const response = await fetch(`http://localhost:3000/user/check-username-availability/${userData.username}`, options);
+            if (response.ok) {
+                const data = await response.json();
+                return !data.available; // Return true if the username is taken
+            } else {
+                console.error("Failed to check username availability");
+                return true; // Assume username is taken if the request fails
+            }
+        } catch (error) {
+            console.error("Error checking username availability:", error);
+            return true; // Assume username is taken if there is an error
+        }
+    };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -70,7 +95,7 @@ export default function EditUserForm({ user }) {
     }, [user]);
 
 
-    const validateForm = () => {
+    const validateForm = async () => {
         let isValid = true;
         const newErrors = {};
 
@@ -82,6 +107,19 @@ export default function EditUserForm({ user }) {
                 // Clear the error if the field is not empty
                 newErrors[key] = "";
             }
+        }
+        if (userData.username !== "") {
+            const usernameTaken = await checkUsernameAvailability();
+            const sameUsername = userData.username === localStorage.getItem("username");
+            if (usernameTaken && !sameUsername) {
+                newErrors["username_taken"] = "This username is already taken";
+                isValid = false;
+            } else {
+                newErrors["username_taken"] = "";
+            }
+        }
+        else{
+            newErrors["username_taken"] = "";
         }
 
         setErrors(newErrors);
@@ -175,8 +213,9 @@ export default function EditUserForm({ user }) {
                                 />
                             </div>
                         </div>
-                        {(errors["username"] || errors["email"]) && <div className="form-row">
+                        {(errors["username"] || errors["email"] || errors["username_taken"]) && <div className="form-row">
                             <div className="col-md-6 mb-1">
+                                {errors["username_taken"] !== "" && <div className="text-danger"> Username already taken</div>}
                                 {errors["username"] !== "" && <div className="text-danger"> Username is Required</div>}
                             </div>
                             <div className="col-md-6">
