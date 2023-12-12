@@ -124,12 +124,12 @@ export default function Match({ matchDetails }) {
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
                 <div className="col">
-                    <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
+                    <p className="p-0 mx-5 my-1" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
                         Main referee : {match.main_referee}
                     </p>
                 </div>
                 <div className="col">
-                    <p className="p-0 m-0" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
+                    <p className="p-0 my-1" style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", color: "#fff" }}>
                         Two Linesmen : {match.lineman1} / {match.lineman2}
                     </p>
 
