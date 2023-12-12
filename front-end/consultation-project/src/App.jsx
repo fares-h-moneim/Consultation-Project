@@ -14,7 +14,8 @@ import AddingMatch from './components/ManagerPortal_Components/AddMatchPage'
 import MatchesListForManager from './components/ManagerPortal_Components/ViewMatchPage'
 import EditingMatch from './components/ManagerPortal_Components/EditingMatchPage'
 import AddingStadium from './components/ManagerPortal_Components/AddStadiumPage'
-
+import ViewUserRequests from "./components/ViewUserRequests";
+import ViewUsers from "./components/ViewUsers";
 
 export default function App() {
     const [index, setIndex] = useState("home");
@@ -42,6 +43,8 @@ export default function App() {
                     <Route path="/edit-match/:matchId" element={<EditingMatch />} />
                     <Route path="/view-matches" element={<MatchesListForManager />}></Route>
                     <Route path="/add-stadium" element={<AddingStadium />}></Route>
+                    <Route path="/view-requests" element={<ViewUserRequests />}></Route>
+                    <Route path="/view-users" element={<ViewUsers />}></Route>
                 </Routes>
             </div>
         </>

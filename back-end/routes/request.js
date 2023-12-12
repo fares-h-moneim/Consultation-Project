@@ -1,10 +1,10 @@
 import express from "express";
-import {addRequest, approveRequest, declineRequest, deleteUser, getAllUsers} from "../controller/request.js";
-import {requireAdmin} from "../controller/passport-setup.js";
+import { addRequest, approveRequest, declineRequest, deleteUser, getAllRequests } from "../controller/request.js";
+import { requireAdmin } from "../controller/passport-setup.js";
 const requestRouter = express.Router();
 requestRouter.post("/add-request", addRequest);
 requestRouter.post("/approve-request/:id", requireAdmin, approveRequest);
 requestRouter.delete("/decline-request/:id", requireAdmin, declineRequest);
 requestRouter.delete("/delete-user/:id", requireAdmin, deleteUser);
-requestRouter.get("/get-all-users", requireAdmin, getAllUsers);
+requestRouter.get("/get-all-requests", getAllRequests);
 export default requestRouter;

@@ -29,6 +29,8 @@ export default function NavBar() {
       });
       if (response.ok) {
         localStorage.removeItem("jwtToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("username");
         setIsAuthenticated(false);
         console.log("Logout success");
         navigate("/");
