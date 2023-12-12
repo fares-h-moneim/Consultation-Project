@@ -9,8 +9,8 @@ const AddMatchForm = () => {
         venue: "",
         date_time: "",
         main_referee: "",
-        linesman1: "",
-        linesman2: "",
+        lineman1: "",
+        lineman2: "",
         capacity: 0,
         booked_fans: []
     });
@@ -81,17 +81,19 @@ const AddMatchForm = () => {
                 console.error("Error fetching teams:", error);
             }
         }
+
+        //TODO: get team ID and not team name
         getTeams();
         getVenues();
         getReferees();
     }, []);
-    //const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
 
+    //TODO: make sure the referee and both linesmen are different like we did with the home and away teams
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // If the property is nested (e.g., linesmen.linesman1)
+        // If the property is nested (e.g., linesmen.lineman1)
         if (name.includes("linesmen")) {
             const [parentName, nestedName] = name.split(".");
 
@@ -131,6 +133,11 @@ const AddMatchForm = () => {
 
         if (matchData.homeTeam === matchData.awayTeam) {
             newErrors.awayTeam = "Away team should be different from the home team";
+            isValid = false;
+        }
+
+        if (matchData.date_time < new Date().toISOString()) {
+            newErrors.date_time = "Date and time must be in the future";
             isValid = false;
         }
 
@@ -191,8 +198,8 @@ const AddMatchForm = () => {
                                 >
                                     <option value="">Select Home Team</option>
                                     {teams.map((team) => (
-                                        <option key={team} value={team}>
-                                            {team}
+                                        <option key={team._id} value={team.team_name}>
+                                            {team.team_name}
                                         </option>
                                     ))}
                                 </select>
@@ -212,10 +219,10 @@ const AddMatchForm = () => {
                                 >
                                     <option value="">Select Away Team</option>
                                     {teams
-                                        .filter((team) => team !== matchData.home_team)
+                                        .filter((team) => team.team_name !== matchData.home_team)
                                         .map((team) => (
-                                            <option key={team} value={team}>
-                                                {team}
+                                            <option key={team._id} value={team.team_name}>
+                                                {team.team_name}
                                             </option>
                                         ))}
                                 </select>
@@ -291,13 +298,13 @@ const AddMatchForm = () => {
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="linesman1">Linesman 1</label>
+                                <label htmlFor="lineman1">Linesman 1</label>
                                 <select
                                     className="form-control form-control-md rounded-0"
-                                    name="linesman1"
-                                    id="linesman1"
+                                    name="lineman1"
+                                    id="lineman1"
                                     required
-                                    value={matchData.linesman1}
+                                    value={matchData.lineman1}
                                     onChange={handleChange}
                                 >
                                     {referees.length > 0 && (
@@ -313,13 +320,13 @@ const AddMatchForm = () => {
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="linesman2">Linesman 2</label>
+                                <label htmlFor="lineman2">Linesman 2</label>
                                 <select
                                     className="form-control form-control-md rounded-0"
-                                    name="linesman2"
-                                    id="linesman2"
+                                    name="lineman2"
+                                    id="lineman2"
                                     required
-                                    value={matchData.linesman2}
+                                    value={matchData.lineman2}
                                     onChange={handleChange}
                                 >
                                     {referees.length > 0 && (
