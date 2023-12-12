@@ -84,18 +84,22 @@ const venue = new VenueModel({
     num_of_seats_per_row: 10
 });
 const savedVenue = await venue.save();
-
-const ahly = new TeamModel({
-    team_name: "Ahly",
-    logo: "./assets/Ahly.png"
-});
-const savedAhly = await ahly.save();
-
-const zamalek = new TeamModel({
-    team_name: "Zamalek",
-    logo: "./assets/Zamalek.png"
-});
-const savedZamalek = await zamalek.save();
+let Ahly_id = null;
+let Zamalek_id = null;
+const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
+for (let team of teams) {
+    const newTeam = new TeamModel({
+        team_name: team,
+        logo: "../assets/images/teams/" + team + ".png",
+    });
+    const savedTeam = await newTeam.save();
+    if (team == "Al Ahly") {
+        Ahly_id = savedTeam._id;
+    }
+    if (team == "Zamalek") {
+        Zamalek_id = savedTeam._id;
+    }
+}
 
 const referee1 = new RefereeModel({
     first_name: "Ahmed",
@@ -116,8 +120,8 @@ const referee3 = new RefereeModel({
 const savedReferee3 = await referee3.save();
 
 const match = new MatchModel({
-    home_team: savedAhly._id,
-    away_team: savedZamalek._id,
+    home_team: Ahly_id,
+    away_team: Zamalek_id,
     venue: savedVenue._id,
     date_time: "2021-12-12",
     main_referee: savedReferee1._id,

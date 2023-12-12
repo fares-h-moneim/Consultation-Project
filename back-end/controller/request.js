@@ -21,7 +21,16 @@ const addRequest = async (req, res) => {
 
 const approveRequest = async (req, res) => {
     try {
-        const request = await RequestModel.findById(req.params.id);
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        if (decoded.role != 'Admin') {
+            return res.status(401).json({ message: 'Unauthorized: Admin role required' });
+        }
+        const request = await RequestModel.findById(req.body.id);
         if (request) {
             const newUser = new UserModel({
                 username: request.username,
@@ -36,7 +45,7 @@ const approveRequest = async (req, res) => {
                 role: request.role
             });
             const savedUser = await newUser.save();
-            const deletedRequest = await RequestModel.findByIdAndDelete(req.params.id);
+            const deletedRequest = await RequestModel.findByIdAndDelete(req.body.id);
             res.status(201).json(savedUser);
         }
         else {
@@ -51,9 +60,18 @@ const approveRequest = async (req, res) => {
 
 const declineRequest = async (req, res) => {
     try {
-        const request = await RequestModel.findById(req.params.id);
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        if (decoded.role != 'Admin') {
+            return res.status(401).json({ message: 'Unauthorized: Admin role required' });
+        }
+        const request = await RequestModel.findById(req.body.id);
         if (request) {
-            const deletedRequest = await RequestModel.findByIdAndDelete(req.params.id);
+            const deletedRequest = await RequestModel.findByIdAndDelete(req.body.id);
             res.status(201).json(deletedRequest);
         }
         else {
@@ -66,22 +84,6 @@ const declineRequest = async (req, res) => {
     }
 }
 
-const deleteUser = async (req, res) => {
-    try {
-        const user = await UserModel.findById(req.params.id);
-        if (user) {
-            const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
-            res.status(201).json(deletedUser);
-        }
-        else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    }
-    catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
 
 const getAllRequests = async (req, res) => {
     try {
@@ -103,4 +105,4 @@ const getAllRequests = async (req, res) => {
     }
 }
 
-export { addRequest, approveRequest, declineRequest, deleteUser, getAllRequests };
+export { addRequest, approveRequest, declineRequest, getAllRequests };
