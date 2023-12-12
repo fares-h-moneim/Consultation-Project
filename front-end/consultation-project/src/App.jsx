@@ -39,7 +39,7 @@ export default function App() {
                     <Route path="/admin" element={<AdminPortal />}></Route>
                     <Route path="/manager" element={<ManagerPortal />}></Route>
                     <Route path="/add-match" element={<AddingMatch />}></Route>
-                    <Route path="/edit-match" element={<EditingMatch />}></Route>
+                    <Route path="/edit-match/:matchId" element={<EditingMatch />} />
                     <Route path="/view-matches" element={<MatchesListForManager />}></Route>
                     <Route path="/add-stadium" element={<AddingStadium />}></Route>
                 </Routes>

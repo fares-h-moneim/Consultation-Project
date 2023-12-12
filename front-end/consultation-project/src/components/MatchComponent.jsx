@@ -3,6 +3,7 @@ import stadium from "../assets/stadium.svg";
 import calendar from "../assets/calendar.svg";
 import Ahly from "../assets/Ahly.png";
 import Zamalek from "../assets/Zamalek.png";
+import { useEffect } from "react";
 
 export default function Match({ matchDetails }) {
     const navigator = () => {
@@ -21,8 +22,65 @@ export default function Match({ matchDetails }) {
         main_referee: "Mohamed Farouk",
         lineman1: "Ahmed Mohamed",
         lineman2: "Ahmed Mohamed"
-
     });
+
+    useEffect(() => {
+        async function getMatches() {
+            var options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            }
+            var response = await fetch(`http://localhost:3000/match/get-match/${matchDetails._id}`, options);
+            if (response.ok) {
+                var data = await response.json();
+                console.log(data);
+                const m = {
+                    home_team: data.home_team.team_name,
+                    away_team: data.away_team.team_name,
+                    venue: data.venue.venue_name,
+                    date_time: data.match.date_time,
+                    main_referee: data.main_referee.first_name + " " + data.main_referee.last_name,
+                    lineman1: data.lineman1.first_name + " " + data.lineman1.last_name,
+                    lineman2: data.lineman2.first_name + " " + data.lineman2.last_name
+                }
+
+                setMatch(m);
+            }
+        }
+
+        getMatches();
+    }, []);
+
+    useEffect(() => {
+        async function getMatches() {
+            var options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            }
+            var response = await fetch("http://localhost:3000/match/get-match/" + matchDetails._id, options);
+            if (response.ok) {
+                var data = await response.json();
+                console.log(data);
+                const m = {
+                    home_team: data.home_team.name,
+                    away_team: data.away_team.name,
+                    venue: data.venue.name,
+                    date_time: data.date_time,
+                    main_referee: data.main_referee,
+                    lineman1: data.lineman1,
+                    lineman2: data.lineman2
+                }
+            }
+        }
+
+        getMatches();
+    }, []);
 
     return (
         <div className="col" style={{ height: "9vh", width: "80vw" }}>

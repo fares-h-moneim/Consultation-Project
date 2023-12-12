@@ -25,7 +25,7 @@ export default function MatchesListForManager() {
     <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red", height: "92vh" }}>
       {matches.map((match, index) => (
         <div key={index} className="d-flex align-items-center justify-content-center m-4">
-          <MatchComponent match={match} />
+          <MatchComponent matchDetails={match} />
         </div>
       ))}
     </div>
