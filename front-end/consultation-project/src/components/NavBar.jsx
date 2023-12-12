@@ -68,7 +68,7 @@ export default function NavBar() {
 
   return (
     <nav className="navbar navbar-expand-lg bg-black">
-      <Link className="navbar-brand" to="/">
+      <Link className="navbar-brand" to={localStorage.getItem("role") === "Manager" ? "/manager" : (localStorage.getItem("role") === "Admin" ? "/admin" : "/")}>
         <img
           src={EFALogo}
           width={50}
