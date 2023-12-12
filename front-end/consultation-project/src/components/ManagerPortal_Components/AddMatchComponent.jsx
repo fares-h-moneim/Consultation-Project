@@ -1,21 +1,68 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddMatchForm = () => {
+    const navigate = useNavigate();
     const [matchData, setMatchData] = useState({
-        homeTeam: "",
-        awayTeam: "",
+        home_team: "",
+        away_team: "",
         venue: "",
-        dateTime: "",
-        mainReferee: "",
-        linesmen: {
-            linesman1: "",
-            linesman2: "",
-        },
+        date_time: "",
+        main_referee: "",
+        linesman1: "",
+        linesman2: "",
+        capacity: 0,
+        booked_fans: []
     });
-
+    const [venues, setVenues] = useState([]);
+    const [referees, setReferees] = useState([]);
     const [errors, setErrors] = useState({});
-
+    useEffect(() => {
+        const getVenues = async () => {
+            try {
+                var options = {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                }
+                const response = await fetch("http://localhost:3000/venue/get-venues", options);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    setVenues(data);
+                } else {
+                    console.error("Failed to fetch venues");
+                }
+            } catch (error) {
+                console.error("Error fetching venues:", error);
+            }
+        }
+        const getReferees = async () => {
+            try {
+                var options = {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                }
+                const response = await fetch("http://localhost:3000/referee/get-referees", options);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    setReferees(data);
+                } else {
+                    console.error("Failed to fetch referees");
+                }
+            } catch (error) {
+                console.error("Error fetching referees:", error);
+            }
+        }
+        getVenues();
+        getReferees();
+    }, []);
     const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
     const stadiums = ["Stadium1", "Stadium2", /* ... add all approved stadiums here ... */];
 
@@ -69,13 +116,32 @@ const AddMatchForm = () => {
         return isValid;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
-
+            try{
+                var options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                    },
+                    body: JSON.stringify(matchData)
+                }
+                const response = await fetch("http://localhost:3000/match/add-match", options);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    navigate("/");
+                } else {
+                    console.error("Failed to add match");
+                }
+            }
+            catch (error) {
+                console.error("Error adding match:", error);
+            }
             console.log("Match data submitted:", matchData);
-        }
     };
 
     return (
@@ -92,13 +158,13 @@ const AddMatchForm = () => {
                     >
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="homeTeam">Home Team</label>
+                                <label htmlFor="home_team">Home Team</label>
                                 <select
                                     className="form-control form-control-md rounded-0"
-                                    name="homeTeam"
-                                    id="homeTeam"
+                                    name="home_team"
+                                    id="home_team"
                                     required
-                                    value={matchData.homeTeam}
+                                    value={matchData.home_team}
                                     onChange={handleChange}
                                 >
                                     <option value="">Select Home Team</option>
@@ -108,23 +174,23 @@ const AddMatchForm = () => {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.homeTeam && (
-                                    <div className="text-danger">{errors.homeTeam}</div>
+                                {errors.home_team && (
+                                    <div className="text-danger">{errors.home_team}</div>
                                 )}
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="awayTeam">Away Team</label>
+                                <label htmlFor="away_team">Away Team</label>
                                 <select
                                     className="form-control form-control-md rounded-0"
-                                    name="awayTeam"
-                                    id="awayTeam"
+                                    name="away_team"
+                                    id="away_team"
                                     required
-                                    value={matchData.awayTeam}
+                                    value={matchData.away_team}
                                     onChange={handleChange}
                                 >
                                     <option value="">Select Away Team</option>
                                     {teams
-                                        .filter((team) => team !== matchData.homeTeam)
+                                        .filter((team) => team !== matchData.home_team)
                                         .map((team) => (
                                             <option key={team} value={team}>
                                                 {team}
@@ -132,7 +198,7 @@ const AddMatchForm = () => {
                                         ))}
                                 </select>
                                 {errors.awayTeam && (
-                                    <div className="text-danger">{errors.awayTeam}</div>
+                                    <div className="text-danger">{errors.away_team}</div>
                                 )}
                             </div>
                         </div>
@@ -149,71 +215,102 @@ const AddMatchForm = () => {
                                     value={matchData.venue}
                                     onChange={handleChange}
                                 >
-                                    <option value="">Select Match Venue</option>
-                                    {stadiums.map((stadium) => (
-                                        <option key={stadium} value={stadium}>
-                                            {stadium}
-                                        </option>
-                                    ))}
+                                    {venues.length > 0 && (
+                                        <>
+                                            <option value="">Select Match Venue</option>
+                                            {venues.map((venue) => (
+                                                <option key={venue._id} value={venue._id}>
+                                                    {venue.venue_name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
                                 </select>
                                 {errors.venue && <div className="text-danger">{errors.venue}</div>}
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="dateTime">Date & Time</label>
+                                <label htmlFor="date_time">Date & Time</label>
                                 <input
                                     type="datetime-local"
                                     className="form-control form-control-md rounded-0"
-                                    name="dateTime"
-                                    id="dateTime"
+                                    name="date_time"
+                                    id="date_time"
                                     required
-                                    value={matchData.dateTime}
+                                    value={matchData.date_time}
                                     onChange={handleChange}
                                 />
-                                {errors.dateTime && (
-                                    <div className="text-danger">{errors.dateTime}</div>
+                                {errors.date_time && (
+                                    <div className="text-danger">{errors.date_time}</div>
                                 )}
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="mainReferee">Main Referee</label>
-                                <input
-                                    type="text"
+                                <label htmlFor="main_referee">Main Referee</label>
+                                <select
                                     className="form-control form-control-md rounded-0"
-                                    name="mainReferee"
-                                    id="mainReferee"
+                                    name="main_referee"
+                                    id="main_referee"
                                     required
-                                    value={matchData.mainReferee}
+                                    value={matchData.main_referee}
                                     onChange={handleChange}
-                                />
-                                {errors.mainReferee && (
-                                    <div className="text-danger">{errors.mainReferee}</div>
-                                )}
+                                >
+                                    {referees.length > 0 && (
+                                        <>
+                                            <option value="">Select Main Referee</option>
+                                            {referees.map((referee) => (
+                                                <option key={referee._id} value={referee._id}>
+                                                    {referee.first_name + " " + referee.last_name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
+                                </select>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="linesman1">Linesman 1</label>
-                                <input
-                                    type="text"
+                                <select
                                     className="form-control form-control-md rounded-0"
-                                    name="linesmen.linesman1"
+                                    name="linesman1"
                                     id="linesman1"
                                     required
-                                    value={matchData.linesmen.linesman1}
+                                    value={matchData.linesman1}
                                     onChange={handleChange}
-                                />
+                                >
+                                    {referees.length > 0 && (
+                                        <>
+                                            <option value="">Select Linesman 1</option>
+                                            {referees.map((referee) => (
+                                                <option key={referee._id} value={referee._id}>
+                                                    {referee.first_name + " " + referee.last_name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
+                                </select>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="linesman2">Linesman 2</label>
-                                <input
-                                    type="text"
+                                <select
                                     className="form-control form-control-md rounded-0"
-                                    name="linesmen.linesman2"
+                                    name="linesman2"
                                     id="linesman2"
                                     required
-                                    value={matchData.linesmen.linesman2}
+                                    value={matchData.linesman2}
                                     onChange={handleChange}
-                                />
+                                >
+                                    {referees.length > 0 && (
+                                        <>
+                                            <option value="">Select Linesman 2</option>
+                                            {referees.map((referee) => (
+                                                <option key={referee._id} value={referee._id}>
+                                                    {referee.first_name + " " + referee.last_name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
+                                </select>
                             </div>
                         </div>
                         {/* ... */}

@@ -1,4 +1,4 @@
-import "../model/referee.js"
+import RefereeModel from "../model/referee.js";
 
 const getRefereeById = async (req, res) => {
     try {
@@ -26,6 +26,16 @@ const addReferee = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-
 }
-export { getRefereeById, addReferee };
+const getReferees = async (req, res) => {
+    try {
+        const referees = await RefereeModel.find({});
+        res.status(200).json(referees);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}   
+
+export { getRefereeById, addReferee, getReferees };

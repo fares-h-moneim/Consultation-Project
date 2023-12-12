@@ -37,4 +37,14 @@ const getVenueById = async (req, res) => {
     }
 }
 
-export {addVenue, getVenueById};
+const getVenues = async (req, res) => {
+    try {
+        const venues = await VenueModel.find({});
+        res.status(200).json(venues);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+export {addVenue, getVenueById, getVenues};
