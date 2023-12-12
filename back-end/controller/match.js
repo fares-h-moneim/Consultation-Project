@@ -95,8 +95,23 @@ const getMatchById = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+const getOnlyMatchById = async (req, res) => {
+    try {
+        const matchId = req.params.matchId;
+        const match = await MatchModel.findById(matchId);
+        if (match) {
+            res.status(200).json(match);
+        } else {
+            res.status(404).json({ error: 'Match not found' });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}   
 
-const editMatch = async (req, res) => {
+const updateMatch = async (req, res) => {
     try{
         const matchId = req.params.matchId;
         const updatedMatchData = req.body;
@@ -114,4 +129,4 @@ const editMatch = async (req, res) => {
     }
 }
 
-export { getMatches, addMatch, bookMatch, getMatchById, editMatch };
+export { getMatches, addMatch, bookMatch, getMatchById, updateMatch, getOnlyMatchById };

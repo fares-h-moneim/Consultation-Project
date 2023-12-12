@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import Ahly from '../assets/Ahly.png';
 import Zamalek from '../assets/Zamalek.png';
 import StadiumIcon from '../assets/StadiumWhite.png';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function Booking() {
+    const { matchId } = useParams();
     // Define initial state for rows and columns
     const [numRows, setNumRows] = useState(10); // Set the initial number of rows
     const [numCols, setNumCols] = useState(10); // Set the initial number of columns
@@ -23,6 +27,23 @@ export default function Booking() {
 
     const [seatingArrangement, setSeatingArrangement] = useState(generateSeatingArrangement());
     const [selectedSeats, setSelectedSeats] = useState([]);
+    useEffect(() => {
+        const fetchSeatingArrangement = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/get-match/${matchId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setNumRows(data.venue.num_of_rows);
+                    setNumCols(data.venue.num_of_seats_per_row);
+                } else {
+                    console.error('Failed to fetch seating arrangement');
+                }
+            } catch (error) {
+                console.error('Error fetching seating arrangement:', error);
+            }
+        };
+        fetchSeatingArrangement();
+    }, [matchId]);
 
     // Function to handle seat click
     const handleSeatClick = (row, col) => {

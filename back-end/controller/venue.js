@@ -1,7 +1,17 @@
 import VenueModel from "../model/venue.js";
+import jwt from "jsonwebtoken";
 
 const addVenue = async (req, res) => {
     try {
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        if(decoded.role !== 'Manager'){
+            return res.status(401).json({ message: 'Unauthorized: Manager access required' });
+        }
         const newVenueData = req.body;
         const venue = new VenueModel(newVenueData);
         const savedVenue = await venue.save();

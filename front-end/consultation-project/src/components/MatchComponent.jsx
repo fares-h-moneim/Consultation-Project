@@ -4,6 +4,7 @@ import calendar from "../assets/calendar.svg";
 import Ahly from "../assets/Ahly.png";
 import Zamalek from "../assets/Zamalek.png";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Match({ matchDetails }) {
     const navigator = () => {
@@ -14,6 +15,7 @@ export default function Match({ matchDetails }) {
             window.location.href = "/booking";
         }
     }
+    const navigate = useNavigate();
     const [match, setMatch] = useState({
         home_team: "../assets/Ahly.png",
         away_team: "../assets/Zamalek.png",
@@ -105,7 +107,7 @@ export default function Match({ matchDetails }) {
                     </div>
                 </div>
                 <div className="col text-center">
-                    <button type="button" className="btn btn-danger" onClick={navigator}>Book Now!</button>
+                    <button type="button" className="btn btn-danger" onClick={() => { navigate(`/booking/${matchDetails._id}`) }}>Book Now!</button>
                 </div>
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
