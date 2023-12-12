@@ -64,7 +64,7 @@ const AddMatchForm = () => {
         getReferees();
     }, []);
     const teams = ["Al Ahly", "Al Ittihad", "Al Masry", "Al Mokawloon", "Baladeyet El Mahala", "Ceramica Cleopatra", "El Dakhleya", "El Gaish", "El Gouna", "ENPPI", "Ismaily", "Modern Future", "National Bank", "Pharco", "Pyramids", "Zamalek", "Smouha", "ZED"];
-    const stadiums = ["Stadium1", "Stadium2", /* ... add all approved stadiums here ... */];
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -119,29 +119,29 @@ const AddMatchForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-            try{
-                var options = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
-                    },
-                    body: JSON.stringify(matchData)
-                }
-                const response = await fetch("http://localhost:3000/match/add-match", options);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    navigate("/");
-                } else {
-                    console.error("Failed to add match");
-                }
+        try {
+            var options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                },
+                body: JSON.stringify(matchData)
             }
-            catch (error) {
-                console.error("Error adding match:", error);
+            const response = await fetch("http://localhost:3000/match/add-match", options);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                navigate("/");
+            } else {
+                console.error("Failed to add match");
             }
-            console.log("Match data submitted:", matchData);
+        }
+        catch (error) {
+            console.error("Error adding match:", error);
+        }
+        console.log("Match data submitted:", matchData);
     };
 
     return (
