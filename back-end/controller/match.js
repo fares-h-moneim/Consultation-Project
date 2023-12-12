@@ -2,6 +2,7 @@ import MatchModel from "../model/match.js";
 import VenueModel from "../model/venue.js";
 import TeamModel from "../model/team.js";
 import RefereeModel from "../model/referee.js";
+import jwt from "jsonwebtoken";
 
 const getMatches = async (req, res) => {
     try {
@@ -16,6 +17,15 @@ const getMatches = async (req, res) => {
 
 const addMatch = async (req, res) => {
     try {
+        const token = req.header('Authorization');
+        if (!token) {
+        return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        if(decoded.role !== 'Manager'){
+            return res.status(401).json({ message: 'Unauthorized: Manager role needed' });
+        }
         const newMatchData = req.body;
         const match = new MatchModel(newMatchData);
         const savedMatch = await match.save();
