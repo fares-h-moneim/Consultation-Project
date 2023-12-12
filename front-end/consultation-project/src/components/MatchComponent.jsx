@@ -118,9 +118,9 @@ export default function Match({ matchDetails }) {
                         <h5 style={{ marginLeft: "10px" }}>{match.date_time}</h5>
                     </div>
                 </div>
-                <div className="col text-center">
+                {localStorage.getItem("role") !== "Admin" && <div className="col text-center">
                     <button type="button" className="btn btn-danger" onClick={() => { navigate(`/booking/${matchDetails._id}`) }}>Book Now!</button>
-                </div>
+                </div>}
             </div>
             <div className="row g-0 " style={{ backgroundColor: "grey" }}>
                 <div className="col">
