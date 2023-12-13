@@ -12,27 +12,27 @@ const AddStadiumForm = () => {
   const [errors, setErrors] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      if(validateForm()){
-          var options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
-                },
-                body: JSON.stringify(stadiumData)
-          }
-          var response = await fetch("http://localhost:3000/venue/add-venue", options);
-          if(response.ok){
-              var data = await response.json();
-              console.log(data);
-              navigate("/");
-          }
+    try {
+      if (validateForm()) {
+        var options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+          body: JSON.stringify(stadiumData)
+        }
+        var response = await fetch("http://localhost:3000/venue/add-venue", options);
+        if (response.ok) {
+          var data = await response.json();
+          console.log(data);
+          navigate("/manager");
+        }
       }
     }
-    catch(error){
-        console.log(error);
+    catch (error) {
+      console.log(error);
     }
   }
 
@@ -74,7 +74,7 @@ const AddStadiumForm = () => {
     return isValid;
   };
 
-  
+
 
   return (
     <div className="col mt-3 mb-3 ml-5 mr-5">

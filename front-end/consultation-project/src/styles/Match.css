@@ -1,5 +1,6 @@
 .match-component {
     margin-bottom: 20px;
+    overflow-y: auto;
 }
 
 .match-details {

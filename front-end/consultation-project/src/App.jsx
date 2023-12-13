@@ -24,8 +24,6 @@ export default function App() {
         setIndex(index);
     }
 
-
-
     return (
         <>
             <NavBar />
