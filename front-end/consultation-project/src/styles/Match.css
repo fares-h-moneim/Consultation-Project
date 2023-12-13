@@ -1,0 +1,38 @@
+.match-component {
+    margin-bottom: 20px;
+}
+
+.match-details {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.vs-label {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.match-info {
+    margin: 0;
+}
+
+.referee-info {
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+}
+
+.team-logo {
+    margin-right: 5px;
+}
+
+.match-buttons {
+    background-color: grey;
+    padding: 10px;
+}

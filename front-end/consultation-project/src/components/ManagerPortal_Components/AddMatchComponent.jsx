@@ -162,7 +162,7 @@ const AddMatchForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
-                navigate("/");
+                navigate("/view-matches");
             } else {
                 console.error("Failed to add match");
             }
@@ -198,7 +198,7 @@ const AddMatchForm = () => {
                                 >
                                     <option value="">Select Home Team</option>
                                     {teams.map((team) => (
-                                        <option key={team._id} value={team.team_name}>
+                                        <option key={team._id} value={team._id}>
                                             {team.team_name}
                                         </option>
                                     ))}
@@ -219,9 +219,9 @@ const AddMatchForm = () => {
                                 >
                                     <option value="">Select Away Team</option>
                                     {teams
-                                        .filter((team) => team.team_name !== matchData.home_team)
+                                        .filter((team) => team._id !== matchData.home_team)
                                         .map((team) => (
-                                            <option key={team._id} value={team.team_name}>
+                                            <option key={team._id} value={team._id}>
                                                 {team.team_name}
                                             </option>
                                         ))}
