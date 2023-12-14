@@ -30,6 +30,7 @@ export default function Booking() {
     const [homeTeamLogo, setHomeTeamLogo] = useState('');
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
     const [timer, setTimer] = useState(300); // Initial time in seconds (5 minutes)
+    const [reservedSeats, setReservedSeats] = useState([]);
 
 
     const teams = {
@@ -71,11 +72,26 @@ export default function Booking() {
                 console.error('Error fetching seating arrangement:', error);
             }
         };
+
+        const getReservedSeats = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/match/get-reserved-seats/${matchId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setReservedSeats(data);
+                } else {
+                    console.error('Failed to fetch reserved seats');
+                }
+
+            } catch (error) {
+                console.error('Error fetching reserved seats:', error);
+            }
+        };
         fetchSeatingArrangement();
     }, [matchId]);
 
     useEffect(() => {
-        SeatingChart(match, numRows, numCols);
+        SeatingChart(match, numRows, numCols, reservedSeats);
     }, [numRows, numCols]);
 
     function formatDate(date) {
@@ -98,17 +114,31 @@ export default function Booking() {
             setTimer((prevTimer) => prevTimer - 1);
         }, 1000);
 
-        // Cleanup: Clear the interval when the component unmounts
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
-        // Check if the timer reaches zero and perform actions if needed
         if (timer === 0) {
-            // Your logic when the timer reaches zero (e.g., redirect or show a message)
+            //TODO: Your logic when the timer reaches zero (e.g., redirect or show a message)
             console.log('Timer reached zero!');
         }
     }, [timer]);
+
+    useEffect(() => {
+        const container = document.getElementById('container');
+
+        const handleClick = (e) => {
+
+        };
+
+        // Add a single event listener to the container
+        container.addEventListener('seatchange', handleClick);
+
+        // Cleanup: Remove the event listener when the component unmounts
+        return () => {
+            container.removeEventListener('seatchange', handleClick);
+        };
+    }, []);
 
     function toString(time) {
         return time > 0 ? (Math.floor(time / 60) + ":" + (time % 60 < 10 ? '0' : '') + time % 60) : "Session Timed Out";

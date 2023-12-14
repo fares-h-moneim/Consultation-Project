@@ -19,15 +19,11 @@ export default function SeatingChart(match, rows, columns) {
           price: 200,
         },
       },
+      reservedSeats: [
+        { row: 0, col: 0 },
+        { row: 0, col: 1 },
+      ]
     },
   };
   var sc = new Seatchart(element, options);
-
-  sc.addEventListener('seatchange', function (e) {
-    console.log(e);
-  });
-
-  sc.addEventListener('submit', function (e) {
-    console.log(e);
-  });
 }
