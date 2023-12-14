@@ -68,7 +68,7 @@ const deleteBooking = async (req, res) => {
         const matchId = req.body.match_id;
         const reservedSeats = req.body.reserved_seats;
         const userId = decoded.sub;
-
+        console.log(matchId, reservedSeats);
         const booking = await BookingModel.findOneAndDelete({ match_id: matchId, reserved_seats: reservedSeats, user_id: userId });
 
         res.status(200).json(booking);

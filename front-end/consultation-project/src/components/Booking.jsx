@@ -29,7 +29,7 @@ export default function Booking() {
     const [match, setMatch] = useState({});
     const [homeTeamLogo, setHomeTeamLogo] = useState('');
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
-    const [timer, setTimer] = useState(300); // Initial time in seconds (5 minutes)
+    const [timer, setTimer] = useState(30); // Initial time in seconds (5 minutes)
     const [reservedSeats, setReservedSeats] = useState([]);
 
 
@@ -94,7 +94,7 @@ export default function Booking() {
     }, [matchId]);
 
     useEffect(() => {
-        SeatingChart(match, numRows, numCols, reservedSeats);
+        SeatingChart(matchId, numRows, numCols, reservedSeats);
     }, [numRows, numCols]);
 
     function formatDate(date) {
@@ -123,7 +123,7 @@ export default function Booking() {
     useEffect(() => {
         if (timer === 0) {
             //TODO: Your logic when the timer reaches zero (e.g., redirect or show a message)
-            console.log('Timer reached zero!');
+            window.dispatchEvent(new Event('timerFinished'));
         }
     }, [timer]);
 
