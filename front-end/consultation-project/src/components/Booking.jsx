@@ -75,9 +75,10 @@ export default function Booking() {
 
         const getReservedSeats = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/match/get-reserved-seats/${matchId}`);
+                const response = await fetch(`http://localhost:3000/booking/get-reserved-seats/${matchId}`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data);
                     setReservedSeats(data);
                 } else {
                     console.error('Failed to fetch reserved seats');
@@ -87,6 +88,8 @@ export default function Booking() {
                 console.error('Error fetching reserved seats:', error);
             }
         };
+
+        getReservedSeats();
         fetchSeatingArrangement();
     }, [matchId]);
 
@@ -123,22 +126,6 @@ export default function Booking() {
             console.log('Timer reached zero!');
         }
     }, [timer]);
-
-    useEffect(() => {
-        const container = document.getElementById('container');
-
-        const handleClick = (e) => {
-
-        };
-
-        // Add a single event listener to the container
-        container.addEventListener('seatchange', handleClick);
-
-        // Cleanup: Remove the event listener when the component unmounts
-        return () => {
-            container.removeEventListener('seatchange', handleClick);
-        };
-    }, []);
 
     function toString(time) {
         return time > 0 ? (Math.floor(time / 60) + ":" + (time % 60 < 10 ? '0' : '') + time % 60) : "Session Timed Out";
