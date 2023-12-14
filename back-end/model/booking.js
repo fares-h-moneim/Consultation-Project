@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   reserved_seats: {
     row: { type: Number, required: true },
-    column: { type: Number, required: true }
+    col: { type: Number, required: true }
   }
 });
 
