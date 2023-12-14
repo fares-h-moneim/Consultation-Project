@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-  matchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Match', required: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  reservedSeats: { type: [String], required: true }
+  match_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Match', required: true },
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  reserved_seats: {
+    row: { type: Number, required: true },
+    column: { type: Number, required: true }
+  }
 });
 
 const BookingModel = mongoose.model("Booking", bookingSchema);
 
 export default BookingModel;
+
