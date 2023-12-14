@@ -11,6 +11,7 @@ import bcrypt from "bcrypt";
 import venueRouter from "./routes/venue.js";
 import refereeRouter from "./routes/referee.js";
 import teamRouter from "./routes/team.js";
+import bookingRouter from "./routes/booking.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use("/match", matchRouter);
 app.use("/venue", venueRouter);
 app.use("/referee", refereeRouter);
 app.use("/team", teamRouter);
+app.use("/booking", bookingRouter)
 app.get("/getRequest", async (req, res) => {
     const users = await RequestModel.find({});
     res.send(users);
