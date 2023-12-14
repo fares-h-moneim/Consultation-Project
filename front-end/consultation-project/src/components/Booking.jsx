@@ -29,6 +29,8 @@ export default function Booking() {
     const [match, setMatch] = useState({});
     const [homeTeamLogo, setHomeTeamLogo] = useState('');
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
+    const [timer, setTimer] = useState(300); // Initial time in seconds (5 minutes)
+
 
     const teams = {
         'Al Ahly': Ahly,
@@ -91,10 +93,31 @@ export default function Booking() {
         return formattedDate
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimer((prevTimer) => prevTimer - 1);
+        }, 1000);
+
+        // Cleanup: Clear the interval when the component unmounts
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        // Check if the timer reaches zero and perform actions if needed
+        if (timer === 0) {
+            // Your logic when the timer reaches zero (e.g., redirect or show a message)
+            console.log('Timer reached zero!');
+        }
+    }, [timer]);
+
+    function toString(time) {
+        return time > 0 ? (Math.floor(time / 60) + ":" + (time % 60 < 10 ? '0' : '') + time % 60) : "Session Timed Out";
+    }
+
     return (
         <>
             <div className="container-fluid px-0">
-                <div className="row align-items-center justify-content-center" style={{ height: '92vh' }}>
+                <div className="row align-items-center justify-content-center pt-5" style={{ height: '92vh' }}>
                     <div className="col-lg-6 col-md-12 text-center">
                         <div>
                             <img src={homeTeamLogo} alt="Ahly Logo" width={'200px'} />
@@ -109,9 +132,15 @@ export default function Booking() {
                             </p>
                         </div>
                     </div>
-                    <div className="col-lg-10 col-md-12 mt-4 mt-lg-0" style={{ paddingRight: '5%' }}>
+                    <div className="row text-center">
+                        <h5 style={{ color: 'white', fontSize: '30px', marginTop: '10px' }}>
+                            {timer > 0 && "Session: " + toString(timer)}
+                        </h5>
+                    </div>
+                    <div className="col-lg-12 col-md-12 mt-4 mt-lg-0 p-5" style={{ paddingRight: '5%' }}>
                         <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%' }}>
-                            <div id="container"></div>
+                            <div id="container" className='justify-content-center'>
+                            </div>
                         </div>
                     </div>
                 </div>
