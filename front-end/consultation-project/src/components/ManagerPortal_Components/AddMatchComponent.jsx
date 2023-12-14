@@ -110,13 +110,7 @@ const AddMatchForm = () => {
                 [name]: value,
             });
         }
-
-        setErrors({
-            ...errors,
-            [name]: "",
-        });
     };
-
 
     const validateForm = () => {
         let isValid = true;
@@ -288,7 +282,9 @@ const AddMatchForm = () => {
                                     {referees.length > 0 && (
                                         <>
                                             <option value="">Select Main Referee</option>
-                                            {referees.map((referee) => (
+                                            {referees
+                                                .filter((referee) => referee._id !== matchData.lineman1 && referee._id !== matchData.lineman2)
+                                                .map((referee) => (
                                                 <option key={referee._id} value={referee._id}>
                                                     {referee.first_name + " " + referee.last_name}
                                                 </option>
@@ -310,7 +306,9 @@ const AddMatchForm = () => {
                                     {referees.length > 0 && (
                                         <>
                                             <option value="">Select Linesman 1</option>
-                                            {referees.map((referee) => (
+                                            {referees
+                                                .filter((referee) => referee._id !== matchData.main_referee && referee._id !== matchData.lineman2)
+                                                .map((referee) => (
                                                 <option key={referee._id} value={referee._id}>
                                                     {referee.first_name + " " + referee.last_name}
                                                 </option>
@@ -332,7 +330,9 @@ const AddMatchForm = () => {
                                     {referees.length > 0 && (
                                         <>
                                             <option value="">Select Linesman 2</option>
-                                            {referees.map((referee) => (
+                                            {referees
+                                                .filter((referee) => referee._id !== matchData.main_referee && referee._id !== matchData.lineman1)
+                                                .map((referee) => (
                                                 <option key={referee._id} value={referee._id}>
                                                     {referee.first_name + " " + referee.last_name}
                                                 </option>
