@@ -17,6 +17,7 @@ import AddingStadium from './components/ManagerPortal_Components/AddStadiumPage'
 import ViewUserRequests from "./components/ViewUserRequests";
 import ViewUsers from "./components/ViewUsers";
 
+
 export default function App() {
     const [index, setIndex] = useState("home");
     const onPageClick = (index) => {

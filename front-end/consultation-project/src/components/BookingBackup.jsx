@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StadiumIcon from '../assets/StadiumWhite.png';
-import SeatingChart from '../SeatingChart'; '../SeatingChart';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Ahly from '../assets/Teams/Al Ahly.png';
@@ -74,9 +73,6 @@ export default function Booking() {
         };
         fetchSeatingArrangement();
     }, [matchId]);
-    useEffect(() => {
-        SeatingChart(numRows, numCols);
-    }, [numRows, numCols]);
 
     const generateSeatingArrangement = (rows, cols) => {
         const seatingArrangement = [];
@@ -94,6 +90,7 @@ export default function Booking() {
     //TODO: Make the user able to book multiple seats
 
     function formatDate(date) {
+        console.log(date);
         const originalDate = new Date(date);
         const opts = {
             year: 'numeric',
@@ -132,49 +129,62 @@ export default function Booking() {
         return selectedSeats.length * seatPrice;
     };
 
+    console.log(match);
+
     return (
-        <>
-            <div className="container-fluid px-0">
-                <div className="row align-items-center justify-content-center" style={{ height: '92vh' }}>
-                    <div className="col-lg-6 col-md-12 text-center">
-                        <div>
-                            <img src={homeTeamLogo} alt="Ahly Logo" width={'200px'} />
-                            <span className="mx-2 text-white" style={{ fontSize: "40px" }}>&nbsp; VS &nbsp;</span>
-                            <img src={awayTeamLogo} alt="Zamalek Logo" width={'200'} />
-                        </div>
-                        <div className="mt-3">
-                            <p style={{ color: 'white', fontSize: '40px' }}>{match.match && formatDate(match.match.date_time)}</p>
-                            <p style={{ color: 'white', fontSize: '40px' }}>
-                                <img src={StadiumIcon} alt="Stadium Icon" style={{ marginRight: '10px', width: '75px' }} />
-                                {match.venue && match.venue.venue_name}
-                            </p>
-                        </div>
+        <div className="container-fluid px-0">
+            <div className="row align-items-center justify-content-center" style={{ height: '92vh' }}>
+                <div className="col-lg-6 col-md-12 text-center">
+                    <div>
+                        <img src={homeTeamLogo} alt="Ahly Logo" width={'200px'} />
+                        <span className="mx-2 text-white" style={{ fontSize: "40px" }}>&nbsp; VS &nbsp;</span>
+                        <img src={awayTeamLogo} alt="Zamalek Logo" width={'200'} />
                     </div>
-                    <div className="col-lg-10 col-md-12 mt-4 mt-lg-0" style={{ paddingRight: '5%' }}>
-                        <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%' }}>
-                            <div id="container"></div>
-                        </div>
+                    <div className="mt-3">
+                        <p style={{ color: 'white', fontSize: '40px' }}>{match.match && formatDate(match.match.date_time)}</p>
+                        <p style={{ color: 'white', fontSize: '40px' }}>
+                            <img src={StadiumIcon} alt="Stadium Icon" style={{ marginRight: '10px', width: '75px' }} />
+                            {match.venue && match.venue.venue_name}
+                        </p>
                     </div>
                 </div>
-                {selectedSeats.length > 0 && (
-                    <div className="row justify-content-center mt-4">
-                        <div className="col text-center" style={{ backgroundColor: 'red', padding: '20px', width: '1000px' }}>
-                            <div className="d-flex justify-content-center">
-                                <div style={{ backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
-                                    <h4>Receipt</h4>
-                                    <ul>
-                                        {selectedSeats.map((selectedSeat, index) => (
-                                            <li key={index}>{selectedSeat}</li>
-                                        ))}
-                                    </ul>
-                                    <p>Total Amount: ${calculateTotalAmount()}</p>
-                                    <button className="btn btn-success">Checkout</button>
-                                </div>
+                <div className="col-lg-6 col-md-12 mt-4 mt-lg-0" style={{ paddingRight: '5%' }}>
+                    <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%' }}>
+                        {seatingArrangement.map((rowSeats, rowIndex) => (
+                            <div key={rowIndex} className="seating-row">
+                                {rowSeats.map((seat, colIndex) => (
+                                    <button
+                                        key={colIndex}
+                                        className={`btn ${seat.selected ? 'btn-primary' : 'btn-outline-primary'}`}
+                                        onClick={() => handleSeatClick(rowIndex, colIndex)}
+                                        style={{ width: '50px', height: '50px' }}
+                                    >
+                                        {seat.seat}
+                                    </button>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {selectedSeats.length > 0 && (
+                <div className="row justify-content-center mt-4">
+                    <div className="col text-center" style={{ backgroundColor: 'red', padding: '20px', width: '1000px' }}>
+                        <div className="d-flex justify-content-center">
+                            <div style={{ backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
+                                <h4>Receipt</h4>
+                                <ul>
+                                    {selectedSeats.map((selectedSeat, index) => (
+                                        <li key={index}>{selectedSeat}</li>
+                                    ))}
+                                </ul>
+                                <p>Total Amount: ${calculateTotalAmount()}</p>
+                                <button className="btn btn-success">Checkout</button>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
-        </>
+                </div>
+            )}
+        </div>
     );
 }
