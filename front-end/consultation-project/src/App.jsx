@@ -26,8 +26,9 @@ import ViewBooking from "./components/ManagerPortal_Components/ViewBooking";
 export default function App() {
     return (
         <>
-            <NavBar />
+
             <div className="App container">
+                <NavBar />
                 <Routes>
                     <Route path="/" element={<LandingPage />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>

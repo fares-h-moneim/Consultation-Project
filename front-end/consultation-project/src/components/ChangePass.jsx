@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/SignUp.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function ChangePass() {
     const [passwords, setPasswords] = useState({
@@ -9,6 +11,7 @@ export default function ChangePass() {
         repeatNewPassword: "",
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,9 +46,29 @@ export default function ChangePass() {
                 })
                     .then((response) => {
                         if (response.ok) {
-                            alert("Password changed successfully!");
+                            toast.success(`Password Changed Successfully`, {
+                                position: "bottom-left",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                            });
+                            navigate("/edit-profile");
+
                         } else {
-                            alert("Failed to change password");
+                            toast.error(`Password Change Failed`, {
+                                position: "bottom-left",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                            });
                         }
                     })
                     .catch((error) => {
