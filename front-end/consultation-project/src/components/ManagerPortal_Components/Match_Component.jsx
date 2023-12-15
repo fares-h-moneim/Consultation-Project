@@ -145,7 +145,18 @@ export default function MatchComponent({ matchDetails }) {
                 </div>
             </div>
             <div className="row g-0 match-buttons">
-                <div className="col-6 text-center">
+                <div className="col-4 text-center">
+                    <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => {
+                            navigate(`/view-reservations/${matchDetails._id}`);
+                        }}
+                    >
+                        View Reserved Seats
+                    </button>
+                </div>
+                <div className="col-4 text-center">
                     <button
                         type="button"
                         className="btn btn-danger"
@@ -156,7 +167,7 @@ export default function MatchComponent({ matchDetails }) {
                         Edit
                     </button>
                 </div>
-                <div className="col-6 text-center">
+                <div className="col-4 text-center">
                     <button
                         type="button"
                         className="btn btn-danger"
