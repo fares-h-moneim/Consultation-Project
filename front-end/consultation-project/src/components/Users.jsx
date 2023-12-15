@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 export default function User({ user, key }) {
     const [isRemoved, setIsRemoved] = useState(false);
@@ -30,6 +31,16 @@ export default function User({ user, key }) {
             console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
             var response = await fetch(`http://localhost:3000/user/delete-user`, options);
             if (response.ok) {
+                toast.success(`${user.username} Removed!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
                 setIsRemoved(true);
             }
         }
