@@ -156,7 +156,6 @@ const AddMatchForm = () => {
             const response = await fetch("http://localhost:3000/match/add-match", options);
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
                 toast.success(`⚽ Match Added Successfully!`, {
                     position: "bottom-left",
                     autoClose: 5000,

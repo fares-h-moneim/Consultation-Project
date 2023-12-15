@@ -20,13 +20,18 @@ export default function MatchesListForManager() {
 
     getMatches();
   }, []);
+  const handleDelete = (matchId) => {
+        setMatches((prevMatches) =>
+            prevMatches.filter((match) => match._id !== matchId)
+        );
+  };
 
   return (
     <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ height: "100%" }} >
       {
         matches.map((match, index) => (
           <div key={index} className="d-flex align-items-center justify-content-center m-4">
-            <MatchComponent matchDetails={match} />
+            <MatchComponent matchDetails={match} onDelete={handleDelete} />
           </div>
         ))
       }

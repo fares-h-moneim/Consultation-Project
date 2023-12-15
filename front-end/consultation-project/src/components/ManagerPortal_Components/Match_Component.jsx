@@ -4,6 +4,7 @@ import calendar from "../../assets/calendar.svg";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { toast } from 'react-toastify';
 import "../../styles/Match.css";
 
 import Ahly from "../../assets/Teams/Al Ahly.png";
@@ -27,6 +28,61 @@ import ZED from "../../assets/Teams/ZED.png";
 
 export default function MatchComponent({ matchDetails }) {
 
+    // TODO : add delete match functionality
+    async function deleteMatch() {
+        try {
+            const data = {
+                match_id: matchDetails._id
+            }
+            var options = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                },
+                body: JSON.stringify(data)
+            }
+            var response = await fetch(`http://localhost:3000/match/delete-match`, options);
+            if (response.ok) {
+                toast.success(`🗑️ Match Deleted Successfully`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+                onDelete(matchDetails._id);
+            }
+            else {
+                toast.error(`❌ Error Deleting Match`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            }
+        }
+        catch (error) {
+            toast.error(`❌ Error Deleting Match`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
+        }
+    }
     const teams = {
         "Al Ahly": Ahly,
         "Al Ittihad": Ittihad,
@@ -86,10 +142,10 @@ export default function MatchComponent({ matchDetails }) {
                     lineman1: data.lineman1.first_name + " " + data.lineman1.last_name,
                     lineman2: data.lineman2.first_name + " " + data.lineman2.last_name
                 }
-
                 setMatch(m);
             }
         }
+
 
         getMatches();
     }, []);
@@ -169,19 +225,7 @@ export default function MatchComponent({ matchDetails }) {
                     <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => {
-                            toast.success(`🗑️ Match Deleted Successfully`, {
-                                position: "bottom-left",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: "light"
-                            });
-                            navigate("/delete-match");
-                        }}
+                        onClick={() => deleteMatch()}
                     >
                         Delete
                     </button>

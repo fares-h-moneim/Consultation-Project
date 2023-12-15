@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function EditMatchForm({ matchDetails }) {
+export default function EditMatchForm({ matchDetails, matchId }) {
   const [matchData, setMatchData] = useState(matchDetails);
 
   const [errors, setErrors] = useState({});
 
-  const teams = ["Ahly", "Zamalek"];
-  const stadiums = ["Cairo International Stadium", "Stadium2"];
-
+  //endpoint to update: http://localhost:3000/match/update-match
   //TODO: Edit match functionality
-
   useEffect(() => {
     // Update local state when matchDetails prop changes
     setMatchData(matchDetails);
@@ -89,7 +86,7 @@ export default function EditMatchForm({ matchDetails }) {
                   name="homeTeam"
                   id="homeTeam"
                   required
-                  value={matchData.home_team}
+                  value={matchData.home_team.team_name}
                   onChange={handleChange}
                   selected={matchData.home_team}
                 >

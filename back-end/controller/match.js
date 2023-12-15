@@ -2,6 +2,8 @@ import MatchModel from "../model/match.js";
 import VenueModel from "../model/venue.js";
 import TeamModel from "../model/team.js";
 import RefereeModel from "../model/referee.js";
+import BookingModel from "../model/booking.js";
+import BookingTempModel from "../model/booking-temp.js";
 import jwt from "jsonwebtoken";
 import BookingModel from "../model/booking.js";
 import BookingTempModel from "../model/booking-temp.js";
@@ -125,7 +127,7 @@ const getOnlyMatchById = async (req, res) => {
 
 const updateMatch = async (req, res) => {
     try {
-        const matchId = req.params.matchId;
+        const matchId = req.body.matchId;
         const updatedMatchData = req.body;
         const match = await MatchModel.findByIdAndUpdate(matchId, updatedMatchData, { new: true });
         if (match) {
@@ -190,9 +192,10 @@ const deleteMatch = async (req, res) => {
         }
 
         const matchId = req.body.match_id;
-        console.log(matchId);
         const deletedMatch = await MatchModel.findByIdAndDelete({ _id: matchId });
-        res.status(200);
+        const deleteBookings = await BookingModel.deleteMany({ match_id: matchId });
+        const deleteBookingsTemp = await BookingTempModel.deleteMany({ match_id: matchId });
+        res.status(200).json(deletedMatch);
     } catch (error) {
         console.error('Error deleting match:', error);
         res.status(500).json({ error: 'Internal Server Error' });
