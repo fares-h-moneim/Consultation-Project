@@ -94,7 +94,7 @@ const deleteBooking = async (req, res) => {
     }
 };
 
-const getUserBookingsforMatch = async (req, res) => {
+const getUserBookings = async (req, res) => {
     try {
         const token = req.header('Authorization');
         if (!token) {
