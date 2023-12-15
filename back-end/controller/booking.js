@@ -46,7 +46,7 @@ const getReservedSeats = async (req, res) => {
         const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
         const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
         var reserved = await BookingModel.find({ match_id: matchId });
-        var tempReserved = await BookingTempModel.find({ match_id: matchId, user_id: {$ne: decoded.sub} }, {expires_at: 0});
+        var tempReserved = await BookingTempModel.find({ match_id: matchId, user_id: { $ne: decoded.sub } }, { expires_at: 0 });
         var reservedSeats = [];
         reserved.forEach(booking => {
             reservedSeats.push(booking.reserved_seats);
@@ -94,31 +94,8 @@ const deleteBooking = async (req, res) => {
     }
 };
 
-const getUserBookings = async (req, res) => {
-    try {
-        const token = req.header('Authorization');
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized: Missing token' });
-        }
-
-        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
-        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
-
-        if (decoded.role !== 'Fan') {
-            return res.status(401).json({ message: 'Unauthorized: Fan role needed' });
-        }
-
-        const userId = decoded.sub;
-        const matchId = req.params.matchId;
-        const bookings = await BookingModel.find({ match_id: matchId, user_id: userId });
-        res.status(200).json(bookings);
-    } catch (error) {
-        console.error('Error getting user bookings:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
 const getUserBookings = async () => {
-    try{
+    try {
         const token = req.header('Authorization');
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized: Missing token' });
