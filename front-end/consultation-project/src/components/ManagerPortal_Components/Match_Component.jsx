@@ -27,8 +27,6 @@ import ZED from "../../assets/Teams/ZED.png";
 
 export default function MatchComponent({ matchDetails }) {
 
-    // TODO : add delete match functionality
-
     const teams = {
         "Al Ahly": Ahly,
         "Al Ittihad": Ittihad,

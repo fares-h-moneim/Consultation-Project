@@ -30,7 +30,7 @@ export default function ViewBooking() {
     const [homeTeamLogo, setHomeTeamLogo] = useState('');
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
     const [reservedSeats, setReservedSeats] = useState([]);
-    const [userTempReservedSeats, setUserTempReservedSeats] = useState([]);
+    const [disabledSeats, setDisabledSeats] = useState([]);
     const navigate = useNavigate();
 
 
@@ -44,16 +44,17 @@ export default function ViewBooking() {
         'El Dakhleya': Dakhleya,
         'El Gaish': Gaish,
         'El Gouna': Gouna,
-        ENPPI: Enppi,
-        Ismaily: Ismaily,
+        'ENPPI': Enppi,
+        'Ismaily': Ismaily,
         'Modern Future': Future,
         'National Bank': NBE,
-        Pharco: Pharco,
-        Pyramids: Pyramids,
-        Smouha: Smouha,
-        Zamalek: Zamalek,
-        ZED: ZED,
+        'Pharco': Pharco,
+        'Pyramids': Pyramids,
+        'Smouha': Smouha,
+        'Zamalek': Zamalek,
+        'ZED': ZED,
     };
+
 
     useEffect(() => {
         const fetchSeatingArrangement = async () => {
@@ -61,11 +62,14 @@ export default function ViewBooking() {
                 const response = await fetch(`http://localhost:3000/match/get-match/${matchId}`);
                 if (response.ok) {
                     const data = await response.json();
-                    setNumRows(data.venue.num_of_rows);
-                    setNumCols(data.venue.num_of_seats_per_row);
+                    const numRows = data.venue.num_of_rows;
+                    const numCols = data.venue.num_of_seats_per_row;
+                    setNumRows(numRows);
+                    setNumCols(numCols);
                     setMatch(data);
                     setHomeTeamLogo(teams[data.home_team.team_name]);
                     setAwayTeamLogo(teams[data.away_team.team_name]);
+                    return { numRows, numCols };
                 } else {
                     console.error('Failed to fetch seating arrangement');
                 }
@@ -74,7 +78,7 @@ export default function ViewBooking() {
             }
         };
 
-        const getReservedSeats = async () => {
+        const getReservedSeats = async (numRows, numCols) => {
             try {
                 const response = await fetch(`http://localhost:3000/booking/get-reserved-seats/${matchId}`, {
                     method: 'GET',
@@ -87,21 +91,37 @@ export default function ViewBooking() {
                 if (response.ok) {
                     const data = await response.json();
                     setReservedSeats(data);
+
+                    // Set disabled seats to all seats other than reserved seats
+                    console.log(numRows, numCols);
+                    const allSeats = [];
+                    for (let row = 0; row < numRows; row++) {
+                        for (let col = 0; col < numCols; col++) {
+                            allSeats.push({ row, col });
+                        }
+                    }
+                    const reservedSeatIds = data.map(seat => ({ row: seat.row, col: seat.col }));
+                    const disabledSeatIds = allSeats.filter(seat => !reservedSeatIds.some(reservedSeat => (
+                        reservedSeat.row === seat.row && reservedSeat.col === seat.col
+                    )));
+                    console.log(disabledSeatIds);
+                    setDisabledSeats(disabledSeatIds);
                 } else {
                     console.error('Failed to fetch reserved seats');
                 }
-
             } catch (error) {
                 console.error('Error fetching reserved seats:', error);
             }
         };
-        getReservedSeats();
-        fetchSeatingArrangement();
+
+        fetchSeatingArrangement().then(({ numRows, numCols }) => getReservedSeats(numRows, numCols));
+
     }, [matchId]);
 
     useEffect(() => {
-        SeatingChart(matchId, numRows, numCols, reservedSeats);
-    }, [numRows, numCols]);
+        //TODO: prevent the seat state from being changed when user clicks on a seat
+        SeatingChart(matchId, numRows, numCols, reservedSeats, disabledSeats);
+    }, [disabledSeats]);
 
     function formatDate(date) {
         const originalDate = new Date(date);

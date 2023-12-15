@@ -1,12 +1,14 @@
 import "../styles/SeatingChart.css";
 
-export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats = []) {
+export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats = [], disabledSeats = []) {
   const selectedSeats = [];
   var element = document.getElementById('container');
   var seats = document.querySelectorAll('.sc-seat');
+  var cartVisible = disabledSeats.length > 0 ? true : false;
   var options = {
     cart: {
-      currency: 'EGP '
+      currency: 'EGP ',
+      visible: cartVisible,
     },
     map: {
       rows: rows,
@@ -20,6 +22,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
       },
       reservedSeats: reservedSeats,
       selectedSeats: userTempReservedSeats,
+      disabledSeats: disabledSeats
     },
   };
   var sc = new Seatchart(element, options);
@@ -50,7 +53,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   }
 
   const reserveSeat = async (e) => {
-    if (e.current.state === 'selected') {
+    if (e.current.state === 'selected' && localStorage.getItem("role") === "Fan") {
       try {
         const data = {
           match_id: match,
@@ -76,7 +79,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
         console.error('Error reserving seat:', error);
       }
     }
-    else if (e.previous.state === 'selected' && e.current.state === 'available') {
+    else if (e.previous.state === 'selected' && e.current.state === 'available' && localStorage.getItem("role") === "Fan") {
       try {
         const data = {
           match_id: match,
@@ -100,6 +103,9 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
       catch (error) {
         console.error('Error cancelling seat reservation:', error);
       }
+    }
+    else if (e.previous.state === 'selected') {
+      alert('This seat is not available');
     }
   }
 
