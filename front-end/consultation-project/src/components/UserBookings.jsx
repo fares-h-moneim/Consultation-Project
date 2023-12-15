@@ -1,31 +1,31 @@
 import React from "react";
-import stadium from "../../assets/stadium.svg"
-import calendar from "../../assets/calendar.svg";
+import stadium from "../assets/stadium.svg"
+import calendar from "../assets/calendar.svg";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
-import "../../styles/Match.css";
+import "../styles/Match.css";
 
-import Ahly from "../../assets/Teams/Al Ahly.png";
-import Ittihad from "../../assets/Teams/Al Ittihad.png";
-import Masry from "../../assets/Teams/Al Masry.png";
-import Mokawloon from "../../assets/Teams/Al Mokawloon.png";
-import Mahala from "../../assets/Teams/Baladiyat El Mahalla.png";
-import Ceramica from "../../assets/Teams/Ceramica Cleopatra.png";
-import Dakhleya from "../../assets/Teams/El Dakhleya.png";
-import Gaish from "../../assets/Teams/El Gaish.png";
-import Gouna from "../../assets/Teams/El Gouna.png";
-import Enppi from "../../assets/Teams/ENPPI.png";
-import Ismaily from "../../assets/Teams/Ismaily.png";
-import Future from "../../assets/Teams/Modern Future.png";
-import NBE from "../../assets/Teams/National Bank.png";
-import Pharco from "../../assets/Teams/Pharco.png";
-import Pyramids from "../../assets/Teams/Pyramids.png";
-import Smouha from "../../assets/Teams/Smouha.png";
-import Zamalek from "../../assets/Teams/Zamalek.png";
-import ZED from "../../assets/Teams/ZED.png";
+import Ahly from "../assets/Teams/Al Ahly.png";
+import Ittihad from "../assets/Teams/Al Ittihad.png";
+import Masry from "../assets/Teams/Al Masry.png";
+import Mokawloon from "../assets/Teams/Al Mokawloon.png";
+import Mahala from "../assets/Teams/Baladiyat El Mahalla.png";
+import Ceramica from "../assets/Teams/Ceramica Cleopatra.png";
+import Dakhleya from "../assets/Teams/El Dakhleya.png";
+import Gaish from "../assets/Teams/El Gaish.png";
+import Gouna from "../assets/Teams/El Gouna.png";
+import Enppi from "../assets/Teams/ENPPI.png";
+import Ismaily from "../assets/Teams/Ismaily.png";
+import Future from "../assets/Teams/Modern Future.png";
+import NBE from "../assets/Teams/National Bank.png";
+import Pharco from "../assets/Teams/Pharco.png";
+import Pyramids from "../assets/Teams/Pyramids.png";
+import Smouha from "../assets/Teams/Smouha.png";
+import Zamalek from "../assets/Teams/Zamalek.png";
+import ZED from "../assets/Teams/ZED.png";
 
-export default function MatchComponent({ matchDetails }) {
+export default function UserBookings({ matchDetails }) {
 
     // TODO : Change Navigator
 
@@ -135,28 +135,12 @@ export default function MatchComponent({ matchDetails }) {
             <div className="row g-0 match-details" >
                 <div className="col-12 text-center" >
                     <h5 className="referee-info">
-                        Main referee: {match.main_referee}
-                    </h5>
-                </div>
-                <div className="col-12 text-center">
-                    <h5 className="referee-info">
-                        Two Linesmen: {match.lineman1} / {match.lineman2}
+                        Seats: B5
                     </h5>
                 </div>
             </div>
             <div className="row g-0 match-buttons">
-                <div className="col-6 text-center">
-                    <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => {
-                            navigate(`/edit-match/${matchDetails._id}`);
-                        }}
-                    >
-                        Edit
-                    </button>
-                </div>
-                <div className="col-6 text-center">
+                <div className="col text-center">
                     <button
                         type="button"
                         className="btn btn-danger"
@@ -164,7 +148,7 @@ export default function MatchComponent({ matchDetails }) {
                             navigate("/delete-match");
                         }}
                     >
-                        Delete
+                        Cancel Booking
                     </button>
                 </div>
             </div>
