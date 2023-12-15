@@ -101,7 +101,7 @@ export default function Booking() {
             hour12: true,
         };
 
-        const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
+        const formattedDate = new Intl.DateTimeFormat('en-UK', opts).format(originalDate);
         return formattedDate
     }
 

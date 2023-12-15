@@ -71,7 +71,13 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
     }, []);
 
     function formatDate(date) {
-        const originalDate = new Date(date);
+        // Ensure the date string is in a consistent format (ISO 8601)
+        const isoString = new Date(date).toISOString();
+
+        // Parse the ISO string
+        const originalDate = new Date(isoString);
+
+        // Format options
         const opts = {
             year: 'numeric',
             month: '2-digit',
@@ -81,8 +87,9 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
             hour12: true,
         };
 
-        const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
-        return formattedDate
+        // Format the date
+        const formattedDate = new Intl.DateTimeFormat('en-UK', opts).format(originalDate);
+        return formattedDate;
     }
 
     return (
@@ -102,7 +109,7 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
             </div>
             <div className="row mt-3">
                 <div className="text-center">
-                    <div className="h4" style={{ fontSize: "50px" }}>{formatDate(match.date_time)}</div>
+                    <div className="h4" style={{ fontSize: "50px" }}>{match.date_time}</div>
                 </div>
             </div>
         </div>
