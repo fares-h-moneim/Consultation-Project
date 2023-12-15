@@ -57,8 +57,8 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
                 if (response.ok) {
                     var data = await response.json();
                     setMatch({
-                        home_team: data.home_team.team_name,
-                        away_team: data.away_team.team_name,
+                        home_team: data.home_team.team_name, // Fix typo here
+                        away_team: data.away_team.team_name, // Fix typo here
                         date_time: data.match.date_time,
                         venue: data.venue.venue_name,
                     });
@@ -81,7 +81,7 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
             hour12: true,
         };
 
-        const formattedDate = new Intl.DateTimeFormat('en-UK', opts).format(originalDate);
+        const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
         return formattedDate
     }
 
