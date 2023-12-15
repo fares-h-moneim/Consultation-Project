@@ -4,7 +4,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   const selectedSeats = [];
   var element = document.getElementById('container');
   var seats = document.querySelectorAll('.sc-seat');
-  var cartVisible = disabledSeats.length > 0 ? true : false;
+  var cartVisible = localStorage.getItem("role") === "Fan" ? true : false;
   var options = {
     cart: {
       currency: 'EGP ',
