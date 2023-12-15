@@ -5,8 +5,6 @@ import RefereeModel from "../model/referee.js";
 import BookingModel from "../model/booking.js";
 import BookingTempModel from "../model/booking-temp.js";
 import jwt from "jsonwebtoken";
-import BookingModel from "../model/booking.js";
-import BookingTempModel from "../model/booking-temp.js";
 
 const getMatches = async (req, res) => {
     try {
