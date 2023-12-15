@@ -24,7 +24,6 @@ export default function EditUserForm({ user }) {
         e.preventDefault();
         const result = await validateForm();
         if (result) {
-            console.log("hello")
             try {
                 var options = {
                     method: "PUT",

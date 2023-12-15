@@ -70,7 +70,7 @@ export default function EditingMatch() {
         >
             <div className="row align-items-center">
                 <MascotImage />
-                <EditMatchForm matchDetails={match} />
+                <EditMatchForm matchDetails={match} matchId = {matchId} />
             </div>
         </div>
     );

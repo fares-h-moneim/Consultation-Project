@@ -125,7 +125,7 @@ const getOnlyMatchById = async (req, res) => {
 
 const updateMatch = async (req, res) => {
     try {
-        const matchId = req.params.matchId;
+        const matchId = req.body.matchId;
         const updatedMatchData = req.body;
         const match = await MatchModel.findByIdAndUpdate(matchId, updatedMatchData, { new: true });
         if (match) {
