@@ -24,7 +24,7 @@ export default function ViewUserRequests() {
     }, []);
 
     return (
-        <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ backgroundColor: "red", height: "92vh" }}>
+        <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ height: "92vh" }}>
             <div className="d-flex flex-column align-items-center justify-content-center m-4">
                 {requests && requests.map((request) => (
                     <UserRequest user={request} key={request.id} />

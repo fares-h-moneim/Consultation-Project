@@ -1,7 +1,14 @@
 .App {
     padding-right: 0;
     padding-left: 0;
-    background-color: red;
+    background-image: url(../assets/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /*Darkenimage*/
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
 }
 
 .container {

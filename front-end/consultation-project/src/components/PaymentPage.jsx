@@ -9,7 +9,7 @@ export default function PaymentPage() {
     console.log(eventData);
 
     return (
-        <div className="container-fluid px-0 content" style={{ backgroundColor: "red", height: "92vh" }}>
+        <div className="container-fluid px-0 content" style={{ height: "92vh" }}>
             <div className="row align-items-center">
                 <MascotImage />
                 <Payment />
