@@ -145,7 +145,7 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                     hour12: true,
                 };
 
-                const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
+                const formattedDate = new Intl.DateTimeFormat('en-UK', opts).format(originalDate);
 
                 const m = {
                     home_team: data.home_team.team_name,
