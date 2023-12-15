@@ -196,8 +196,8 @@ export default function Booking() {
                             {timer > 0 && "Session: " + toString(timer)}
                         </h5>
                     </div>
-                    <div className="col-lg-12 col-md-12 mt-4 mt-lg-0 p-5" style={{ paddingRight: '5%' }}>
-                        <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%' }}>
+                    <div className="col-lg-12 col-md-12 mt-4 mt-lg-0 p-5 d-flex justify-content-center align-content-center" style={{ paddingRight: '5%' }}>
+                        <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%', maxWidth: '70%' }}>
                             <div id="container" className='justify-content-center'>
                             </div>
                         </div>

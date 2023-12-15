@@ -108,19 +108,6 @@ export default function EditUserForm({ user }) {
                 newErrors[key] = "";
             }
         }
-        if (userData.username !== "") {
-            const usernameTaken = await checkUsernameAvailability();
-            const sameUsername = userData.username === localStorage.getItem("username");
-            if (usernameTaken && !sameUsername) {
-                newErrors["username_taken"] = "This username is already taken";
-                isValid = false;
-            } else {
-                newErrors["username_taken"] = "";
-            }
-        }
-        else{
-            newErrors["username_taken"] = "";
-        }
 
         setErrors(newErrors);
         return isValid;
@@ -183,43 +170,6 @@ export default function EditUserForm({ user }) {
                             </div>
                             <div className="col-md-6">
                                 {errors["last_name"] !== "" && <div className="text-danger">Last Name is Required</div>}
-                            </div>
-                        </div>}
-                        <div className="form-row">
-                            <div className="form-group col-md-6">
-                                <label htmlFor="uname">Username</label>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-md rounded-0"
-                                    name="username"
-                                    id="uname"
-                                    required=""
-                                    placeholder="johndoe"
-                                    value={userData.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-md rounded-0"
-                                    name="email"
-                                    id="email"
-                                    required=""
-                                    placeholder="example@email.com"
-                                    value={userData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        {(errors["username"] || errors["email"] || errors["username_taken"]) && <div className="form-row">
-                            <div className="col-md-6 mb-1">
-                                {errors["username_taken"] !== "" && <div className="text-danger"> Username already taken</div>}
-                                {errors["username"] !== "" && <div className="text-danger"> Username is Required</div>}
-                            </div>
-                            <div className="col-md-6">
-                                {errors["email"] !== "" && <div className="text-danger"> Provide a valid email</div>}
                             </div>
                         </div>}
                         <div className="form-row">
