@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddMatchForm = () => {
     const navigate = useNavigate();
@@ -156,13 +157,42 @@ const AddMatchForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                toast.success(`⚽ Match Added Successfully!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    icon: false
+                });
                 navigate("/view-matches");
             } else {
-                console.error("Failed to add match");
+                toast.error(`Failed to add match`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
             }
         }
         catch (error) {
-            console.error("Error adding match:", error);
+            toast.error(`Error adding match`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
         }
         console.log("Match data submitted:", matchData);
     };
@@ -285,10 +315,10 @@ const AddMatchForm = () => {
                                             {referees
                                                 .filter((referee) => referee._id !== matchData.lineman1 && referee._id !== matchData.lineman2)
                                                 .map((referee) => (
-                                                <option key={referee._id} value={referee._id}>
-                                                    {referee.first_name + " " + referee.last_name}
-                                                </option>
-                                            ))}
+                                                    <option key={referee._id} value={referee._id}>
+                                                        {referee.first_name + " " + referee.last_name}
+                                                    </option>
+                                                ))}
                                         </>
                                     )}
                                 </select>
@@ -309,10 +339,10 @@ const AddMatchForm = () => {
                                             {referees
                                                 .filter((referee) => referee._id !== matchData.main_referee && referee._id !== matchData.lineman2)
                                                 .map((referee) => (
-                                                <option key={referee._id} value={referee._id}>
-                                                    {referee.first_name + " " + referee.last_name}
-                                                </option>
-                                            ))}
+                                                    <option key={referee._id} value={referee._id}>
+                                                        {referee.first_name + " " + referee.last_name}
+                                                    </option>
+                                                ))}
                                         </>
                                     )}
                                 </select>
@@ -333,10 +363,10 @@ const AddMatchForm = () => {
                                             {referees
                                                 .filter((referee) => referee._id !== matchData.main_referee && referee._id !== matchData.lineman1)
                                                 .map((referee) => (
-                                                <option key={referee._id} value={referee._id}>
-                                                    {referee.first_name + " " + referee.last_name}
-                                                </option>
-                                            ))}
+                                                    <option key={referee._id} value={referee._id}>
+                                                        {referee.first_name + " " + referee.last_name}
+                                                    </option>
+                                                ))}
                                         </>
                                     )}
                                 </select>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddStadiumForm = () => {
   const [stadiumData, setStadiumData] = useState({
@@ -27,12 +28,32 @@ const AddStadiumForm = () => {
         if (response.ok) {
           var data = await response.json();
           console.log(data);
+          toast.success(`🏟️ Stadium Added Successfully`, {
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
           navigate("/manager");
         }
       }
     }
     catch (error) {
-      console.log(error);
+      toast.error(`Error Adding Stadium`, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+      console.error(error);
     }
   }
 

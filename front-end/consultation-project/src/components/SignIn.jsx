@@ -49,9 +49,31 @@ export default function SignIn() {
                         navigate("/");
                     }
                     else if (role === "Manager") {
+                        toast.info(`👋 Welcome Coach ${username}!`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            icon: false
+                        });
                         navigate("/manager");
                     }
                     else if (role === "Admin") {
+                        toast.info(`👋 Welcome Mr.${username}!`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            icon: false
+                        });
                         navigate("/admin");
                     }
                 }

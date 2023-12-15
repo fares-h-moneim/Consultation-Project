@@ -27,7 +27,7 @@ import ZED from "../../assets/Teams/ZED.png";
 
 export default function MatchComponent({ matchDetails }) {
 
-    // TODO : Change Navigator
+    // TODO : add delete match functionality
 
     const teams = {
         "Al Ahly": Ahly,
@@ -161,6 +161,16 @@ export default function MatchComponent({ matchDetails }) {
                         type="button"
                         className="btn btn-danger"
                         onClick={() => {
+                            toast.success(`🗑️ Match Deleted Successfully`, {
+                                position: "bottom-left",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light"
+                            });
                             navigate("/delete-match");
                         }}
                     >

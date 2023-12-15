@@ -9,6 +9,8 @@ export default function EditMatchForm({ matchDetails }) {
   const teams = ["Ahly", "Zamalek"];
   const stadiums = ["Cairo International Stadium", "Stadium2"];
 
+  //TODO: Edit match functionality
+
   useEffect(() => {
     // Update local state when matchDetails prop changes
     setMatchData(matchDetails);
@@ -211,7 +213,7 @@ export default function EditMatchForm({ matchDetails }) {
             <button type="submit" className="btn btn-primary btn-lg float-right">
               Save Changes
             </button>
-            <Link to="/matches" className="btn btn-secondary btn-lg float-right mr-2">
+            <Link to="/view-matches" className="btn btn-secondary btn-lg float-right mr-2">
               Cancel
             </Link>
           </form>
