@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function SignIn() {
     const [userData, setUserData] = useState({
@@ -34,6 +35,17 @@ export default function SignIn() {
                     window.dispatchEvent(new Event("login"));
 
                     if (role === "Fan") {
+                        toast.info(`👋 Welcome ${username}!`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            icon: false
+                        });
                         navigate("/");
                     }
                     else if (role === "Manager") {
@@ -46,6 +58,16 @@ export default function SignIn() {
                 else {
                     if (response.status === 401) {
                         setInvalidCredentials(true);
+                        toast.error(`Invalid Credentials`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light"
+                        });
                     }
                 }
             }
