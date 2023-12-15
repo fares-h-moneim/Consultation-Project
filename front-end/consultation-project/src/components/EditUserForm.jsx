@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import "../styles/SignUp.css";
 
 
@@ -38,6 +39,17 @@ export default function EditUserForm({ user }) {
                 if (response.ok) {
                     const { updatedUser } = await response.json();
                     const event = new Event("profileUpdated");
+                    toast.success(`Profile edited successfully!`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        icon: false
+                    });
                     event.username = updatedUser.username;
                     localStorage.setItem("username", updatedUser.username);
                     window.dispatchEvent(event);
@@ -48,8 +60,31 @@ export default function EditUserForm({ user }) {
                         navigate("/");
                     }
                 }
+                else {
+                    toast.error(`Edit failed! Please Try again!`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                    console.log("error");
+                }
             }
             catch (error) {
+                toast.error(`Edit failed! Please Try again!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
                 console.log(error)
             }
         }
