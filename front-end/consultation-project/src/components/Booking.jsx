@@ -87,7 +87,6 @@ export default function Booking() {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
                     setReservedSeats(data);
                 } else {
                     console.error('Failed to fetch reserved seats');

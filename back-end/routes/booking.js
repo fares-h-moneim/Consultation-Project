@@ -5,5 +5,5 @@ const bookingRouter = express.Router();
 bookingRouter.get("/get-reserved-seats/:matchId", getReservedSeats);
 bookingRouter.post("/book-match", bookMatch);
 bookingRouter.delete("/delete-booking", deleteBooking);
-bookingRouter.get("/get-user-bookings/:matchId", getUserBookings);
+bookingRouter.get("/get-user-bookings", getUserBookings);
 export default bookingRouter;

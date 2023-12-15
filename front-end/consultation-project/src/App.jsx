@@ -17,6 +17,7 @@ import AddingStadium from './components/ManagerPortal_Components/AddStadiumPage'
 import ViewUserRequests from "./components/ViewUserRequests";
 import ViewUsers from "./components/ViewUsers";
 import BookingsPage from "./components/BookingsPage";
+import Payment from "./components/PaymentPage";
 
 
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
                     <Route path="/view-requests" element={<ViewUserRequests />}></Route>
                     <Route path="/view-users" element={<ViewUsers />}></Route>
                     <Route path="/bookings" element={<BookingsPage />}></Route>
+                    <Route path="/payment" element={<Payment />}></Route>
                 </Routes>
             </div>
         </>

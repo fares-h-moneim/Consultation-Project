@@ -117,5 +117,22 @@ const getUserBookingsforMatch = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+const getUserBookings = async () => {
+    try{
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        const userId = decoded.sub;
+        const bookings = await BookingModel.find({ user_id: userId });
+        res.status(200).json(bookings);
+    }
+    catch (error) {
+        console.error('Error getting user bookings:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 
 export { bookMatch, getReservedSeats, deleteBooking, getUserBookings };
