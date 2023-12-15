@@ -12,7 +12,7 @@ export default function PaymentPage() {
         <div className="container-fluid px-0 content" style={{ height: "92vh" }}>
             <div className="row align-items-center">
                 <MascotImage />
-                <Payment />
+                <Payment checkout = {eventData}/>
             </div>
         </div>
     );

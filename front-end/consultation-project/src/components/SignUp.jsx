@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/SignUp.css";
-
+import { toast } from 'react-toastify';
 
 export default function Signup({ user, text = "Sign Up" }) {
     const initialUserData = user ? { ...user } : {
@@ -37,11 +37,44 @@ export default function Signup({ user, text = "Sign Up" }) {
                 }
                 var response = await fetch("http://localhost:3000/request/add-request", options);
                 if (response.ok) {
+                    toast.success(`👋 Request sent! Approval Pending.`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            icon: false
+                    });
                     console.log("sign up success");
                     navigate("/");
                 }
+                else{
+                    toast.error(`Request Failed! Try again!`, {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light"
+                    });
+                }
             }
             catch (error) {
+                toast.error(`Request Failed! Try again!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
                 console.log(error)
             }
         }

@@ -17,17 +17,18 @@ const bookMatch = async (req, res) => {
         }
 
         const matchId = req.body.match_id;
-        const reservedSeats = req.body.reserved_seats;
+        const checkout = req.body.reserved_seats;
+        const reservedSeats = checkout.checkout;
         const userId = decoded.sub;
-
-        const booking = new BookingModel({
-            match_id: matchId,
-            reserved_seats: reservedSeats,
-            user_id: userId
-        });
-
-        const savedBookings = await booking.save();
-
+        const savedBookings = await Promise.all(reservedSeats.map(async seat => {
+            const booking = new BookingModel({
+                match_id: matchId,
+                reserved_seats: seat.index,
+                user_id: userId
+            });
+            return await booking.save();
+        }));
+        const deleteTempBookings = await BookingTempModel.deleteMany({ match_id: matchId, user_id: userId });
         res.status(201).json(savedBookings);
     } catch (error) {
         console.error('Error booking match:', error);
@@ -94,7 +95,7 @@ const deleteBooking = async (req, res) => {
     }
 };
 
-const getUserBookings = async () => {
+const getUserBookings = async (req, res) => {
     try {
         const token = req.header('Authorization');
         if (!token) {
@@ -112,4 +113,28 @@ const getUserBookings = async () => {
     }
 }
 
-export { bookMatch, getReservedSeats, deleteBooking, getUserBookings };
+const deletedSeat = async (req, res) => {
+    try{
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+
+        if (decoded.role !== 'Fan') {
+            return res.status(401).json({ message: 'Unauthorized: Fan role needed' });
+        }
+        const booking_id = req.body.booking_id;
+        const deletedSeat = await BookingModel.findOneAndDelete({ _id: booking_id });
+
+        res.status(200).json(deletedSeat);
+    }
+    catch (error) {
+        console.error('Error deleting booking:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export { bookMatch, getReservedSeats, deleteBooking, getUserBookings, deletedSeat };

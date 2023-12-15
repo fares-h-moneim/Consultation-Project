@@ -14,7 +14,7 @@ export default function ManagerPortal() {
                 <div className="col">
                     <div className="row align-items-center">
                         <div className="col text-center">
-                            <p className="display-3 text-white" style={{ fontWeight: "bolder" }}>Hello Manager!</p>
+                            <p className="display-3 text-white" style={{ fontWeight: "bolder" }}>Hello {localStorage.getItem("username")}!</p>
                         </div>
                     </div>
                     <div className="row align-items-center px-5">

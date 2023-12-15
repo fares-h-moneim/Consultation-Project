@@ -43,8 +43,31 @@ export default function UserRequest({ user, key }) {
                 });
                 setIsRemoved(true);
             }
+            else{
+                toast.error(`Approval failed! Please Try again!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            
+            }
         }
         catch (error) {
+            toast.error(`Approval failed! Please Try again!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
             console.log(error)
         }
     }
@@ -76,8 +99,31 @@ export default function UserRequest({ user, key }) {
                 });
                 setIsRemoved(true);
             }
+            else{
+                toast.error(`Rejection failed! Please Try again!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+            
+            }
         }
         catch (error) {
+            toast.error(`Rejection failed! Please Try again!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
             console.log(error)
         }
     }

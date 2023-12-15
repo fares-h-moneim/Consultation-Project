@@ -12,10 +12,9 @@ export default function AdminPortal() {
             <div className="row align-items-center">
                 <MascotImage />
                 <div className="col">
-                    <div className="row align-items-center">
-                        <div className="col text-center">
-                            {/*TODO: Change the text to the admin name*/}
-                            <p className="display-3 text-white" style={{ fontWeight: "bolder" }}>Hello Admin!</p>
+                    <div className="d-flex justify-content-center row align-items-center">
+                        <div className="d-flex justify-content-center col text-center">
+                            <p className="display-3 text-white" style={{ fontWeight: "bolder" }}>Hello {localStorage.getItem("username")}!</p>
                         </div>
                     </div>
                     <div className="row align-items-center">

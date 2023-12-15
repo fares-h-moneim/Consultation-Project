@@ -169,7 +169,7 @@ export default function Booking() {
 
     useEffect(() => {
         window.addEventListener('checkout', (e) => {
-            navigate('/payment', { state: { eventData: e.detail } });
+            navigate(`/payment/${matchId}`, { state: { eventData: e.detail } });
         });
     }, []);
 

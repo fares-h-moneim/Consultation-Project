@@ -1,27 +1,75 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 
-export default function Payment() {
+export default function Payment(checkout) {
+    const {matchId} = useParams();
     const [userData, setUserData] = useState({
         cardNumber: "",
         pinNumber: ""
     });
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const [checkoutData, setCheckoutData] = useState(checkout);
     const callEndpoint = async (e) => {
         e.preventDefault();
         try {
             if (validateForm()) {
+                console.log(checkoutData);
+                const userData = {
+                    match_id: matchId,
+                    reserved_seats: checkoutData
+                }
                 var options = {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Accept": "application/json"
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
                     },
                     body: JSON.stringify(userData)
+                };
+                var response = await fetch("http://localhost:3000/booking/book-match", options);
+                if(response.ok){
+                    toast.success(`👋 Match booked successfully!`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        icon: false
+                    });
+                    navigate("/bookings");
+                }
+                else{
+                    toast.error(`Match booking failed! Please Try again!`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                    console.log("error");
                 }
             }
         }
         catch (error) {
+            toast.error(`Approval failed! Please Try again!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
             console.log(error);
         }
     }
@@ -50,6 +98,7 @@ export default function Payment() {
             [e.target.name]: ""
         });
     }
+
     return (
         <div className="col mt-3 mb-3 ml-5 mr-5">
             <div className="card rounded-2">

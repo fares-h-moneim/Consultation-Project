@@ -23,8 +23,6 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
     },
   };
   var sc = new Seatchart(element, options);
-  sc.addEventListener('submit', function () {
-  });
   const deleteBooking = async (e) => {
     try {
       const data = {

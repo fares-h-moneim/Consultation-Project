@@ -4,6 +4,7 @@ import calendar from "../assets/calendar.svg";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { toast } from 'react-toastify';
 import "../styles/Match.css";
 
 import Ahly from "../assets/Teams/Al Ahly.png";
@@ -25,9 +26,7 @@ import Smouha from "../assets/Teams/Smouha.png";
 import Zamalek from "../assets/Teams/Zamalek.png";
 import ZED from "../assets/Teams/ZED.png";
 
-export default function UserBookings({ matchDetails }) {
-
-    // TODO : Change Navigator
+export default function UserBookings({ matchDetails, seat, bookingId, onDelete }) {
 
     const teams = {
         "Al Ahly": Ahly,
@@ -49,6 +48,76 @@ export default function UserBookings({ matchDetails }) {
         "Zamalek": Zamalek,
         "ZED": ZED
     }
+    async function deleteBooking() {
+        try {
+            const data = {
+                booking_id: bookingId,
+            }
+            var options = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                },
+                body: JSON.stringify(data)
+            }
+            var response = await fetch(`http://localhost:3000/booking/delete-booking`, options);
+            if (response.ok) {
+                toast.success(`Booking cancelled successfully!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    icon: false
+                });
+                onDelete(bookingId);
+                console.log("Deleted");
+            }
+            else {
+                toast.error(`Cancellation failed! Please Try again!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+                console.log("Error");
+            }
+        }
+        catch (error) {
+            toast.error(`Cancellation failed! Please Try again!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
+            console.log(error);
+        }
+    }
+
+
+    function mapper(row, col) {
+        var rowChar = String.fromCharCode('A'.charCodeAt(0) + row);
+
+        var colNumber = col + 1;
+
+        var seat = rowChar + colNumber.toString();
+
+        return seat;
+    }
+
 
     const navigate = useNavigate();
     const [match, setMatch] = useState({});
@@ -62,10 +131,9 @@ export default function UserBookings({ matchDetails }) {
                     "Accept": "application/json"
                 }
             }
-            var response = await fetch(`http://localhost:3000/match/get-match/${matchDetails._id}`, options);
-
+            var response = await fetch(`http://localhost:3000/match/get-match/${matchDetails}`, options);
+            var data = await response.json();
             if (response.ok) {
-                var data = await response.json(); // Move this line up
                 const originalDate = new Date(data.match.date_time);
 
                 const opts = {
@@ -135,7 +203,7 @@ export default function UserBookings({ matchDetails }) {
             <div className="row g-0 match-details" >
                 <div className="col-12 text-center" >
                     <h5 className="referee-info">
-                        Seats: B5
+                        {mapper(seat.row, seat.col)}
                     </h5>
                 </div>
             </div>
@@ -144,9 +212,7 @@ export default function UserBookings({ matchDetails }) {
                     <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => {
-                            navigate("/delete-match");
-                        }}
+                        onClick={() => deleteBooking()}
                     >
                         Cancel Booking
                     </button>

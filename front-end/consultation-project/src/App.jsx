@@ -47,7 +47,7 @@ export default function App() {
                     <Route path="/view-requests" element={<ViewUserRequests />}></Route>
                     <Route path="/view-users" element={<ViewUsers />}></Route>
                     <Route path="/bookings" element={<BookingsPage />}></Route>
-                    <Route path="/payment" element={<Payment />}></Route>
+                    <Route path="/payment/:matchId" element={<Payment />}></Route>
                 </Routes>
             </div>
         </>

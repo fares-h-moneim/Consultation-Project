@@ -131,7 +131,7 @@ const getAllUsers = async (req, res) => {
     if (decoded.role != 'Admin') {
       return res.status(401).json({ message: 'Unauthorized: Admin role required' });
     }
-    const users = await UserModel.find();
+    const users = await UserModel.find({role: {$ne: 'Admin'}});
     res.status(201).json(users);
   }
   catch (error) {
