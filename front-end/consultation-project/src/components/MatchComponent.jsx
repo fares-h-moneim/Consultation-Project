@@ -98,10 +98,10 @@ export default function MatchComponent({ matchDetails }) {
 
 
     return (
-        <div className="col match-component">
+        <div className="col match-component rounded" style={{ maxWidth: '65vw' }}>
             <div className="row g-0 align-items-center justify-content-top p-0 m-0 match-details">
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
 
                         <p className="team-name mt-3">{match.home_team} &nbsp;</p>
                         <img
@@ -121,13 +121,13 @@ export default function MatchComponent({ matchDetails }) {
                     </div>
                 </div>
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
                         <img src={stadium} alt="stadium Image" className="icon" />
                         <h5 className="match-info">{match.venue}</h5>
                     </div>
                 </div>
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
                         <img src={calendar} alt="calendar Image" className="icon" />
                         <h5 className="match-info">{match.date_time}</h5>
                     </div>
