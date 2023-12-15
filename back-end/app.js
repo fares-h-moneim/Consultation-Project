@@ -12,6 +12,7 @@ import venueRouter from "./routes/venue.js";
 import refereeRouter from "./routes/referee.js";
 import teamRouter from "./routes/team.js";
 import bookingRouter from "./routes/booking.js";
+import bookingTempRouter from "./routes/booking-temp.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -41,6 +42,7 @@ app.use("/venue", venueRouter);
 app.use("/referee", refereeRouter);
 app.use("/team", teamRouter);
 app.use("/booking", bookingRouter)
+app.use("/booking-temp", bookingTempRouter)
 app.get("/getRequest", async (req, res) => {
     const users = await RequestModel.find({});
     res.send(users);
