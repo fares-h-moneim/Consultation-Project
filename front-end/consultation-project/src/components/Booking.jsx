@@ -31,6 +31,7 @@ export default function Booking() {
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
     const [timer, setTimer] = useState(30); // Initial time in seconds (5 minutes)
     const [reservedSeats, setReservedSeats] = useState([]);
+    const navigate = useNavigate();
 
 
     const teams = {
@@ -124,6 +125,7 @@ export default function Booking() {
         if (timer === 0) {
             //TODO: Your logic when the timer reaches zero (e.g., redirect or show a message)
             window.dispatchEvent(new Event('timerFinished'));
+            navigate("/");
         }
     }, [timer]);
 
