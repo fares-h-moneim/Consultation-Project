@@ -244,13 +244,20 @@ export default function EditUserForm({ user }) {
                                 {errors["address"] !== "" && <div className="text-danger"> Address is required</div>}
                             </div>
                         </div>}
-                        <button
-                            type="submit"
-                            className="btn btn-danger btn-lg float-right"
-                            id="btnSignup"
-                        >
-                            Edit Profile
-                        </button>
+                        <div className="form-row">
+                            <div className="col-md-6">
+                                <div className="form-group col mt-4">
+                                    <Link to="/change-pass"><p>Want to change password? Click here.</p></Link>
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                className="btn btn-danger btn-lg float-right col"
+                                id="btnSignup"
+                            >
+                                Edit Profile
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

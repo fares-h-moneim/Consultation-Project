@@ -131,7 +131,7 @@ const getAllUsers = async (req, res) => {
     if (decoded.role != 'Admin') {
       return res.status(401).json({ message: 'Unauthorized: Admin role required' });
     }
-    const users = await UserModel.find({role: {$ne: 'Admin'}});
+    const users = await UserModel.find({ role: { $ne: 'Admin' } });
     res.status(201).json(users);
   }
   catch (error) {
@@ -140,4 +140,34 @@ const getAllUsers = async (req, res) => {
   }
 }
 
-export { signIn, logout, getDetailsByUsername, updateDetails, getAllUsers, deleteUser, checkUserAvailability };
+const changePassword = async (req, res) => {
+  try {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Missing token' });
+    }
+    const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+    const user = await UserModel.findOne({ _id: decoded.sub });
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+    const isPasswordCorrect = await bcrypt.compare(req.body.oldPassword, user.password);
+    if (isPasswordCorrect) {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+      const updatedUser = await UserModel.findByIdAndUpdate(decoded.sub, { password: hashedPassword }, { new: true });
+      res.status(200).json({ updatedUser });
+    }
+    else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+
+export { signIn, logout, getDetailsByUsername, updateDetails, getAllUsers, deleteUser, checkUserAvailability, changePassword };

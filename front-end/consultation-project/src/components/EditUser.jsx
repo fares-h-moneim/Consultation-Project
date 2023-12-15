@@ -43,7 +43,7 @@ export default function EditUser() {
     }, []);
 
     return (
-        <div className="container-fluid px-0 content" style={{ height: "auto" }}>
+        <div className="container-fluid px-0 content" style={{ height: "auto", overflow: "hidden" }}>
             <div className="row align-items-center">
                 <MascotImage />
                 <EditUserForm user={userData} />

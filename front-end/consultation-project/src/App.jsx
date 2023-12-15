@@ -18,15 +18,11 @@ import ViewUserRequests from "./components/ViewUserRequests";
 import ViewUsers from "./components/ViewUsers";
 import BookingsPage from "./components/BookingsPage";
 import Payment from "./components/PaymentPage";
+import ChangePassPage from "./components/ChangePassPage";
+
 
 
 export default function App() {
-    const [index, setIndex] = useState("home");
-    const onPageClick = (index) => {
-        console.log(index);
-        setIndex(index);
-    }
-
     return (
         <>
             <NavBar />
@@ -48,6 +44,7 @@ export default function App() {
                     <Route path="/view-users" element={<ViewUsers />}></Route>
                     <Route path="/bookings" element={<BookingsPage />}></Route>
                     <Route path="/payment/:matchId" element={<Payment />}></Route>
+                    <Route path="/change-pass" element={<ChangePassPage />}></Route>
                 </Routes>
             </div>
         </>
