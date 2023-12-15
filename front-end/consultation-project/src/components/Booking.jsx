@@ -29,8 +29,9 @@ export default function Booking() {
     const [match, setMatch] = useState({});
     const [homeTeamLogo, setHomeTeamLogo] = useState('');
     const [awayTeamLogo, setAwayTeamLogo] = useState('');
-    const [timer, setTimer] = useState(30); // Initial time in seconds (5 minutes)
+    const [timer, setTimer] = useState(300); // Initial time in seconds (5 minutes)
     const [reservedSeats, setReservedSeats] = useState([]);
+    const [userTempReservedSeats, setUserTempReservedSeats] = useState([]);
     const navigate = useNavigate();
 
 
@@ -76,10 +77,16 @@ export default function Booking() {
 
         const getReservedSeats = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/booking/get-reserved-seats/${matchId}`);
+                const response = await fetch(`http://localhost:3000/booking/get-reserved-seats/${matchId}`, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                    },
+                });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
                     setReservedSeats(data);
                 } else {
                     console.error('Failed to fetch reserved seats');
@@ -89,13 +96,34 @@ export default function Booking() {
                 console.error('Error fetching reserved seats:', error);
             }
         };
+        const getUserTempReservedSeats = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/booking-temp/get-user-temp-reserved-seats/${matchId}`, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserTempReservedSeats(data);
+                } else {
+                    console.error('Failed to fetch reserved seats');
+                }
 
+            } catch (error) {
+                console.error('Error fetching reserved seats:', error);
+            }
+        }
+        getUserTempReservedSeats();
         getReservedSeats();
         fetchSeatingArrangement();
     }, [matchId]);
 
     useEffect(() => {
-        SeatingChart(matchId, numRows, numCols, reservedSeats);
+        SeatingChart(matchId, numRows, numCols, reservedSeats, userTempReservedSeats);
     }, [numRows, numCols]);
 
     function formatDate(date) {
@@ -132,6 +160,12 @@ export default function Booking() {
     function toString(time) {
         return time > 0 ? (Math.floor(time / 60) + ":" + (time % 60 < 10 ? '0' : '') + time % 60) : "Session Timed Out";
     }
+    useEffect(() => {
+        const jwtToken = localStorage.getItem('jwtToken');
+        if (!jwtToken) {
+            navigate('/signin');
+        }
+    }, []);
 
     return (
         <>

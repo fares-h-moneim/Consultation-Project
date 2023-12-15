@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "../styles/SeatingChart.css";
 
-export default function SeatingChart(match, rows, columns, onSeatChange) {
+export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats) {
   const selectedSeats = [];
   var element = document.getElementById('container');
   var seats = document.querySelectorAll('.sc-seat');
@@ -20,13 +20,14 @@ export default function SeatingChart(match, rows, columns, onSeatChange) {
           price: 200,
         },
       },
-      reservedSeats: [
-        { row: 0, col: 0 },
-        { row: 0, col: 1 },
-      ]
+      reservedSeats: reservedSeats,
+      selectedSeats: userTempReservedSeats,
     },
   };
   var sc = new Seatchart(element, options);
+  sc.addEventListener('submit', function () {
+    
+  });
   const deleteBooking = async (e) => {
     try {
       const data = {
@@ -54,14 +55,13 @@ export default function SeatingChart(match, rows, columns, onSeatChange) {
   }
 
   const reserveSeat = async (e) => {
-    console.log(e);
     if (e.current.state === 'selected') {
       try {
         const data = {
           match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`http://localhost:3000/booking/book-match`, {
+        const response = await fetch(`http://localhost:3000/booking-temp/book-temp-match`, {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -84,10 +84,10 @@ export default function SeatingChart(match, rows, columns, onSeatChange) {
     else if (e.previous.state === 'selected' && e.current.state === 'available') {
       try {
         const data = {
-          match_id: match.match._id,
+          match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`http://localhost:3000/booking/delete-booking`, {
+        const response = await fetch(`http://localhost:3000/booking-temp/delete-temp-booking`, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json",

@@ -21,7 +21,8 @@
 .sc-cart-table{width:100%}
 .sc-cart-title{font-weight:700;margin:0}
 .sc-cart-table td{text-align:center;vertical-align:middle;padding:2px}
-.sc-cart-btn{border-radius:4px;transition:background-color .15s ease-in-out;user-select:none;border:none;cursor:pointer;font-size:14px;height:35px}
+.sc-cart-btn{border-radius:4px;transition:background-color .15s ease-in-out;background-color:#e53c4a;color:#fff;user-select:none;border:none;cursor:pointer;font-size:14px;height:35px}
+.sc-cart-btn:hover{background-color:#db3240}
 .sc-cart-btn-icon{height:3px;width:12px;border-radius:5px;background-color:#fff}
 .sc-cart-btn-delete{display:flex;align-items:center;justify-content:center;background-color:#e53c4a;height:22px;width:22px}
 .sc-cart-btn-delete:hover{background-color:#db3240}

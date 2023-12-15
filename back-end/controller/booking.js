@@ -1,4 +1,5 @@
 import BookingModel from "../model/booking.js";
+import BookingTempModel from "../model/booking-temp.js";
 import jwt from "jsonwebtoken";
 
 const bookMatch = async (req, res) => {
@@ -38,10 +39,20 @@ const bookMatch = async (req, res) => {
 const getReservedSeats = async (req, res) => {
     try {
         const matchId = req.params.matchId;
-        var reserved = await BookingModel.find({ matchId: matchId });
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        var reserved = await BookingModel.find({ match_id: matchId });
+        var tempReserved = await BookingTempModel.find({ match_id: matchId, user_id: {$ne: decoded.sub} }, {expires_at: 0});
         var reservedSeats = [];
         reserved.forEach(booking => {
-            reservedSeats.push(booking.reservedSeats);
+            reservedSeats.push(booking.reserved_seats);
+        });
+        tempReserved.forEach(booking => {
+            reservedSeats.push(booking.reserved_seats);
         });
         res.status(200).json(reservedSeats);
     }
@@ -50,6 +61,8 @@ const getReservedSeats = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
 
 const deleteBooking = async (req, res) => {
     try {
@@ -100,6 +113,23 @@ const getUserBookings = async (req, res) => {
         const bookings = await BookingModel.find({ match_id: matchId, user_id: userId });
         res.status(200).json(bookings);
     } catch (error) {
+        console.error('Error getting user bookings:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+const getUserBookings = async () => {
+    try{
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        const userId = decoded.sub;
+        const bookings = await BookingModel.find({ user_id: userId });
+        res.status(200).json(bookings);
+    }
+    catch (error) {
         console.error('Error getting user bookings:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
