@@ -167,6 +167,12 @@ export default function Booking() {
         }
     }, []);
 
+    useEffect(() => {
+        window.addEventListener('checkout', (e) => {
+            navigate('/payment', { state: { eventData: e.detail } });
+        });
+    }, []);
+
     return (
         <>
             <div className="container-fluid px-0">

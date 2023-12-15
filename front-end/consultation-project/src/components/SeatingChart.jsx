@@ -1,5 +1,3 @@
-import React from "react";
-import { useState } from "react";
 import "../styles/SeatingChart.css";
 
 export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats) {
@@ -26,7 +24,6 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   };
   var sc = new Seatchart(element, options);
   sc.addEventListener('submit', function () {
-    
   });
   const deleteBooking = async (e) => {
     try {
@@ -110,4 +107,10 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
 
   window.addEventListener('timerFinished', deleteBooking);
   sc.addEventListener('seatchange', reserveSeat);
+  sc.addEventListener('submit', (e) => {
+    const eventData = e.cart;
+    const checkoutEvent = new CustomEvent('checkout', { detail: eventData });
+
+    window.dispatchEvent(checkoutEvent);
+  });
 }
