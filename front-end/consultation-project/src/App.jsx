@@ -19,6 +19,7 @@ import ViewUsers from "./components/ViewUsers";
 import BookingsPage from "./components/BookingsPage";
 import Payment from "./components/PaymentPage";
 import ChangePassPage from "./components/ChangePassPage";
+import ViewBooking from "./components/ManagerPortal_Components/ViewBooking";
 
 
 
@@ -45,6 +46,7 @@ export default function App() {
                     <Route path="/bookings" element={<BookingsPage />}></Route>
                     <Route path="/payment/:matchId" element={<Payment />}></Route>
                     <Route path="/change-pass" element={<ChangePassPage />}></Route>
+                    <Route path="/view-reservations/:matchId" element={<ViewBooking />}></Route>
                 </Routes>
             </div>
         </>

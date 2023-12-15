@@ -1,6 +1,6 @@
 import "../styles/SeatingChart.css";
 
-export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats) {
+export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats = []) {
   const selectedSeats = [];
   var element = document.getElementById('container');
   var seats = document.querySelectorAll('.sc-seat');
