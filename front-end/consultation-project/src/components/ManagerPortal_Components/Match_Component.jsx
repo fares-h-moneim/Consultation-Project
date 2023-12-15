@@ -80,8 +80,8 @@ export default function MatchComponent({ matchDetails }) {
                 const formattedDate = new Intl.DateTimeFormat('en-US', opts).format(originalDate);
 
                 const m = {
-                    home_team: teams[data.home_team.team_name],
-                    away_team: teams[data.away_team.team_name],
+                    home_team: data.home_team.team_name,
+                    away_team: data.away_team.team_name,
                     venue: data.venue.venue_name,
                     date_time: formattedDate,
                     main_referee: data.main_referee.first_name + " " + data.main_referee.last_name,
@@ -101,30 +101,32 @@ export default function MatchComponent({ matchDetails }) {
         <div className="col match-component">
             <div className="row g-0 align-items-center justify-content-top p-0 m-0 match-details">
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
+                        <p className="team-name mt-3">{match.home_team} &nbsp;</p>
                         <img
-                            src={match.home_team}
+                            src={teams[match.home_team]}
                             alt="Home Team"
                             width={"50px"}
                             className="team-logo"
                         />
-                        <h5 className="vs-label">vs</h5>
+                        <h5 className="vs-label">&nbsp; vs &nbsp;</h5>
                         <img
-                            src={match.away_team}
+                            src={teams[match.away_team]}
                             alt="Away Team"
                             width={"50px"}
                             className="team-logo"
                         />
+                        <p className="team-name mt-3">{match.away_team}</p>
                     </div>
                 </div>
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
                         <img src={stadium} alt="stadium Image" className="icon" />
                         <h5 className="match-info">{match.venue}</h5>
                     </div>
                 </div>
                 <div className="col-12 col-md-4 text-center">
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center py-2">
                         <img src={calendar} alt="calendar Image" className="icon" />
                         <h5 className="match-info">{match.date_time}</h5>
                     </div>
