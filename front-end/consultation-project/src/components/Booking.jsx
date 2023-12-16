@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StadiumIcon from '../assets/StadiumWhite.png';
 import SeatingChart from './SeatingChart'; '../SeatingChart';
 import { useNavigate, useParams } from 'react-router-dom';
+import io from 'socket.io-client';
 
 import Ahly from '../assets/Teams/Al Ahly.png';
 import Ittihad from '../assets/Teams/Al Ittihad.png';
@@ -55,7 +56,6 @@ export default function Booking() {
         Zamalek: Zamalek,
         ZED: ZED,
     };
-
     useEffect(() => {
         const fetchSeatingArrangement = async () => {
             try {

@@ -13,7 +13,16 @@ import refereeRouter from "./routes/referee.js";
 import teamRouter from "./routes/team.js";
 import bookingRouter from "./routes/booking.js";
 import bookingTempRouter from "./routes/booking-temp.js";
+import { Server } from "socket.io";
+import {createServer} from "http";
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: '*',
+    }
+});
+export {io};
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,9 +37,13 @@ const connectDB = async () => {
         console.error(err);
     }
 };
-
 connectDB();
-
+io.on("connection", (socket) => {
+    console.log("a user connected");
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+});
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something went wrong!");
@@ -81,6 +94,6 @@ app.use("/add-match", async (req, res) => {
     res.send(savedMatch);
 });
 
-app.listen(3000, () => {
+httpServer.listen(3000, () => {
     console.log("On Port 3000");
 });
