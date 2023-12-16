@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { toast } from 'react-toastify';
 
+//TODO: Enhance UI
+
 export default function UserRequest({ user, key }) {
     const [isRemoved, setIsRemoved] = useState(false);
     function dateFormat(dateString) {
@@ -43,7 +45,7 @@ export default function UserRequest({ user, key }) {
                 });
                 setIsRemoved(true);
             }
-            else{
+            else {
                 toast.error(`Approval failed! Please Try again!`, {
                     position: "bottom-left",
                     autoClose: 5000,
@@ -54,7 +56,7 @@ export default function UserRequest({ user, key }) {
                     progress: undefined,
                     theme: "light"
                 });
-            
+
             }
         }
         catch (error) {
@@ -99,7 +101,7 @@ export default function UserRequest({ user, key }) {
                 });
                 setIsRemoved(true);
             }
-            else{
+            else {
                 toast.error(`Rejection failed! Please Try again!`, {
                     position: "bottom-left",
                     autoClose: 5000,
@@ -110,7 +112,7 @@ export default function UserRequest({ user, key }) {
                     progress: undefined,
                     theme: "light"
                 });
-            
+
             }
         }
         catch (error) {

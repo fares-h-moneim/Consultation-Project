@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "../styles/LandingPageText.css"
+
 
 import Ahly from "../assets/Teams/Al Ahly.png";
 import Ittihad from "../assets/Teams/Al Ittihad.png";
@@ -93,25 +95,34 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
     }
 
     return (
-        <div className="col center ml-5 text-white">
+        match.home_team ? (<div className="col center ml-5 text-white">
             <div className="row">
                 <div className="text-center">
-                    <div className="h1" style={{ fontSize: "100px" }}>Up Next!</div>
+                    <div className="h1" style={{ fontSize: "7rem" }}>Up Next!</div>
                     <br />
                 </div>
             </div>
             <div className="row d-flex justify-content-center align-items-center">
                 <div className="text-center">
                     <img src={teams[match.home_team]} alt={match.home_team} width={"200px"} className="team-logo" />
-                    <span className="h1 ml-2 text-white" style={{ fontSize: "100px" }}>&nbsp; vs &nbsp;</span>
+                    <span className="h1 ml-2 text-white" style={{ fontSize: "5rem" }}>&nbsp; vs &nbsp;</span>
                     <img src={teams[match.away_team]} alt={match.away_team} width={"200px"} className="team-logo" />
                 </div>
             </div>
             <div className="row mt-3">
                 <div className="text-center">
-                    <div className="h4" style={{ fontSize: "50px" }}>{match.date_time}</div>
+                    <div className="h4" style={{ fontSize: "3.5rem" }}>{match.date_time}</div>
                 </div>
             </div>
-        </div>
+        </div>) : (<>
+            <div className="col center ml-5 text-white">
+                <div className="row">
+                    <div className="text-center">
+                        <div className="h1" style={{ fontSize: "7rem" }}>More Matches Coming Soon</div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </>)
     );
 }

@@ -73,7 +73,6 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                    icon: false
                 });
                 onDelete(bookingId);
                 console.log("Deleted");
@@ -166,7 +165,7 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
 
 
     return (
-        <div className="col match-component" style={{ maxWidth: '65vw' }}>
+        <div className="col match-component" style={{ maxWidth: '65vw', minWidth: '400px' }}>
             <div className="row g-0 align-items-center justify-content-top p-0 m-0 match-details">
                 <div className="col-12 col-md-4 text-center">
                     <div className="d-flex align-items-center justify-content-center py-2">

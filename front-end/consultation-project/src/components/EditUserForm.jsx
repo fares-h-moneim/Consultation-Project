@@ -46,8 +46,7 @@ export default function EditUserForm({ user }) {
                         pauseOnHover: true,
                         draggable: true,
                         progress: undefined,
-                        theme: "light",
-                        icon: false
+                        theme: "light"
                     });
                     event.username = updatedUser.username;
                     localStorage.setItem("username", updatedUser.username);

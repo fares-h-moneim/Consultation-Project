@@ -152,7 +152,7 @@ export default function MatchComponent({ matchDetails }) {
 
 
     return (
-        <div className="col match-component" style={{ maxWidth: '65vw' }}>
+        <div className="col match-component" style={{ maxWidth: '65vw', minWidth: "400px" }}>
             <div className="row g-0 align-items-center justify-content-top p-0 m-0 match-details">
                 <div className="col-12 col-md-4 text-center">
                     <div className="d-flex align-items-center justify-content-center py-2">
@@ -198,8 +198,8 @@ export default function MatchComponent({ matchDetails }) {
                     </h5>
                 </div>
             </div>
-            <div className="row g-0 match-buttons">
-                <div className="col-4 text-center">
+            <div className="row d-flex g-0 match-buttons">
+                <div className="col-12 col-md-4 text-center py-1">
                     <button
                         type="button"
                         className="btn btn-danger"
@@ -210,7 +210,7 @@ export default function MatchComponent({ matchDetails }) {
                         View Reserved Seats
                     </button>
                 </div>
-                <div className="col-4 text-center">
+                <div className="col-12 col-md-4 text-center py-1r">
                     <button
                         type="button"
                         className="btn btn-danger"
@@ -221,7 +221,7 @@ export default function MatchComponent({ matchDetails }) {
                         Edit
                     </button>
                 </div>
-                <div className="col-4 text-center">
+                <div className="col-12 col-md-4 text-center py-1">
                     <button
                         type="button"
                         className="btn btn-danger"
