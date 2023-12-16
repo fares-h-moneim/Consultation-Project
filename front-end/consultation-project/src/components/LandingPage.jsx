@@ -18,7 +18,7 @@ export default function LandingPage() {
         <>
             {isLoading ? (
                 // Loading spinner while content is loading
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "92vh", overflow: "hidden hidden" }}>
                     <ThreeDots
                         height="80"
                         width="80"

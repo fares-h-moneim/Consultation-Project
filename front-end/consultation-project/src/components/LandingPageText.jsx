@@ -23,6 +23,7 @@ import ZED from "../assets/Teams/ZED.png";
 
 export default function LandingPageText({ bigText = "Hello World!" }) {
     const [match, setMatch] = useState({});
+    const [dateTime, setDateTime] = useState("");
 
     const teams = {
         "Al Ahly": Ahly,
@@ -72,27 +73,14 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
         getNextMatch();
     }, []);
 
-    function formatDate(date) {
-        // Ensure the date string is in a consistent format (ISO 8601)
-        const isoString = new Date(date).toISOString();
-
-        // Parse the ISO string
-        const originalDate = new Date(isoString);
-
-        // Format options
-        const opts = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-        };
-
-        // Format the date
-        const formattedDate = new Intl.DateTimeFormat('en-UK', opts).format(originalDate);
-        return formattedDate;
-    }
+    useEffect(() => {
+        if (match.date_time) {
+            var date = new Date(match.date_time);
+            var dateStr = date.toDateString();
+            var timeStr = date.toLocaleTimeString();
+            setDateTime(`${dateStr}, ${timeStr}`);
+        }
+    }, [match]);
 
     return (
         match.home_team ? (<div className="col center ml-5 text-white">
@@ -111,7 +99,7 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
             </div>
             <div className="row mt-3">
                 <div className="text-center">
-                    <div className="h4" style={{ fontSize: "3.5rem" }}>{match.date_time}</div>
+                    <div className="h4" style={{ fontSize: "3.5rem" }}>{dateTime}</div>
                 </div>
             </div>
         </div>) : (<>
