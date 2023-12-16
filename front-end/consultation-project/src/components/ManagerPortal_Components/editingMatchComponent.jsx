@@ -8,11 +8,55 @@ export default function EditMatchForm({ matchDetails, matchId }) {
 
   //endpoint to update: http://localhost:3000/match/update-match
   //TODO: Edit match functionality
-  useEffect(() => {
-    // Update local state when matchDetails prop changes
-    setMatchData(matchDetails);
-  }, [matchDetails]);
 
+    //Update local state when matchDetails prop changes
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        if (validateForm()) {
+          var options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+            },
+            body: JSON.stringify(matchData)
+          }
+          var response = await fetch("http://localhost:3000/match/update-match", options);
+          if (response.ok) {
+            var data = await response.json();
+            console.log(data);
+            toast.success(`Match Edited Successfully`, {
+              position: "bottom-left",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            });
+          }
+        }
+      }
+      catch (error) {
+        toast.error(`Error Editing Match`, {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
+        console.error(error);
+      }
+    }
+
+
+  
   useEffect(() => {
     const validateForm = () => {
       let isValid = true;
@@ -53,14 +97,6 @@ export default function EditMatchForm({ matchDetails, matchId }) {
         ...matchData,
         [name]: value,
       });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      onSave(matchId, matchData);
     }
   };
 
