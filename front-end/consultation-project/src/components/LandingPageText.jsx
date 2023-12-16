@@ -76,8 +76,15 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
     useEffect(() => {
         if (match.date_time) {
             var date = new Date(match.date_time);
-            var dateStr = date.toDateString();
-            var timeStr = date.toLocaleTimeString();
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+
+            var dateStr = `${day}/${month}/${year}`;
+            var timeStr = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${ampm}`;
             setDateTime(`${dateStr}, ${timeStr}`);
         }
     }, [match]);
