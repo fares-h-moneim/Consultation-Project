@@ -3,60 +3,63 @@ import { Link } from "react-router-dom";
 
 export default function EditMatchForm({ matchDetails, matchId }) {
   const [matchData, setMatchData] = useState(matchDetails);
+  const [teams, setTeams] = useState([]);
+  const [stadiums, setStadiums] = useState([]);
+  const [referees, setReferees] = useState([]);
 
   const [errors, setErrors] = useState({});
 
   //endpoint to update: http://localhost:3000/match/update-match
   //TODO: Edit match functionality
 
-    //Update local state when matchDetails prop changes
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        if (validateForm()) {
-          var options = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
-            },
-            body: JSON.stringify(matchData)
-          }
-          var response = await fetch("http://localhost:3000/match/update-match", options);
-          if (response.ok) {
-            var data = await response.json();
-            console.log(data);
-            toast.success(`Match Edited Successfully`, {
-              position: "bottom-left",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light"
-            });
-          }
+  //Update local state when matchDetails prop changes
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (validateForm()) {
+        var options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+          body: JSON.stringify(matchData)
+        }
+        var response = await fetch("http://localhost:3000/match/update-match", options);
+        if (response.ok) {
+          var data = await response.json();
+          console.log(data);
+          toast.success(`Match Edited Successfully`, {
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
         }
       }
-      catch (error) {
-        toast.error(`Error Editing Match`, {
-          position: "bottom-left",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light"
-        });
-        console.error(error);
-      }
     }
+    catch (error) {
+      toast.error(`Error Editing Match`, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+      console.error(error);
+    }
+  }
 
 
-  
+
   useEffect(() => {
     const validateForm = () => {
       let isValid = true;
@@ -78,6 +81,74 @@ export default function EditMatchForm({ matchDetails, matchId }) {
       return isValid;
     };
   }, [matchData]);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/team/get-all-teams`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setTeams(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      } catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    };
+    const fetchStadiums = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/venue/get-venues`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setStadiums(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      }
+      catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    }
+    const fetchReferees = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/referee/get-referees`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setReferees(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      }
+      catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    }
+    fetchStadiums();
+    fetchTeams();
+    fetchReferees();
+  }, [matchId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -128,8 +199,8 @@ export default function EditMatchForm({ matchDetails, matchId }) {
                 >
                   <option value="">Select Home Team</option>
                   {teams.map((team) => (
-                    <option key={team} value={team}>
-                      {team}
+                    <option key={team._id} value={team._id}>
+                      {team.team_name}
                     </option>
                   ))}
                 </select>
@@ -152,8 +223,8 @@ export default function EditMatchForm({ matchDetails, matchId }) {
                   {teams
                     .filter((team) => team !== matchData.homeTeam)
                     .map((team) => (
-                      <option key={team} value={team}>
-                        {team}
+                      <option key={team._id} value={team._id}>
+                        {team.team_name}
                       </option>
                     ))}
                 </select>
@@ -178,8 +249,8 @@ export default function EditMatchForm({ matchDetails, matchId }) {
                 >
                   <option value="">Select Match Venue</option>
                   {stadiums.map((stadium) => (
-                    <option key={stadium} value={stadium}>
-                      {stadium}
+                    <option key={stadium._id} value={stadium._id}>
+                      {stadium.venue_name}
                     </option>
                   ))}
                 </select>
@@ -205,42 +276,63 @@ export default function EditMatchForm({ matchDetails, matchId }) {
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="mainReferee">Main Referee</label>
-                <input
-                  type="text"
+                <select
                   className="form-control form-control-md rounded-0"
-                  name="mainReferee"
-                  id="mainReferee"
+                  name="main_referee"
+                  id="main_referee"
                   required
-                  value={matchData.main_referee}
+                  value={matchData.mainReferee}
                   onChange={handleChange}
-                />
+                  selected={matchData.mainReferee}
+                >
+                  <option value="">Main Referee</option>
+                  {referees.map((referee) => (
+                    <option key={referee._id} value={referee._id}>
+                      {referee.first_name + " " + referee.last_name}
+                    </option>
+                  ))}
+                </select>
                 {errors.mainReferee && (
                   <div className="text-danger">{errors.mainReferee}</div>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="linesman1">Linesman 1</label>
-                <input
-                  type="text"
+                <select
                   className="form-control form-control-md rounded-0"
-                  name="linesmen.linesman1"
+                  name="linesman1"
                   id="linesman1"
                   required
-                  value={matchData.lineman1}
+                  value={matchData.linesman1}
                   onChange={handleChange}
-                />
+                  selected={matchData.linesman1}
+                >
+                  <option value="">Select Linesman 1</option>
+                  {referees.map((referee) => (
+                    <option key={referee._id} value={referee._id}>
+                      {referee.first_name + " " + referee.last_name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="linesman2">Linesman 2</label>
-                <input
-                  type="text"
+                <select
                   className="form-control form-control-md rounded-0"
-                  name="linesmen.linesman2"
-                  id="linesman2"
+                  name="linesman1"
+                  id="linesman1"
                   required
-                  value={matchData.lineman2}
+                  value={matchData.linesman2}
                   onChange={handleChange}
-                />
+                  selected={matchData.linesman2}
+                >
+                  <option value="">Select Linesman 2</option>
+                  {referees.map((referee) => (
+                    <option key={referee._id} value={referee._id}>
+                      {referee.first_name + " " + referee.last_name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <button type="submit" className="btn btn-primary btn-lg float-right">
