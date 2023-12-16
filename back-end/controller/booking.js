@@ -1,5 +1,7 @@
 import BookingModel from "../model/booking.js";
 import BookingTempModel from "../model/booking-temp.js";
+import UserModel from "../model/user.js";
+import { io } from "../app.js";
 import jwt from "jsonwebtoken";
 
 const bookMatch = async (req, res) => {
@@ -127,8 +129,15 @@ const deletedSeat = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized: Fan role needed' });
         }
         const booking_id = req.body.booking_id;
-        const deletedSeat = await BookingModel.findOneAndDelete({ _id: booking_id });
-
+        var deletedSeat = await BookingModel.findOneAndDelete({ _id: booking_id });
+        const user = await UserModel.findById({ _id: decoded.sub });
+        deletedSeat = {
+            match_id: deletedSeat.match_id,
+            reserved_seats: deletedSeat.reserved_seats,
+            user_id: deletedSeat.user_id,
+            username: user.username,
+        }
+        io.emit("deletedPermSeat", deletedSeat);
         res.status(200).json(deletedSeat);
     }
     catch (error) {

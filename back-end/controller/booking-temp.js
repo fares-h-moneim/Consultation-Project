@@ -1,5 +1,8 @@
 import BookingTempModel from "../model/booking-temp.js";
+import UserModel from "../model/user.js";
 import jwt from "jsonwebtoken";
+import { io } from "../app.js";
+import { Socket } from "socket.io";
 
 const bookTempMatch = async (req, res) => {
     try {
@@ -24,9 +27,16 @@ const bookTempMatch = async (req, res) => {
             reserved_seats: reservedSeats,
             user_id: userId
         });
-        
+        const user = await UserModel.findById({ _id: userId });
 
-        const savedBookings = await booking.save();
+        var savedBookings = await booking.save();
+        savedBookings = {
+            match_id: savedBookings.match_id,
+            reserved_seats: savedBookings.reserved_seats,
+            user_id: savedBookings.user_id,
+            username: user.username,
+        }
+        io.emit("booking", savedBookings, user);
 
         res.status(201).json(savedBookings);
     } catch (error) {
@@ -52,8 +62,15 @@ const deletedSeat = async (req, res) => {
         const matchId = req.body.match_id;
         const reservedSeats = req.body.reserved_seats;
         const userId = decoded.sub;
-        const deletedSeat = await BookingTempModel.findOneAndDelete({ match_id: matchId, reserved_seats: reservedSeats, user_id: userId });
-
+        var deletedSeat = await BookingTempModel.findOneAndDelete({ match_id: matchId, reserved_seats: reservedSeats, user_id: userId });
+        const user = await UserModel.findById({ _id: userId });
+        deletedSeat = {
+            match_id: deletedSeat.match_id,
+            reserved_seats: deletedSeat.reserved_seats,
+            user_id: deletedSeat.user_id,
+            username: user.username,
+        }
+        io.emit("deletedSeat", deletedSeat);
         res.status(200).json(deletedSeat);
     } catch (error) {
         console.error('Error deleting booking:', error);
