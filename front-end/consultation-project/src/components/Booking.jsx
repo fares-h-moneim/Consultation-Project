@@ -3,6 +3,7 @@ import StadiumIcon from '../assets/StadiumWhite.png';
 import SeatingChart from './SeatingChart'; '../SeatingChart';
 import { useNavigate, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
+import "../styles/SeatChart.css";
 
 import Ahly from '../assets/Teams/Al Ahly.png';
 import Ittihad from '../assets/Teams/Al Ittihad.png';
@@ -179,9 +180,9 @@ export default function Booking() {
                 <div className="row align-items-center justify-content-center pt-5" style={{ height: '92vh' }}>
                     <div className="col-lg-6 col-md-12 text-center">
                         <div>
-                            <img src={homeTeamLogo} alt="Ahly Logo" width={'200px'} />
+                            <img className='team-logo' src={homeTeamLogo} alt="Ahly Logo" width={'200px'} />
                             <span className="mx-2 text-white" style={{ fontSize: "40px" }}>&nbsp; VS &nbsp;</span>
-                            <img src={awayTeamLogo} alt="Zamalek Logo" width={'200'} />
+                            <img className='team-logo' src={awayTeamLogo} alt="Zamalek Logo" width={'200'} />
                         </div>
                         <div className="mt-3">
                             <p style={{ color: 'white', fontSize: '40px' }}>{match.match && formatDate(match.match.date_time)}</p>
@@ -197,7 +198,7 @@ export default function Booking() {
                         </h5>
                     </div>
                     <div className="col-lg-12 col-md-12 mt-4 mt-lg-0 p-5 d-flex justify-content-center align-content-center" style={{ paddingRight: '5%' }}>
-                        <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '5%', maxWidth: '70%' }}>
+                        <div className="seating-container" style={{ backgroundColor: 'white', color: 'red', padding: '0', minWidth: '70%' }}>
                             <div id="container" className='justify-content-center'>
                             </div>
                         </div>
