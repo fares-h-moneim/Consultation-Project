@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 
 const getMatches = async (req, res) => {
     try {
-        const matches = await MatchModel.find({});
+        const matches = await MatchModel.find({date_time: {$gte: new Date()}}).sort({ date_time: 1});
         res.status(200).json(matches);
     }
     catch (error) {
