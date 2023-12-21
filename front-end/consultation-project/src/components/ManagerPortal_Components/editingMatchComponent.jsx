@@ -97,6 +97,74 @@ export default function EditMatchForm() {
     getReferees();
   }, [matchId]);
 
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/team/get-all-teams`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setTeams(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      } catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    };
+    const fetchStadiums = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/venue/get-venues`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setStadiums(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      }
+      catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    }
+    const fetchReferees = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/referee/get-referees`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setReferees(data);
+        } else {
+          console.error("Failed to fetch match details");
+        }
+      }
+      catch (error) {
+        console.error("Error fetching match details:", error);
+      }
+    }
+    fetchStadiums();
+    fetchTeams();
+    fetchReferees();
+  }, [matchId]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -321,7 +389,7 @@ export default function EditMatchForm() {
                   name="main_referee"
                   id="main_referee"
                   required
-                  value={matchData.main_referee}
+                  value={matchData.mainReferee}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
@@ -345,7 +413,7 @@ export default function EditMatchForm() {
                   name="lineman1"
                   id="lineman1"
                   required
-                  value={matchData.lineman1}
+                  value={matchData.linesman1}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
@@ -369,7 +437,7 @@ export default function EditMatchForm() {
                   name="lineman2"
                   id="lineman2"
                   required
-                  value={matchData.lineman2}
+                  value={matchData.linesman2}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
