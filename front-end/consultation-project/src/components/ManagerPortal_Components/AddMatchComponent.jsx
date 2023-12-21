@@ -126,11 +126,6 @@ const AddMatchForm = () => {
         }
 
 
-        if (matchData.homeTeam === matchData.awayTeam) {
-            newErrors.awayTeam = "Away team should be different from the home team";
-            isValid = false;
-        }
-
         if (matchData.date_time < new Date().toISOString()) {
             newErrors.date_time = "Date and time must be in the future";
             isValid = false;
@@ -142,34 +137,48 @@ const AddMatchForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            var options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
-                },
-                body: JSON.stringify(matchData)
+        console.log(validateForm())
+        if (validateForm()) {
+            try {
+                var options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
+                    },
+                    body: JSON.stringify(matchData)
+                }
+                const response = await fetch("http://localhost:3000/match/add-match", options);
+                if (response.ok) {
+                    const data = await response.json();
+                    toast.success(`⚽ Match Added Successfully!`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        icon: false
+                    });
+                    navigate("/view-matches");
+                } else {
+                    toast.error(`Failed to add match`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                }
             }
-            const response = await fetch("http://localhost:3000/match/add-match", options);
-            if (response.ok) {
-                const data = await response.json();
-                toast.success(`⚽ Match Added Successfully!`, {
-                    position: "bottom-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    icon: false
-                });
-                navigate("/view-matches");
-            } else {
-                toast.error(`Failed to add match`, {
+            catch (error) {
+                toast.error(`Error adding match`, {
                     position: "bottom-left",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -180,20 +189,8 @@ const AddMatchForm = () => {
                     theme: "light"
                 });
             }
+            console.log("Match data submitted:", matchData);
         }
-        catch (error) {
-            toast.error(`Error adding match`, {
-                position: "bottom-left",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light"
-            });
-        }
-        console.log("Match data submitted:", matchData);
     };
 
     return (

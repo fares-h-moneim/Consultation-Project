@@ -389,7 +389,7 @@ export default function EditMatchForm() {
                   name="main_referee"
                   id="main_referee"
                   required
-                  value={matchData.mainReferee}
+                  value={matchData.main_referee}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
@@ -413,7 +413,7 @@ export default function EditMatchForm() {
                   name="lineman1"
                   id="lineman1"
                   required
-                  value={matchData.linesman1}
+                  value={matchData.lineman1}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
@@ -437,7 +437,7 @@ export default function EditMatchForm() {
                   name="lineman2"
                   id="lineman2"
                   required
-                  value={matchData.linesman2}
+                  value={matchData.lineman2}
                   onChange={handleChange}
                 >
                   {referees.length > 0 && (
