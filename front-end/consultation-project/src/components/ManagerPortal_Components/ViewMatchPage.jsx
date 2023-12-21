@@ -21,9 +21,9 @@ export default function MatchesListForManager() {
     getMatches();
   }, []);
   const handleDelete = (matchId) => {
-        setMatches((prevMatches) =>
-            prevMatches.filter((match) => match._id !== matchId)
-        );
+    setMatches((prevMatches) =>
+      prevMatches.filter((match) => match._id !== matchId)
+    );
   };
 
   return (
