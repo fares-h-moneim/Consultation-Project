@@ -21,9 +21,7 @@ export default function MatchesListForManager() {
     getMatches();
   }, []);
   const handleDelete = (matchId) => {
-    setMatches((prevMatches) =>
-      prevMatches.filter((match) => match._id !== matchId)
-    );
+    setMatches((prevMatches) => prevMatches.filter((match) => match._id !== matchId));
   };
 
   return (
@@ -31,7 +29,7 @@ export default function MatchesListForManager() {
       {
         matches.map((match, index) => (
           <div key={index} className="d-flex align-items-center justify-content-center m-4">
-            <MatchComponent matchDetails={match} onDelete={handleDelete} />
+            <MatchComponent matchDetails={match} onDelete={() => handleDelete(match._id)} />
           </div>
         ))
       }

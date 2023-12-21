@@ -26,10 +26,12 @@ import Smouha from "../../assets/Teams/Smouha.png";
 import Zamalek from "../../assets/Teams/Zamalek.png";
 import ZED from "../../assets/Teams/ZED.png";
 
-export default function MatchComponent({ matchDetails }) {
+
+export default function MatchComponent({ matchDetails }, onDelete) {
 
     // TODO : add delete match functionality
-    async function deleteMatch() {
+    const [isRemoved, setIsRemoved] = useState(false);
+    const deleteMatch = async(e) => {
         try {
             const data = {
                 match_id: matchDetails._id
@@ -55,10 +57,10 @@ export default function MatchComponent({ matchDetails }) {
                     progress: undefined,
                     theme: "light"
                 });
-                onDelete(matchDetails._id);
+                setIsRemoved(true);
             }
             else {
-                toast.error(`❌ Error Deleting Match`, {
+                toast.error(`❌ Error Deleting Match Response not ok`, {
                     position: "bottom-left",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -71,7 +73,8 @@ export default function MatchComponent({ matchDetails }) {
             }
         }
         catch (error) {
-            toast.error(`❌ Error Deleting Match`, {
+            console.log(error);
+            toast.error(`❌ Error Deleting Match internal`, {
                 position: "bottom-left",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -150,7 +153,9 @@ export default function MatchComponent({ matchDetails }) {
         getMatches();
     }, []);
 
-
+    if (isRemoved) {
+        return null;
+    }
     return (
         <div className="col match-component" style={{ maxWidth: '65vw', minWidth: "400px" }}>
             <div className="row g-0 align-items-center justify-content-top p-0 m-0 match-details">
@@ -225,7 +230,7 @@ export default function MatchComponent({ matchDetails }) {
                     <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => deleteMatch()}
+                        onClick={deleteMatch}
                     >
                         Delete
                     </button>

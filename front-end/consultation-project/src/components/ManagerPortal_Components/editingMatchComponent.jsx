@@ -118,27 +118,6 @@ export default function EditMatchForm() {
         console.error("Error fetching match details:", error);
       }
     };
-    const fetchStadiums = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/venue/get-venues`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setStadiums(data);
-        } else {
-          console.error("Failed to fetch match details");
-        }
-      }
-      catch (error) {
-        console.error("Error fetching match details:", error);
-      }
-    }
     const fetchReferees = async () => {
       try {
         const response = await fetch(`http://localhost:3000/referee/get-referees`, {
@@ -160,7 +139,6 @@ export default function EditMatchForm() {
         console.error("Error fetching match details:", error);
       }
     }
-    fetchStadiums();
     fetchTeams();
     fetchReferees();
   }, [matchId]);
