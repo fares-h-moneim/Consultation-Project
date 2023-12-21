@@ -145,7 +145,7 @@ const getNextMatch = async (req, res) => {
     try {
         const matches = await MatchModel.find({
             date_time: { $gte: new Date() }
-        }).sort({ date: 1 }).limit(1);
+        }).sort({ date_time: 1 }).limit(1);
 
         if (matches.length === 0) {
             return res.status(404).json({ error: 'No upcoming matches found' });
