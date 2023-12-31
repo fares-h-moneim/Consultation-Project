@@ -28,7 +28,7 @@ export default function EditingMatch() {
 
                 console.log(`MATCH ID ${matchId}`);
                 const response = await fetch(
-                    `http://localhost:3000/match/get-match/${matchId}`,
+                    `https://epl-reservation-backend.vercel.app//match/get-match/${matchId}`,
                     options
                 );
 

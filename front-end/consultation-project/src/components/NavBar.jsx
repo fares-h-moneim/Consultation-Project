@@ -20,7 +20,7 @@ export default function NavBar() {
   };
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/log-out", {
+      const response = await fetch("https://epl-reservation-backend.vercel.app//user/log-out", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

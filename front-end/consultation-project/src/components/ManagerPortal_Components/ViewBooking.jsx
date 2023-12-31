@@ -59,7 +59,7 @@ export default function ViewBooking() {
     useEffect(() => {
         const fetchSeatingArrangement = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/match/get-match/${matchId}`);
+                const response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchId}`);
                 if (response.ok) {
                     const data = await response.json();
                     const numRows = data.venue.num_of_rows;
@@ -80,7 +80,7 @@ export default function ViewBooking() {
 
         const getReservedSeats = async (numRows, numCols) => {
             try {
-                const response = await fetch(`http://localhost:3000/booking/get-reserved-seats/${matchId}`, {
+                const response = await fetch(`https://epl-reservation-backend.vercel.app//booking/get-reserved-seats/${matchId}`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",

@@ -22,7 +22,7 @@ export default function EditMatchForm() {
   useEffect(() => {
     const getMatch = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/match/get-match/${matchId}`);
+        const response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchId}`);
         if (response.ok) {
           const data = await response.json();
           const m = {
@@ -45,7 +45,7 @@ export default function EditMatchForm() {
 
     const getVenues = async () => {
       try {
-        const response = await fetch("http://localhost:3000/venue/get-venues");
+        const response = await fetch("https://epl-reservation-backend.vercel.app//venue/get-venues");
         if (response.ok) {
           const data = await response.json();
           setVenues(data);
@@ -59,7 +59,7 @@ export default function EditMatchForm() {
 
     const getReferees = async () => {
       try {
-        const response = await fetch("http://localhost:3000/referee/get-referees");
+        const response = await fetch("https://epl-reservation-backend.vercel.app//referee/get-referees");
         if (response.ok) {
           const data = await response.json();
           setReferees(data);
@@ -73,7 +73,7 @@ export default function EditMatchForm() {
 
     const getTeams = async () => {
       try {
-        const response = await fetch("http://localhost:3000/team/get-all-teams", {
+        const response = await fetch("https://epl-reservation-backend.vercel.app//team/get-all-teams", {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -100,7 +100,7 @@ export default function EditMatchForm() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/team/get-all-teams`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app//team/get-all-teams`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export default function EditMatchForm() {
     };
     const fetchReferees = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/referee/get-referees`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app//referee/get-referees`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -202,7 +202,7 @@ export default function EditMatchForm() {
     }
     console.log(send);
     try {
-      const response = await fetch(`http://localhost:3000/match/update-match`, {
+      const response = await fetch(`https://epl-reservation-backend.vercel.app//match/update-match`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

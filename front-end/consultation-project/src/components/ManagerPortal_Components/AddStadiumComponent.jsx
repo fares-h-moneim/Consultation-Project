@@ -24,7 +24,7 @@ const AddStadiumForm = () => {
           },
           body: JSON.stringify(stadiumData)
         }
-        var response = await fetch("http://localhost:3000/venue/add-venue", options);
+        var response = await fetch("https://epl-reservation-backend.vercel.app//venue/add-venue", options);
         if (response.ok) {
           var data = await response.json();
           console.log(data);

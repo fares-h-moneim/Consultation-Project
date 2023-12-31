@@ -36,7 +36,7 @@ export default function ChangePass() {
                     oldPassword: passwords.oldPassword,
                     newPassword: passwords.newPassword,
                 };
-                fetch("http://localhost:3000/user/change-password", {
+                fetch("https://epl-reservation-backend.vercel.app//user/change-password", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

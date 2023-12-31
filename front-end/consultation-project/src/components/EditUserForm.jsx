@@ -34,7 +34,7 @@ export default function EditUserForm({ user }) {
                     },
                     body: JSON.stringify(userData)
                 }
-                var response = await fetch("http://localhost:3000/user/update-details", options);
+                var response = await fetch("https://epl-reservation-backend.vercel.app//user/update-details", options);
                 if (response.ok) {
                     const { updatedUser } = await response.json();
                     const event = new Event("profileUpdated");
@@ -96,7 +96,7 @@ export default function EditUserForm({ user }) {
                     "Accept": "application/json"
                 }
             }
-            const response = await fetch(`http://localhost:3000/user/check-username-availability/${userData.username}`, options);
+            const response = await fetch(`https://epl-reservation-backend.vercel.app//user/check-username-availability/${userData.username}`, options);
             if (response.ok) {
                 const data = await response.json();
                 return !data.available; // Return true if the username is taken

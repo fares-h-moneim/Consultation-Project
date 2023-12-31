@@ -29,7 +29,7 @@ const AddMatchForm = () => {
                         "Accept": "application/json"
                     }
                 }
-                const response = await fetch("http://localhost:3000/venue/get-venues", options);
+                const response = await fetch("https://epl-reservation-backend.vercel.app//venue/get-venues", options);
                 if (response.ok) {
                     const data = await response.json();
                     setVenues(data);
@@ -49,7 +49,7 @@ const AddMatchForm = () => {
                         "Accept": "application/json"
                     }
                 }
-                const response = await fetch("http://localhost:3000/referee/get-referees", options);
+                const response = await fetch("https://epl-reservation-backend.vercel.app//referee/get-referees", options);
                 if (response.ok) {
                     const data = await response.json();
                     setReferees(data);
@@ -70,7 +70,7 @@ const AddMatchForm = () => {
                         Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
                     }
                 }
-                const response = await fetch("http://localhost:3000/team/get-all-teams", options);
+                const response = await fetch("https://epl-reservation-backend.vercel.app//team/get-all-teams", options);
                 if (response.ok) {
                     const data = await response.json();
                     setTeams(data);
@@ -149,7 +149,7 @@ const AddMatchForm = () => {
                     },
                     body: JSON.stringify(matchData)
                 }
-                const response = await fetch("http://localhost:3000/match/add-match", options);
+                const response = await fetch("https://epl-reservation-backend.vercel.app//match/add-match", options);
                 if (response.ok) {
                     const data = await response.json();
                     toast.success(`⚽ Match Added Successfully!`, {

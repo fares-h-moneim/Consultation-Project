@@ -14,7 +14,7 @@ export default function ViewUsers() {
                     Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
                 }
             }
-            var response = await fetch(`http://localhost:3000/user/get-all-users`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app//user/get-all-users`, options);
             if (response.ok) {
                 setUsers(await response.json());
             }

@@ -14,7 +14,7 @@ export default function BookingsPage() {
                     Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
                 }
             }
-            var response = await fetch("http://localhost:3000/booking/get-user-bookings", options);
+            var response = await fetch("https://epl-reservation-backend.vercel.app//booking/get-user-bookings", options);
             var data = await response.json();
             setMatches(data);
             console.log(data);

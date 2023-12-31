@@ -56,7 +56,7 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
                         "Accept": "application/json",
                     },
                 };
-                var response = await fetch(`http://localhost:3000/match/get-next-match`, options);
+                var response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-next-match`, options);
                 if (response.ok) {
                     var data = await response.json();
                     setMatch({

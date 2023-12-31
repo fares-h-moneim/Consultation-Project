@@ -14,7 +14,7 @@ export default function ViewUserRequests() {
                     Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
                 }
             }
-            var response = await fetch(`http://localhost:3000/request/get-all-requests`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app//request/get-all-requests`, options);
             if (response.ok) {
                 setRequests(await response.json());
             }

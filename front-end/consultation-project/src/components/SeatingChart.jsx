@@ -27,7 +27,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
     },
   };
   var sc = new Seatchart(element, options);
-  const socket = io('http://localhost:3000');
+  const socket = io('https://epl-reservation-backend.vercel.app/');
   socket.on('booking', (booking, user) => {
     console.log(`New Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
@@ -75,7 +75,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
         match_id: match,
         reserved_seats: selectedSeats
       }
-      const response = await fetch(`http://localhost:3000/booking/delete-booking`, {
+      const response = await fetch(`https://epl-reservation-backend.vercel.app//booking/delete-booking`, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`http://localhost:3000/booking-temp/book-temp-match`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app//booking-temp/book-temp-match`, {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`http://localhost:3000/booking-temp/delete-temp-booking`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app//booking-temp/delete-temp-booking`, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json",

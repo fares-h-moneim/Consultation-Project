@@ -29,7 +29,7 @@ export default function Payment(checkout) {
                     },
                     body: JSON.stringify(userData)
                 };
-                var response = await fetch("http://localhost:3000/booking/book-match", options);
+                var response = await fetch("https://epl-reservation-backend.vercel.app//booking/book-match", options);
                 if(response.ok){
                     toast.success(`👋 Match booked successfully!`, {
                         position: "bottom-left",
