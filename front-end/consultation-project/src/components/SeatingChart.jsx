@@ -31,31 +31,42 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   socket.on('booking', (booking, user) => {
     console.log(`New Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
-      const newSeatInfo = {
-        state: 'reserved', // Replace with the new state
-        type: 'default', // Replace with the new type
-      };
-      sc.setSeat(booking.reserved_seats, newSeatInfo)
+      console.log(booking.match_id, match)
+      if(booking.match_id === match){
+        const newSeatInfo = {
+          state: 'reserved', // Replace with the new state
+          type: 'default', // Replace with the new type
+        };
+        sc.setSeat(booking.reserved_seats, newSeatInfo)
+        console.log("match")
+      }
+      else{
+        console.log("not match")
+      }
     }
   });
   socket.on('deletedSeat', (booking) => {
     console.log(`Deleted Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
-      const newSeatInfo = {
-        state: 'available',
-        type: 'default', 
-      };
-      sc.setSeat(booking.reserved_seats, newSeatInfo)
+      if(booking.match_id === match){
+        const newSeatInfo = {
+          state: 'available',
+          type: 'default', 
+        };
+        sc.setSeat(booking.reserved_seats, newSeatInfo)
+      }
     }
   });
   socket.on('deletedPermSeat', (booking) => {
     console.log(`Deleted Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
-      const newSeatInfo = {
-        state: 'available', 
-        type: 'default', 
-      };
-      sc.setSeat(booking.reserved_seats, newSeatInfo)
+      if(booking.match_id === match){
+        const newSeatInfo = {
+          state: 'available', 
+          type: 'default', 
+        };
+        sc.setSeat(booking.reserved_seats, newSeatInfo)
+      }   
     }
   });
   const deleteBooking = async (e) => {
