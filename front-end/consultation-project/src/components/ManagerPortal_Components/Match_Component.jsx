@@ -31,7 +31,7 @@ export default function MatchComponent({ matchDetails }, onDelete) {
 
     // TODO : add delete match functionality
     const [isRemoved, setIsRemoved] = useState(false);
-    const deleteMatch = async(e) => {
+    const deleteMatch = async (e) => {
         try {
             const data = {
                 match_id: matchDetails._id
@@ -45,7 +45,7 @@ export default function MatchComponent({ matchDetails }, onDelete) {
                 },
                 body: JSON.stringify(data)
             }
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//match/delete-match`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/match/delete-match`, options);
             if (response.ok) {
                 toast.success(`🗑️ Match Deleted Successfully`, {
                     position: "bottom-left",
@@ -119,7 +119,7 @@ export default function MatchComponent({ matchDetails }, onDelete) {
                     "Accept": "application/json"
                 }
             }
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchDetails._id}`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/match/get-match/${matchDetails._id}`, options);
 
             if (response.ok) {
                 var data = await response.json(); // Move this line up

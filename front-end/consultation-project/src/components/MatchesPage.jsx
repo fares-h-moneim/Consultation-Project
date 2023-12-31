@@ -13,7 +13,7 @@ export default function MatchesList() {
           "Accept": "application/json"
         }
       }
-      var response = await fetch("https://epl-reservation-backend.vercel.app//match/get-matches", options);
+      var response = await fetch("https://epl-reservation-backend.vercel.app/match/get-matches", options);
       var data = await response.json();
       setMatches(data);
       console.log(data);

@@ -62,7 +62,7 @@ export default function MatchComponent({ matchDetails }) {
                     "Accept": "application/json"
                 }
             }
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchDetails._id}`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/match/get-match/${matchDetails._id}`, options);
 
             if (response.ok) {
                 var data = await response.json(); // Move this line up

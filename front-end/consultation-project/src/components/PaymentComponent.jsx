@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 export default function Payment(checkout) {
-    const {matchId} = useParams();
+    const { matchId } = useParams();
     const [userData, setUserData] = useState({
         cardNumber: "",
         pinNumber: ""
@@ -29,8 +29,8 @@ export default function Payment(checkout) {
                     },
                     body: JSON.stringify(userData)
                 };
-                var response = await fetch("https://epl-reservation-backend.vercel.app//booking/book-match", options);
-                if(response.ok){
+                var response = await fetch("https://epl-reservation-backend.vercel.app/booking/book-match", options);
+                if (response.ok) {
                     toast.success(`👋 Match booked successfully!`, {
                         position: "bottom-left",
                         autoClose: 5000,
@@ -44,7 +44,7 @@ export default function Payment(checkout) {
                     });
                     navigate("/bookings");
                 }
-                else{
+                else {
                     toast.error(`Match booking failed! Please Try again!`, {
                         position: "bottom-left",
                         autoClose: 5000,

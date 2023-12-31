@@ -22,7 +22,7 @@ export default function SignIn() {
                     },
                     body: JSON.stringify(userData)
                 }
-                var response = await fetch("https://epl-reservation-backend.vercel.app//user/sign-in", options);
+                var response = await fetch("https://epl-reservation-backend.vercel.app/user/sign-in", options);
                 if (response.ok) {
                     var responseData = await response.json();
                     var jwtToken = responseData.token;

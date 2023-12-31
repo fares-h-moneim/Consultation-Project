@@ -29,7 +29,7 @@ export default function User({ user, key }) {
                 body: JSON.stringify({ id: user._id })
             }
             console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//user/delete-user`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/user/delete-user`, options);
             if (response.ok) {
                 toast.success(`${user.username} Removed!`, {
                     position: "bottom-left",

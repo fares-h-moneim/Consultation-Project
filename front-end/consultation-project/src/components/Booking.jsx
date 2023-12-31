@@ -60,7 +60,7 @@ export default function Booking() {
     useEffect(() => {
         const fetchSeatingArrangement = async () => {
             try {
-                const response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchId}`);
+                const response = await fetch(`https://epl-reservation-backend.vercel.app/match/get-match/${matchId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setNumRows(data.venue.num_of_rows);
@@ -78,7 +78,7 @@ export default function Booking() {
 
         const getReservedSeats = async () => {
             try {
-                const response = await fetch(`https://epl-reservation-backend.vercel.app//booking/get-reserved-seats/${matchId}`, {
+                const response = await fetch(`https://epl-reservation-backend.vercel.app/booking/get-reserved-seats/${matchId}`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function Booking() {
         };
         const getUserTempReservedSeats = async () => {
             try {
-                const response = await fetch(`https://epl-reservation-backend.vercel.app//booking-temp/get-user-temp-reserved-seats/${matchId}`, {
+                const response = await fetch(`https://epl-reservation-backend.vercel.app/booking-temp/get-user-temp-reserved-seats/${matchId}`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",

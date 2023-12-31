@@ -20,7 +20,7 @@ export default function EditUser() {
         const getUserData = async () => {
             try {
                 const token = localStorage.getItem("jwtToken");
-                const response = await fetch("https://epl-reservation-backend.vercel.app//user/details", {
+                const response = await fetch("https://epl-reservation-backend.vercel.app/user/details", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

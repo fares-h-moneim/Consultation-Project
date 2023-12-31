@@ -32,7 +32,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
     console.log(`New Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
       console.log(booking.match_id, match)
-      if(booking.match_id === match){
+      if (booking.match_id === match) {
         const newSeatInfo = {
           state: 'reserved', // Replace with the new state
           type: 'default', // Replace with the new type
@@ -40,7 +40,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
         sc.setSeat(booking.reserved_seats, newSeatInfo)
         console.log("match")
       }
-      else{
+      else {
         console.log("not match")
       }
     }
@@ -48,10 +48,10 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   socket.on('deletedSeat', (booking) => {
     console.log(`Deleted Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
-      if(booking.match_id === match){
+      if (booking.match_id === match) {
         const newSeatInfo = {
           state: 'available',
-          type: 'default', 
+          type: 'default',
         };
         sc.setSeat(booking.reserved_seats, newSeatInfo)
       }
@@ -60,13 +60,13 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
   socket.on('deletedPermSeat', (booking) => {
     console.log(`Deleted Booking:`, booking);
     if (booking.username !== localStorage.getItem("username")) {
-      if(booking.match_id === match){
+      if (booking.match_id === match) {
         const newSeatInfo = {
-          state: 'available', 
-          type: 'default', 
+          state: 'available',
+          type: 'default',
         };
         sc.setSeat(booking.reserved_seats, newSeatInfo)
-      }   
+      }
     }
   });
   const deleteBooking = async (e) => {
@@ -75,7 +75,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
         match_id: match,
         reserved_seats: selectedSeats
       }
-      const response = await fetch(`https://epl-reservation-backend.vercel.app//booking/delete-booking`, {
+      const response = await fetch(`https://epl-reservation-backend.vercel.app/booking/delete-booking`, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`https://epl-reservation-backend.vercel.app//booking-temp/book-temp-match`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app/booking-temp/book-temp-match`, {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           match_id: match,
           reserved_seats: { row: e.current.index.row, col: e.current.index.col }
         }
-        const response = await fetch(`https://epl-reservation-backend.vercel.app//booking-temp/delete-temp-booking`, {
+        const response = await fetch(`https://epl-reservation-backend.vercel.app/booking-temp/delete-temp-booking`, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json",

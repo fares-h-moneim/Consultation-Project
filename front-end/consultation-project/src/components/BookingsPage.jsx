@@ -14,7 +14,7 @@ export default function BookingsPage() {
                     Authorization: `Bearer ${localStorage.getItem("jwtToken")}`
                 }
             }
-            var response = await fetch("https://epl-reservation-backend.vercel.app//booking/get-user-bookings", options);
+            var response = await fetch("https://epl-reservation-backend.vercel.app/booking/get-user-bookings", options);
             var data = await response.json();
             setMatches(data);
             console.log(data);
@@ -32,7 +32,7 @@ export default function BookingsPage() {
         <div className="container-fluid px-0 content align-items-center justify-content-center" style={{ height: "100%" }}>
             {matches.map((match, index) => (
                 <div key={index} className="d-flex align-items-center justify-content-center m-4">
-                    <UserBookings matchDetails={match.match_id} seat={match.reserved_seats} bookingId={match._id} onDelete={handleDelete}/>
+                    <UserBookings matchDetails={match.match_id} seat={match.reserved_seats} bookingId={match._id} onDelete={handleDelete} />
                 </div>
             ))}
         </div>

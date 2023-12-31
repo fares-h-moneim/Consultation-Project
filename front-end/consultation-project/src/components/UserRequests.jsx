@@ -31,7 +31,7 @@ export default function UserRequest({ user, key }) {
                 body: JSON.stringify({ id: user._id }) // pass id in the body
             }
             console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//request/approve-request`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/request/approve-request`, options);
             if (response.ok) {
                 toast.success(`${user.username} Accepted!`, {
                     position: "bottom-left",
@@ -87,7 +87,7 @@ export default function UserRequest({ user, key }) {
                 body: JSON.stringify({ id: user._id })
             }
             console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//request/decline-request`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/request/decline-request`, options);
             if (response.ok) {
                 toast.success(`${user.username} Rejected!`, {
                     position: "bottom-left",

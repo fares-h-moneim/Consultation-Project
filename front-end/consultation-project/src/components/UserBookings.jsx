@@ -62,7 +62,7 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                 },
                 body: JSON.stringify(data)
             }
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//booking/delete-booking`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/booking/delete-booking`, options);
             if (response.ok) {
                 toast.success(`Booking cancelled successfully!`, {
                     position: "bottom-left",
@@ -130,7 +130,7 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                     "Accept": "application/json"
                 }
             }
-            var response = await fetch(`https://epl-reservation-backend.vercel.app//match/get-match/${matchDetails}`, options);
+            var response = await fetch(`https://epl-reservation-backend.vercel.app/match/get-match/${matchDetails}`, options);
             var data = await response.json();
             if (response.ok) {
                 const originalDate = new Date(data.match.date_time);

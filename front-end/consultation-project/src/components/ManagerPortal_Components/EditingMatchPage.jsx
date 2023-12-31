@@ -28,7 +28,7 @@ export default function EditingMatch() {
 
                 console.log(`MATCH ID ${matchId}`);
                 const response = await fetch(
-                    `https://epl-reservation-backend.vercel.app//match/get-match/${matchId}`,
+                    `https://epl-reservation-backend.vercel.app/match/get-match/${matchId}`,
                     options
                 );
 
@@ -70,7 +70,7 @@ export default function EditingMatch() {
         >
             <div className="row align-items-center">
                 <MascotImage />
-                <EditMatchForm matchDetails={match} matchId = {matchId} />
+                <EditMatchForm matchDetails={match} matchId={matchId} />
             </div>
         </div>
     );

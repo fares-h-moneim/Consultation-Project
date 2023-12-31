@@ -35,7 +35,7 @@ export default function Signup({ user, text = "Sign Up" }) {
                     },
                     body: JSON.stringify(userData)
                 }
-                var response = await fetch("https://epl-reservation-backend.vercel.app//request/add-request", options);
+                var response = await fetch("https://epl-reservation-backend.vercel.app/request/add-request", options);
                 if (response.ok) {
                     toast.success(`👋 Request sent! Approval Pending.`, {
                         position: "bottom-left",
@@ -89,7 +89,7 @@ export default function Signup({ user, text = "Sign Up" }) {
                     "Accept": "application/json"
                 }
             }
-            const response = await fetch(`https://epl-reservation-backend.vercel.app//user/check-username-availability/${userData.username}`, options);
+            const response = await fetch(`https://epl-reservation-backend.vercel.app/user/check-username-availability/${userData.username}`, options);
             if (response.ok) {
                 const data = await response.json();
                 return !data.available; // Return true if the username is taken
