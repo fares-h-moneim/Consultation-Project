@@ -15,6 +15,8 @@ import bookingRouter from "./routes/booking.js";
 import bookingTempRouter from "./routes/booking-temp.js";
 import { Server } from "socket.io";
 import {createServer} from "http";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -26,9 +28,10 @@ export {io};
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2";
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2", {
+        await mongoose.connect(dbUrl, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

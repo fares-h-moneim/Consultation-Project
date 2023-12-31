@@ -125,7 +125,7 @@ export default function Booking() {
 
     useEffect(() => {
         SeatingChart(matchId, numRows, numCols, reservedSeats, userTempReservedSeats);
-    }, [reservedSeats, userTempReservedSeats]);
+    }, [reservedSeats, userTempReservedSeats, numRows, numCols, matchId]);
 
     function formatDate(date) {
         const originalDate = new Date(date);

@@ -6,10 +6,21 @@ import RefereeModel from "./referee.js";
 import RequestModel from "./request.js";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path from "path";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);  
+const envPath = path.resolve(__dirname, "../.env");
+dotenv.config({ path: envPath });
+
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2";
+console.log(process.env.DB_URL)
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2", {
+        await mongoose.connect(dbUrl, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -20,7 +31,6 @@ const connectDB = async () => {
 };
 
 connectDB();
-
 const fan = new UserModel({
     username: "yehia1",
     password: await bcrypt.hash("123456", 10),
