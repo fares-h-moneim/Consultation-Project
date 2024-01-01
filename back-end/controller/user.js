@@ -1,4 +1,5 @@
 import UserModel from "../model/user.js";
+import RequestModel from "../model/request.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import passport from "passport";
@@ -87,7 +88,8 @@ const checkUserAvailability = async (req, res) => {
   try {
     const tryUsername = req.params.username;
     const user = await UserModel.findOne({ username: tryUsername });
-    res.json({ available: !user }); // Return true if the username is available
+    const requestUser = await RequestModel.findOne({ username: tryUsername })
+    res.json({ available: !user && !requestUser }); // Return true if the username is available
   } catch (error) {
     console.error('Error checking username availability:', error);
     res.status(500).json({ error: 'Internal Server Error' });

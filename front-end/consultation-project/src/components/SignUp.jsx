@@ -139,6 +139,7 @@ export default function Signup({ user, text = "Sign Up" }) {
                 newErrors[key] = "";
             }
         }
+
         // Validate password confirmation
         if (confPass === "") {
             newErrors.confPass = "Confirm Password is required";
@@ -149,6 +150,7 @@ export default function Signup({ user, text = "Sign Up" }) {
         } else {
             newErrors.confPass = "";
         }
+
         if (userData.username !== "") {
             const usernameTaken = await checkUsernameAvailability();
             const sameUsername = userData.username === localStorage.getItem("username");
@@ -163,6 +165,10 @@ export default function Signup({ user, text = "Sign Up" }) {
             newErrors["username_taken"] = "";
         }
 
+        if(userData.birth_date > new Date().toISOString().slice(0, 10)){
+            newErrors["birth_date"] = "Birth date must be in the past";
+            isValid = false;
+        }
         setErrors(newErrors);
         return isValid;
     };
@@ -330,7 +336,7 @@ export default function Signup({ user, text = "Sign Up" }) {
                                 {errors["gender"] !== "" && <div className="text-danger"> Pick a gender</div>}
                             </div>
                             <div className="col-md-6">
-                                {errors["birth_date"] !== "" && <div className="text-danger"> Provide a birth date</div>}
+                                {errors["birth_date"] !== "" && <div className="text-danger"> {errors["birth_date"]}</div>}
                             </div>
                         </div>}
 

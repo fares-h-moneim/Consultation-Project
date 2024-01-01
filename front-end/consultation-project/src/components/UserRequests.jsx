@@ -30,7 +30,6 @@ export default function UserRequest({ user, key }) {
                 },
                 body: JSON.stringify({ id: user._id }) // pass id in the body
             }
-            console.log(`Bearer ${localStorage.getItem("jwtToken")}`);
             var response = await fetch(`http://localhost:3000/request/approve-request`, options);
             if (response.ok) {
                 toast.success(`${user.username} Accepted!`, {
