@@ -211,7 +211,20 @@ export default function EditMatchForm() {
         },
         body: JSON.stringify(send)
       });
-
+      if (response.status === 400) {
+        toast.error(`⚽ Match already has bookings, can't update!`, {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          icon: false
+        });
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         console.log("Match updated successfully:", data);

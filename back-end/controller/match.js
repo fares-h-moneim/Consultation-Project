@@ -125,8 +125,23 @@ const getOnlyMatchById = async (req, res) => {
 
 const updateMatch = async (req, res) => {
     try {
+        const token = req.header('Authorization');
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Missing token' });
+        }
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const decoded = jwt.verify(tokenWithoutBearer, process.env.ACCESS_TOKEN_SECRET);
+        if (decoded.role !== 'Manager') {
+            return res.status(401).json({ message: 'Unauthorized: Manager role needed' });
+        }
         const matchId = req.body.matchId;
         const updatedMatchData = req.body;
+        const reservedUsers = await BookingModel.find({ match_id: matchId });
+        const reservedUsersTemp = await BookingTempModel.find({ match_id: matchId });
+        if(reservedUsers.length > 0 || reservedUsersTemp.length > 0){
+            return res.status(400).json({ error: "Match already has bookings, can't update." });
+        }
+        
         const match = await MatchModel.findByIdAndUpdate(matchId, updatedMatchData, { new: true });
         if (match) {
             res.status(200).json(match);
