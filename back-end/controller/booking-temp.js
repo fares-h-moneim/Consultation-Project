@@ -21,6 +21,10 @@ const bookTempMatch = async (req, res) => {
         const matchId = req.body.match_id;
         const reservedSeats = req.body.reserved_seats;
         const userId = decoded.sub;
+        const alreadyReserved = await BookingTempModel.findOne({ match_id: matchId, reserved_seats: reservedSeats });
+        if (alreadyReserved) {
+            return res.status(400).json({ error: 'Seat already reserved' });
+        }
 
         const booking = new BookingTempModel({
             match_id: matchId,

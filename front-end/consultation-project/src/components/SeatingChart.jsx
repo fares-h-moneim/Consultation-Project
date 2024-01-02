@@ -1,5 +1,6 @@
 import "../styles/SeatingChart.css";
 import io from 'socket.io-client';
+import { toast } from 'react-toastify';
 
 export default function SeatingChart(match, rows, columns, reservedSeats, userTempReservedSeats = [], disabledSeats = []) {
   const selectedSeats = [];
@@ -111,6 +112,19 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           },
           body: JSON.stringify(data),
         });
+        if(response.status === 401){
+          toast.error(`Seat already booked!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+            });
+          return;
+        }
         if (response.ok) {
           console.log('Seat reserved successfully');
           selectedSeats.push(e.current.index);
