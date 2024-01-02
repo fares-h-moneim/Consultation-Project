@@ -200,7 +200,12 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                 </div>
             </div>
             <div className="row g-0 match-details" >
-                <div className="col-12 text-center" >
+                <div className="col-6 text-center" >
+                    <h5 className="referee-info">
+                        Ticket ID: <span style={{ color: "gray" }}>{bookingId}</span>
+                    </h5>
+                </div>
+                <div className="col-6 text-center" >
                     <h5 className="referee-info">
                         {mapper(seat.row, seat.col)}
                     </h5>
