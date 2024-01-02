@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import dotenv from 'dotenv';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import BookingModel from "../model/booking.js";
+import BookingTempModel from "../model/booking-temp.js";
 
 dotenv.config();
 const signIn = async (req, res) => {
@@ -110,6 +112,8 @@ const deleteUser = async (req, res) => {
     const user = await UserModel.findById(req.body.id);
     if (user) {
       const deletedUser = await UserModel.findByIdAndDelete(req.body.id);
+      const deleteSeats = await BookingModel.deleteMany({ user_id: req.body.id });
+      const deleteTempBookings = await BookingTempModel.deleteMany({ user_id: req.body.id });
       res.status(201).json(deletedUser);
     }
     else {
