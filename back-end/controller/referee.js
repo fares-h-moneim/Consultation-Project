@@ -16,6 +16,7 @@ const getRefereeById = async (req, res) => {
     }
 }
 
+//not used as it wasn't written in the document to add referees
 const addReferee = async (req, res) => {
     try {
         const newRefereeData = req.body;
@@ -36,6 +37,6 @@ const getReferees = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}   
+}
 
 export { getRefereeById, addReferee, getReferees };

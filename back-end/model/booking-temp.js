@@ -13,3 +13,5 @@ const bookingTempSchema = new mongoose.Schema({
 const BookingTempModel = mongoose.model("BookingTemp", bookingTempSchema);
 
 export default BookingTempModel;
+
+//Added later

@@ -5,3 +5,5 @@ const AdminSchema = mongoose.Schema({
 })
 const AdminModel = mongoose.model("Admin", AdminSchema);
 export default AdminModel;
+
+//Currently not used as admins are entries in user table
