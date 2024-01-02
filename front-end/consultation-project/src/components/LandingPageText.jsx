@@ -99,17 +99,9 @@ export default function LandingPageText({ bigText = "Hello World!" }) {
             </div>
             <div className="row d-flex justify-content-center align-items-center">
                 <div className="text-center">
-                    <div className="row d-flex justify-content-center align-items-center">
-                        <div className="text-center">
-                            <img src={teams[match.home_team]} alt={match.home_team} width={"100px"} className="team-logo" />
-                        </div>
-                        <div className="text-center">
-                            <span className="h1 ml-2 text-white" style={{ fontSize: "3rem" }}>&nbsp; vs &nbsp;</span>
-                        </div>
-                        <div className="text-center">
-                            <img src={teams[match.away_team]} alt={match.away_team} width={"100px"} className="team-logo" />
-                        </div>
-                    </div>
+                    <img src={teams[match.home_team]} alt={match.home_team} width={"200px"} className="team-logo" />
+                    <span className="h1 ml-2 text-white" style={{ fontSize: "5rem" }}>&nbsp; vs &nbsp;</span>
+                    <img src={teams[match.away_team]} alt={match.away_team} width={"200px"} className="team-logo" />
                 </div>
             </div>
             <div className="row mt-3">
