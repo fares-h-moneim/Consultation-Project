@@ -176,7 +176,6 @@ export default function SignIn() {
                                     name="password"
                                     id="password"
                                     required=""
-                                    placeholder="Doe"
                                     value={userData.password}
                                     onChange={handleChange}
                                 />

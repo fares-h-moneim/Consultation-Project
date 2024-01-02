@@ -1,9 +1,28 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import MascotImage from "../MascotImage";
 import EditMatchForm from "./editingMatchComponent";
 import { useState, useEffect } from "react";
 
 export default function EditingMatch() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem("role") !== "Manager") {
+            navigate("/signin");
+            toast.error(`⚽ Please sign in as a manager!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                icon: false
+            });
+            return;
+        }
+    }, []);
     const { matchId } = useParams();
     const [match, setMatch] = useState({
         home_team: "Ahly",

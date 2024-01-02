@@ -4,9 +4,29 @@ import ButtonImage from "./ButtonImage";
 import userPlus from "../assets/user-plus-solid.svg";
 import trash from "../assets/trash-solid.svg";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+
 
 export default function AdminPortal() {
     const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem("role") !== "Admin") {
+            navigate("/signin");
+            toast.error(`⚽ Please sign in as a admin!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                icon: false
+            });
+            return;
+        }
+    }, []);
     return (
         <div className="container-fluid px-0 content" style={{ height: "92vh" }}>
             <div className="row align-items-center">

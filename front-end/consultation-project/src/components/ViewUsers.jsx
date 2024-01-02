@@ -1,9 +1,28 @@
 import User from "./Users.jsx";
 import { useState, useEffect } from "react";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 export default function ViewUsers() {
     const [users, setUsers] = useState([]);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem("role") !== "Admin") {
+            navigate("/signin");
+            toast.error(`⚽ Please sign in as a admin!`, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                icon: false
+            });
+            return;
+        }
+    }, []);
     useEffect(() => {
         async function getUsers() {
             var options = {

@@ -114,14 +114,14 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
         });
         if(response.status === 401){
           toast.error(`Seat already booked!`, {
-                    position: "bottom-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light"
+                  position: "bottom-left",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light"
             });
           return;
         }
