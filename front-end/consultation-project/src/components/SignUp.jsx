@@ -165,7 +165,7 @@ export default function Signup({ user, text = "Sign Up" }) {
             newErrors["username_taken"] = "";
         }
 
-        if(userData.birth_date > new Date().toISOString().slice(0, 10)){
+        if (userData.birth_date > new Date().toISOString().slice(0, 10)) {
             newErrors["birth_date"] = "Birth date must be in the past";
             isValid = false;
         }
@@ -250,7 +250,7 @@ export default function Signup({ user, text = "Sign Up" }) {
                             <div className="form-group col-md-6">
                                 <label htmlFor="email">Email</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     className="form-control form-control-md rounded-0"
                                     name="email"
                                     id="email"
