@@ -112,7 +112,7 @@ export default function SeatingChart(match, rows, columns, reservedSeats, userTe
           },
           body: JSON.stringify(data),
         });
-        if(response.status === 401){
+        if(response.status === 400){
           toast.error(`Seat already booked!`, {
                   position: "bottom-left",
                   autoClose: 5000,
