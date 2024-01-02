@@ -3,6 +3,7 @@ import BookingTempModel from "../model/booking-temp.js";
 import UserModel from "../model/user.js";
 import { io } from "../app.js";
 import jwt from "jsonwebtoken";
+import MatchModel from "../model/match.js";
 
 const bookMatch = async (req, res) => {
     try {
@@ -127,6 +128,16 @@ const deletedSeat = async (req, res) => {
 
         if (decoded.role !== 'Fan') {
             return res.status(401).json({ message: 'Unauthorized: Fan role needed' });
+        }
+        // get match from BookingModel
+        const getSeat = await BookingModel.findOne({ _id: req.body.booking_id });
+        const match = await MatchModel.findOne({ _id: getSeat.match_id });
+        // check if match is in the past
+        const matchDate = new Date(match.date_time);
+        const threeDaysInMilliseconds = 3 * 24 * 60 * 60 * 1000;
+
+        if (matchDate.getTime() <= Date.now() + threeDaysInMilliseconds) {
+            return res.status(400).json({ message: "Can't cancel three days in advance" });
         }
         const booking_id = req.body.booking_id;
         var deletedSeat = await BookingModel.findOneAndDelete({ _id: booking_id });

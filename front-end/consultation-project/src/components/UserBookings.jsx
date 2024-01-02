@@ -63,6 +63,20 @@ export default function UserBookings({ matchDetails, seat, bookingId, onDelete }
                 body: JSON.stringify(data)
             }
             var response = await fetch(`http://localhost:3000/booking/delete-booking`, options);
+            if(response.status === 400){
+                toast.error(`Can't cancel three days in advance!`, {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
+                console.log("Error");
+                return;
+            }
             if (response.ok) {
                 toast.success(`Booking cancelled successfully!`, {
                     position: "bottom-left",
