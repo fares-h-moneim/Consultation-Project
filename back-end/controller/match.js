@@ -28,6 +28,16 @@ const addMatch = async (req, res) => {
         if (decoded.role !== 'Manager') {
             return res.status(401).json({ message: 'Unauthorized: Manager role needed' });
         }
+        const existingMatch = await MatchModel.findOne({
+            $or: [
+                { $and: [{ home_team: req.body.home_team }, { date_time: { $gte: new Date(req.body.date_time).setHours(0, 0, 0, 0), $lt: new Date(req.body.date_time).setHours(24, 0, 0, 0) } }] },
+                { $and: [{ away_team: req.body.away_team }, { date_time: { $gte: new Date(req.body.date_time).setHours(0, 0, 0, 0), $lt: new Date(req.body.date_time).setHours(24, 0, 0, 0) } }] }
+            ]
+        });
+
+        if (existingMatch) {
+            return res.status(400).json({ message: 'A match already exists for either home_team or away_team on this date_time' });
+        }
         const newMatchData = req.body;
         const match = new MatchModel(newMatchData);
         const savedMatch = await match.save();

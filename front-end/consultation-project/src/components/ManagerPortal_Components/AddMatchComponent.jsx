@@ -150,6 +150,19 @@ const AddMatchForm = () => {
                     body: JSON.stringify(matchData)
                 }
                 const response = await fetch("http://localhost:3000/match/add-match", options);
+                if(response.status === 400) {
+                    toast.error(`Team already has a match in this time`, {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    });
+                    return;
+                }
                 if (response.ok) {
                     const data = await response.json();
                     toast.success(`⚽ Match Added Successfully!`, {
