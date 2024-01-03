@@ -76,6 +76,7 @@ export default function NavBar() {
           width={50}
           className="rounded float-start ml-2"
           alt="EFA Logo"
+          title="Home"  // Add this line for the tooltip
         />
       </Link>
       <button
